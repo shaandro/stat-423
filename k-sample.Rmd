@@ -133,6 +133,16 @@ for(i in 1:(K-1)) {
 JT
 ```
 
+## Bartlett Test
+
+- Test for equal variances
+- Hypotheses: $H_0$: $\sigma_1 = \sigma_2 = \dots = \sigma_K$
+
+```{r}
+bartlett.test(iris$Sepal.Length ~ iris$Species)
+```
+
+
 ## Multiple Comparisons and Multiple Testing {.tabset .tabset-pills}
 
 We have three methods of deciding the significance levels of multiple comparisons:
