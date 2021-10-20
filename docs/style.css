@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;700&display=swap');
+
 p.caption {
   color: #777;
   margin-top: 10px;
@@ -14,13 +16,20 @@ pre {
 
 pre code {
   white-space: inherit;
-  font-family: 'Iosevka', 'Fira Code', 'Consolas', monospace;
 }
 
-body {
+.book.font-family-1 {
   font-family: 'Inter', 'Segoe UI', sans-serif;
 }
 
-h1 h2 h3 h4 h5 h6 {
-  font-family: "Inter", 'Segoe UI', sans-serif;
+.book .book-body .page-wrapper .page-inner section.normal pre,
+.book .book-body .page-wrapper .page-inner section.normal code {
+  font-family: 'Fira Code', 'Consolas', monospace;
+}
+
+.book .book-body .page-wrapper .page-inner section.normal h1,
+.book .book-body .page-wrapper .page-inner section.normal h2,
+.book .book-body .page-wrapper .page-inner section.normal h3,
+.book .book-body .page-wrapper .page-inner section.normal h4 {
+  font-family: "Inter", sans-serif;
 }

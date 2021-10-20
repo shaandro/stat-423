@@ -14,12 +14,14 @@ link-citations: yes
 github-repo: shaandro/stat-423
 ---
 
+# About
+
+This is my review guide for STAT 423 (Nonparametric Statistics).
+The course was taught by Dr. Ya Su at Virginia Commonwealth University in the fall 2021 semester.
+
 ```{r include=FALSE}
 # automatically create a bib database for R packages
 knitr::write_bib(c(
   .packages(), 'bookdown', 'knitr', 'rmarkdown'
 ), 'packages.bib')
 ```
-
-This is my review guide for STAT 423 (Nonparametric Statistics).
-The course was taught by Dr. Ya Su at Virginia Commonwealth University in the fall 2021 semester.
