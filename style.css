@@ -18,6 +18,10 @@ pre code {
   white-space: inherit;
 }
 
+.book .book-header,.book .book-summary {
+  font-family: "Inter", "Helvetica Neue",Helvetica,Arial,sans-serif
+}
+
 .book.font-family-1 {
   font-family: 'Inter', 'Segoe UI', sans-serif;
 }

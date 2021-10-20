@@ -1,0 +1,201 @@
+# Independent $K$-Sample Tests
+
+- $K$ independent samples
+- $n_i$: number of observations in group $i$
+- $X_{ij}$: $j$th observation from $i$th sample
+  - $i \in \{1, \dots, K\}$
+  - $j \in \{1, \dots, n_i\}$
+- $\mu_i$: mean of group $i$
+- One-way ANOVA model: $X_{ij} = \mu_i + e_{ij}$
+- Hypotheses: $H_0$: $\mu_1 = \mu_2 = \dots = \mu_K$ vs 
+              $H_a$: $H_0$ is not true
+
+For this section, we will use the dataset `iris`.
+The column `Sepal.Length` indicates the length of the flower's sepal,
+and the column `Species` indicates its species.
+
+```{r}
+data("iris")
+```
+
+
+## Classic $F$-Test
+
+- Assumption: $e_{ij} \overset{\mathrm{iid}} \sim N(0, \sigma^2)$
+- Mean of group $i$: $\bar{X}_i = \frac{1}{n} \sum_{j = 1}^{n_i} X_{ij}$
+- Grand mean: $\bar{X} = \frac{1}{N} \sum_{i=1}^K \sum_{j=1}^{n_i} X_{ij}$
+- Treatment sum of squares:
+  $$\mathrm{SSTR} = \sum_{i=1}^K n_i (\bar{X}_i - \bar{X})^2$$
+- Error sum of squres:
+  $$\mathrm{SSE} = \sum_{i=1}^K \sum_{j=1}^{n_i} (X_{ij} - \bar{X}_i)^2$$
+- Test statistic:
+  $$F_{\mathrm{obs}} = \frac{\mathrm{SSTr}/(K-1)}{\mathrm{SSE}/(N-K)}$$
+- Null distribution: Under $H_0$, $F_{\mathrm{obs}} \sim F_{K-1, N-K}$
+
+We can conduct the classic $F$-test using `anova` and `lm`.
+
+```{r}
+anova(lm(Sepal.Length ~ Species, data = iris))
+```
+
+The SSTr is the value in the first row of column `Sum Sq`.
+The SSE is the value in the row `Residuals` of column `Sum Sq`.
+The $p$-value is `Pr(>F)`.
+
+## Permutation $F$-Test
+
+- Total number of permutation outcomes: $R = N!/(n_1! n_2! \cdots n_K!)$
+- Calculate $F_{\mathrm{obs}}$
+- For $\ell \in \{1, \dots, R\}$, 
+  $F_\ell$ is the $F$-statistic for the $\ell$th permutation outcome
+- We can use the simplified calculation
+    $$F \propto \sum_{i=1}^K n_i \bar{X}_i^2$$
+- $p\text{-value} = I\{F_\ell \geq F_{\mathrm{obs}}\} / R$
+
+```{r}
+# number of permutation samples
+R <- 1000 
+# number of samples in each group
+n <- tapply(iris$Sepal.Length, iris$Species, length)
+# total number of observations
+N <- sum(n)
+# sepal length of each observation
+x <- iris$Sepal.Length
+# species of each observation
+t <- iris$Species
+
+# F-statistic
+Fobs <- sum(n * tapply(x, t, mean)^2)
+
+# permutation sample F-statistics
+F <- c()
+for (i in 1:R) {
+  F <- c(F, sum(n * tapply(x, sample(t), mean)^2))
+}
+
+# p-value
+mean(Fobs <= F)
+```
+
+
+## Kruskal-Walis Test
+
+- Assumption: the data are iid in each group
+- Replace data with ranks
+- Test statistic: 
+  $$\mathrm{KW} = \frac{12}{N(N+1)} \mathrm{SST}^*,$$
+  where $\mathrm{SST}^*$ is the SST calculated with ranks
+- Null distribution:
+  Under $H_0$, $\mathrm{KW} \sim \chi^2_{K-1}$ approximately
+  
+```{r}
+kruskal.test(Sepal.Length ~ Species, data = iris)
+```
+
+
+## Jonkheere-Terpstra Test
+
+- Assumption: the data are iid in each group
+- Hypotheses: $H_0$: $\mu_1 = \mu_2 = \dots = \mu_K$ vs 
+              $H_a$: $\mu_1 \leq \mu_2 \leq \dots \leq \mu_K$
+- Test-Statistic:
+  $$\mathrm{JT} = \sum_{i < j} U_{ij},$$
+  where $U_{ij}$ is the Mann-Whitney test statistic
+  for $H_a$: $\mu_i < \mu_j$
+- Approximate null distribution: Under $H_0$,
+  $$\frac{\mathrm{JT} - E(\mathrm{JT})}{\sqrt{\mathrm{Var}(\mathrm{JT})}}
+  \sim N(0,1)$$
+  $$E(\mathrm{JT}) = \frac{N^2 - \sum_{i=1}^K n_i^2}{4}$$
+  $$\mathrm{Var}(\mathrm{JT}) 
+  = \frac{N^2(2N+3) - \sum_{i=1}^K n_i^2 (2n_i + 3)}{72}$$
+
+```{r}
+# assign numbers to each group
+species <- factor(iris$Species, levels=c("setosa","versicolor","virginica"))
+groups <- as.numeric(species)
+
+sepal <- iris$Sepal.Length
+
+# number of groups
+K <- max(groups)
+
+# number of observations
+N <-length(sepal)  # total
+n <- table(groups) # per group
+
+# compute Uij
+JT <- 0
+for(i in 1:(K-1)) {
+  for(j in (i+1):K) {
+     JT <- JT + sum(outer(sepal[groups == i], sepal[groups == j],"<"))
+  }
+}
+JT
+```
+
+## Multiple Comparisons and Multiple Testing {.tabset .tabset-pills}
+
+We have three methods of deciding the significance levels of multiple comparisons:
+
+Adjustment         Description                             `p.adjust.method`
+----------         ---------------------------             -----------------
+none               compare $p_i$ with $\alpha$             none
+Bonferroni         compare $p_i$ with $\alpha / h$         `"bonferroni"`
+Benjamini-Hochberg compare BH-adjusted $p_i$ with $\alpha$ `"BH"`
+
+The Benjamini-Hochberg procedure leads to improved Type I error rate and power.
+
+### Multiple Comparisons
+
+- If we reject $H_0$: $\mu_1 = \mu_2 = \dots = \mu_K$ for a $K$-sample test,
+  we can conduct pairwise two-sample tests to determine which pairs of means
+  are not equal.
+- Total number of pairwise tests for $K$ samples: $h = K(K-1)/2$
+- $P(\text{at least one Type I error}) = 1 - (1 - \alpha)^h$
+
+```{r}
+pairwise.t.test(iris$Sepal.Length, iris$Species)
+```
+
+#### Bonferroni Adjustment
+
+- compare $p$-value for each pairwise comparison $i$ with significance level
+  $\alpha_i = \alpha / h$
+  - works because $1 - (1 - \alpha_i)^h \approx h \alpha_i$
+
+```{r}
+pairwise.t.test(iris$Sepal.Length, iris$Species, p.adjust.method = "bonferroni")
+```
+
+
+### Multiple Testing
+
+- Consider $m$ hypothesis tests together
+- The $p$-values are $p_1, \dots, p_h$
+- Instead of controlling the Type I error rate $\alpha$, 
+  we control the False Discovery Rate
+  $$\mathrm{FDR} 
+  = E \left( \frac{\text{number of false discoveries}}{\text{number of discoveries}} \right)
+  \leq \alpha$$
+  - discovery means rejection of $H_0$
+- Threshold: Reject $H_0$ if $p\text{-value} \leq t$
+- False Discovery Proportion for $i \in \{1, \dots, m\}$
+
+  $$\mathrm{FDP}(t) = \frac{\sum_{i = 1}^m I\{p_i \leq t\} H_i}{\sum_{i = 1}^m I\{p_i \leq t\}}$$
+  - $p_i$ is the $p$-value for test $i$
+  - $H_i = 1$ if $H_0$ is true and $H_i = 0$ otherwise
+
+#### Benjamini-Hochberg Procedure
+
+- Choose the threshold for rejection to be
+
+  $$t_{\mathrm{BH}} = \max \{P_{(i)} \mid P_{(i)} \leq \frac{\alpha i}{m}, 0 \leq i \leq m\}$$
+  - $P_{(1)} \leq P_{(2)} \leq \dots \leq P_{(m)}$
+- It can be proved that
+
+  $$\mathrm{FDR} = E[\mathrm{FDP}(t_{\mathrm{BH}})] 
+  \leq \frac{\alpha \sum_{i=1}^m H_i}{m}$$
+
+```{r}
+pairwise.t.test(iris$Sepal.Length, iris$Species, p.adjust.method = "BH")
+```

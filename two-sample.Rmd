@@ -1,0 +1,291 @@
+# Independent Two-Sample Tests
+
+Data for independent two-sample tests have the following properties:
+
+- two independent samples $X_1, \dots, X_m$ and $Y_1, \dots, Y_n$
+- $X_1, \dots, X_m$ are mutually independent
+- $Y_1, \dots, Y_n$ are mutually independent
+
+We are interested in the mean differences between the two samples.
+
+For this example, we will use the dataset `chickwts`.
+The column `feed` indicates the feed chicks were fed,
+and the column `weight` indicates the weight of the chick.
+We will only consider the `weight`s of the `feed`s
+`horsebean` and `linseed`.
+
+```{r}
+data("chickwts")
+
+# subset only horsebean and linseed
+chickwts <- subset(chickwts, feed == "horsebean" | feed == "linseed")
+
+# X: weights of chicks with horsebean feed
+x <- chickwts$weight[chickwts$feed == "horsebean"]
+
+# Y: weights of chicks with linseed feed
+y <- chickwts$weight[chickwts$feed == "linseed"]
+```
+
+For each test, we will be testing $H_a$: $\Delta \neq \Delta_0$,
+where $\Delta$ is the difference in center (mean or median)
+between the two groups.
+
+## Two-Sample $t$-Test
+
+- Parametric test
+- Assumptions: $X_i \overset{\mathrm{iid}} \sim N(\mu_X, \sigma^2)$,
+  $Y_i \overset{\mathrm{iid}} \sim N(\mu_Y, \sigma^2)$
+- Parameter of interest: $\mu = \mu_X - \mu_Y$
+Hypotheses: $H_0$: $\mu = \mu_0$ vs $H_a$: $\mu \neq \mu_0$ (or $<$, $>$)
+- Test statistic: 
+  $$T_{\mathrm{obs}} = \frac{\bar{X} - \bar{Y} - \mu_0}{s_p \sqrt{\frac{1}{m} + \frac{1}{n}}},
+  \quad \text{where} \quad s_p = \frac{(m-1)s_X^2 + (n-1)s_Y^2}{m + n - 2}$$
+- Null distribution: Under $H_0$, $T_{\mathrm{obs}} \sim t_{m + n - 2}$
+
+There are two ways to conduct this test using `t.test`.
+For both ways, we use the argument `var.equal = TRUE`
+and we let the argument `mu` be equal to $\mu_0$.
+
+If your two samples are in separate vectors `x` and `y`,
+you perform the test the way you're probably used to.
+
+```{r}
+t.test(x, y, mu = 0, var.equal = TRUE, alternative = "two.sided")
+```
+
+If your response variable is in one column of a dataset and the
+groups are indicated in a different column,
+we can use `~` and the argument `data` like we did for the paired $t$-test.
+
+```{r}
+t.test(weight ~ feed, data = chickwts,
+       mu = 0, var.equal = TRUE, alternative = "two.sided")
+```
+
+Using both methods, we get $p\text{-value} = 0.008205$.
+
+## Permutation Test
+
+- Nonparametric tests
+- Assumptions
+  - $X$ and $Y$ are independent
+  - $X_1, \dots, X_m$ are iid
+  - $Y_1, \dots, Y_n$ are iid
+- Parameters of interest
+  - $\Delta_1 = E(X_i) - E(Y_i)$
+  - $\Delta_2 = \mathrm{median}(X_i) - \mathrm{median}(Y_i)$
+- Hypotheses: $H_0$: $\Delta = \Delta_0$ vs $H_a$:  $\Delta \neq \Delta_0$ (or $<$, $>$)
+- Test statistic:
+  - $\hat{\Delta}_1 = \bar{X} - \bar{Y}$
+  - $\hat{\Delta}_2 = \mathrm{median}(X) - \mathrm{median}(Y)$
+
+For the remainder of this section, we will use 
+$\Delta$ to represent the parameter of interest
+(difference in population means or medians)
+and $\hat{\Delta}$ to represent the corresponding test statistic,
+since the permutation test works the same way regardless of the choice of test statistic.
+
+- The total number of permutation outcomes is $R = {{m + n} \choose {n}}$.
+- For each possible outcome $\ell \in \{1, \dots, R\}$,
+  we calculate the sample test statistic (mean or median) $\delta_\ell$.
+
+The $p$-value depends on the direction of $H_a$.
+
+$H_a$           $p$-value
+--------------- ----------------------------------
+$\Delta > 0$    $I\{\delta_\ell \geq \hat{\Delta}\} / R$
+$\Delta < 0$    $I\{\delta_\ell \leq \hat{\Delta}\} / R$
+$\Delta \neq 0$ $I\{|\delta_\ell| \geq |\hat{\Delta}|\} / R$
+--------------- ----------------------------------
+
+### Exact permutation test
+
+The exact permutation test for $H_a$: $\Delta \neq 0$, where $\Delta$ is the 
+difference in population means,
+is carried out as follows.
+(You can also do this for medians by replacing `mean` with `median` in the code.)
+
+```{r}
+# append x and y
+xy <- c(x, y)
+
+m <- length(x) # sample size of x
+n <- length(y) # sample size of y
+
+# construct permutation matrix
+permut <- combn(m + n, n)
+
+# observed difference in sample means
+Delta <- mean(x) - mean(y)
+
+# sample mean for each permutation outcome
+delta <- apply(permut, 2,
+               function(u) mean(xy[-u]) - mean(xy[u]))
+
+# p-value
+mean(abs(delta) >= abs(Delta))
+```
+This code takes a while to run because there are so many permutation outcomes.
+Because of that, we can perform a large-sample approximation using fewer permutation outcomes.
+
+
+### Large-sample approximation for permutation test
+
+Instead of using all $R = {{m + n} \choose {n}}$ possible permutation outcomes,
+we can randomly select $R$ permutation outcomes and calculate the approximate
+$p$-value.
+
+```{r}
+R <- 1000
+xy <- c(x, y)
+m <- length(x) # sample size of x
+n <- length(y) # sample size of y
+
+# construct permutation matrix
+permut <- replicate(R, sample(m + n, n))
+
+# observed difference in sample means
+Delta <- mean(x) - mean(y)
+
+# sample mean for each permutation outcome
+delta <- apply(permut, 2,
+               function(u) mean(xy[-u]) - mean(xy[u]))
+
+# p-value
+mean(abs(delta) >= abs(Delta))
+```
+
+
+## Mann-Whitney Test
+
+- Equivalent to Wilcoxon rank-sum test
+- Nonparametric test
+- Assumptions
+  - $X$ and $Y$ are independent
+  - $X_1, \dots, X_m$ are iid
+  - $Y_1, \dots, Y_n$ are iid
+- Parameter of interest:
+  $\Delta = \mathrm{median}(X_i) - \mathrm{median}(Y_i)$
+- Hypotheses: $H_0$: $\Delta = 0$ vs $H_a$:  $\Delta \neq 0$ (or $<$, $>$)
+- Test statistic: For $i \in \{1, \dots, m\}$ and $j = 1, \dots, n$,
+  $$U = I\{X_i > X_j\}$$
+  
+Because the Mann-Whitney test and the 
+Wilcoxon rank-sum test are equivalent,
+we can use `wilcox.test` the same as with paired samples.
+
+```{r}
+wilcox.test(x, y, paired = FALSE, alternative = "two.sided")
+wilcox.test(weight ~ feed, data = chickwts,
+            paired = FALSE, alternative = "two.sided")
+```
+
+
+## Kolmogorov-Smirnov Test
+
+- Designed to detect the differences of two distributions
+  in either location, variability, or shape.
+- Hypotheses: 
+  For two continuous CDFs $F(u)$ and $G(u)$,
+  $H_0$: $F(u) = G(u)$ vs $H_a$: $F(u) \neq G(u)$
+- Test statistic:
+  $$\mathrm{KS} = \max \left| \hat{F}(u) - \hat{G}(u) \right|$$
+  where $\hat{F}(u)$ and $\hat{G}(u)$ are the
+  empirical CDFs of two samples
+
+```{r}
+ks.test(x, y)
+```
+
+## Tests on Deviances {.tabset .tabset-pills}
+
+Suppose we have two groups of data:
+- $X_i = \mu_X + \sigma_X \epsilon_i$, where $i \in \{1, \dots, m\}$
+- $Y_i = \mu_Y + \sigma_Y \epsilon_{i+m}$, where $i \in \{1, \dots, n\}$
+
+We will test $H_0$: $\sigma_X = \sigma_Y$
+for the `chickwts` data from the previous section.
+
+### $F$-Test
+
+- Assumption: $\epsilon_i \overset{\mathrm{iid}} \sim N(0,1)$
+- Test statistic:
+  $$F_{\mathrm{obs}} = \frac{s_X^2}{s_Y^2}$$
+- Null distribution:
+  Under $H_0$, $F_{\mathrm{obs}} \sim F_{m-1, n-1}$
+  
+```{r}
+R <- 1000
+xy <- c(x, y)
+m <- length(x) # sample size of x
+n <- length(y) # sample size of y
+
+# construct permutation matrix
+permut <- replicate(R, sample(m + n, n))
+
+# sample variances
+varx <- var(x)
+vary <- var(y)
+
+# test statistic
+Fobs <- varx / vary
+
+# p-value
+2 * min(pf(Fobs, m - 1, n - 1), 1 - pf(Fobs, m - 1, n - 1))
+```
+
+
+### Nonparametric Test
+
+- Calculate the deviances:
+  - $\mathrm{dev}_{iX} = X_i - \bar{X}$
+  - $\mathrm{dev}_{iY} = Y_i - \bar{Y}$
+- Calculate the absolute mean deviances:
+  - $\mathrm{dev}_X = \frac{1}{m} \sum_{i=1}^n |\mathrm{dev}_{iX}|$
+  - $\mathrm{dev}_Y = \frac{1}{n} \sum_{i=1}^n |\mathrm{dev}_{iY}|$
+- Test statistic for $H_a$: $\sigma_X > \sigma_Y$
+  and $H_a$: $\sigma_X < \sigma_Y$
+  $$r_{\mathrm{obs}} = \frac{\mathrm{dev}_X}{\mathrm{dev}_Y}$$
+- Test statistic for $H_a$: $\sigma_X \neq \sigma_Y$
+  $$r_{\mathrm{obs}} = \frac{\min \{\mathrm{dev}_X, \mathrm{dev}_Y\}}
+             {\max \{\mathrm{dev}_X, \mathrm{dev}_Y\}}$$
+
+Let $R$ be the number of permutation outcomes.
+For all $\ell \in \{1, \dots, R\}$, 
+$r_\ell$ is the test statistic for the permutation outcome $\ell$.
+The $p$-value depends on the direction of $H_a$.
+
+$H_a$                    $p$-value
+------------------------ ----------------------------------
+$\sigma_X > \sigma_Y$    $I\{r_\ell \geq r\} / R$
+$\sigma_X < \sigma_Y$    $I\{r_\ell \leq r\} / R$
+$\sigma_X \neq \sigma_Y$ $I\{r_\ell \geq r\} / R$
+------------------------ ----------------------------------
+
+```{r}
+R <- 1000
+xy <- c(x, y)
+
+# construct permutation matrix
+permut <- replicate(R, sample(m + n, n))
+
+# absolute mean deviances
+devx <- mean(abs(x - mean(x)))
+devy <- mean(abs(y - mean(y)))
+
+# test statistic
+robs <- max(devx, devy) / min(devx, devy)
+
+# test statistics for permutation outcomes
+devxl <- apply(permut, 2,
+               function(u) mean(abs(xy[u] - mean(xy[u]))))
+devyl <- apply(permut, 2,
+               function(u) mean(abs(xy[-u] - mean(xy[-u]))))
+r <- apply(cbind(devxl, devyl), 1,
+            function(u) {max(u) / min(u)})
+
+# p-value
+mean(r >= robs)
+```
+

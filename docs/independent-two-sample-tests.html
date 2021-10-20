@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>3 Independent Two-Sample Tests | STAT 423 Review Guide</title>
+  <meta name="description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="3 Independent Two-Sample Tests | STAT 423 Review Guide" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="github-repo" content="shaandro/stat-423" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="3 Independent Two-Sample Tests | STAT 423 Review Guide" />
+  
+  <meta name="twitter:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  
+
+<meta name="author" content="Shaandro Sarkar" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="paired-two-sample-tests.html"/>
+<link rel="next" href="independent-k-sample-tests.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">STAT 423 Review Guide</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About</a></li>
+<li class="chapter" data-level="2" data-path="paired-two-sample-tests.html"><a href="paired-two-sample-tests.html"><i class="fa fa-check"></i><b>2</b> Paired Two-Sample Tests</a><ul>
+<li class="chapter" data-level="2.1" data-path="paired-two-sample-tests.html"><a href="paired-two-sample-tests.html#paired-t-test"><i class="fa fa-check"></i><b>2.1</b> Paired <span class="math inline">\(t\)</span>-test</a></li>
+<li class="chapter" data-level="2.2" data-path="paired-two-sample-tests.html"><a href="paired-two-sample-tests.html#sign-test"><i class="fa fa-check"></i><b>2.2</b> Sign test</a></li>
+<li class="chapter" data-level="2.3" data-path="paired-two-sample-tests.html"><a href="paired-two-sample-tests.html#wilcoxon-signed-rank-test"><i class="fa fa-check"></i><b>2.3</b> Wilcoxon Signed-Rank Test</a></li>
+<li class="chapter" data-level="2.4" data-path="paired-two-sample-tests.html"><a href="paired-two-sample-tests.html#permutation-test"><i class="fa fa-check"></i><b>2.4</b> Permutation Test</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="paired-two-sample-tests.html"><a href="paired-two-sample-tests.html#exact-permutation-test"><i class="fa fa-check"></i><b>2.4.1</b> Exact permutation test</a></li>
+<li class="chapter" data-level="2.4.2" data-path="paired-two-sample-tests.html"><a href="paired-two-sample-tests.html#large-sample-approximation-for-permutation-test"><i class="fa fa-check"></i><b>2.4.2</b> Large-sample approximation for permutation test</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="independent-two-sample-tests.html"><a href="independent-two-sample-tests.html"><i class="fa fa-check"></i><b>3</b> Independent Two-Sample Tests</a><ul>
+<li class="chapter" data-level="3.1" data-path="independent-two-sample-tests.html"><a href="independent-two-sample-tests.html#two-sample-t-test"><i class="fa fa-check"></i><b>3.1</b> Two-Sample <span class="math inline">\(t\)</span>-Test</a></li>
+<li class="chapter" data-level="3.2" data-path="independent-two-sample-tests.html"><a href="independent-two-sample-tests.html#permutation-test-1"><i class="fa fa-check"></i><b>3.2</b> Permutation Test</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="independent-two-sample-tests.html"><a href="independent-two-sample-tests.html#exact-permutation-test-1"><i class="fa fa-check"></i><b>3.2.1</b> Exact permutation test</a></li>
+<li class="chapter" data-level="3.2.2" data-path="independent-two-sample-tests.html"><a href="independent-two-sample-tests.html#large-sample-approximation-for-permutation-test-1"><i class="fa fa-check"></i><b>3.2.2</b> Large-sample approximation for permutation test</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="independent-two-sample-tests.html"><a href="independent-two-sample-tests.html#mann-whitney-test"><i class="fa fa-check"></i><b>3.3</b> Mann-Whitney Test</a></li>
+<li class="chapter" data-level="3.4" data-path="independent-two-sample-tests.html"><a href="independent-two-sample-tests.html#kolmogorov-smirnov-test"><i class="fa fa-check"></i><b>3.4</b> Kolmogorov-Smirnov Test</a></li>
+<li class="chapter" data-level="3.5" data-path="independent-two-sample-tests.html"><a href="independent-two-sample-tests.html#tests-on-deviances"><i class="fa fa-check"></i><b>3.5</b> Tests on Deviances</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="independent-two-sample-tests.html"><a href="independent-two-sample-tests.html#f-test"><i class="fa fa-check"></i><b>3.5.1</b> <span class="math inline">\(F\)</span>-Test</a></li>
+<li class="chapter" data-level="3.5.2" data-path="independent-two-sample-tests.html"><a href="independent-two-sample-tests.html#nonparametric-test"><i class="fa fa-check"></i><b>3.5.2</b> Nonparametric Test</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="independent-k-sample-tests.html"><a href="independent-k-sample-tests.html"><i class="fa fa-check"></i><b>4</b> Independent <span class="math inline">\(K\)</span>-Sample Tests</a><ul>
+<li class="chapter" data-level="4.1" data-path="independent-k-sample-tests.html"><a href="independent-k-sample-tests.html#classic-f-test"><i class="fa fa-check"></i><b>4.1</b> Classic <span class="math inline">\(F\)</span>-Test</a></li>
+<li class="chapter" data-level="4.2" data-path="independent-k-sample-tests.html"><a href="independent-k-sample-tests.html#permutation-f-test"><i class="fa fa-check"></i><b>4.2</b> Permutation <span class="math inline">\(F\)</span>-Test</a></li>
+<li class="chapter" data-level="4.3" data-path="independent-k-sample-tests.html"><a href="independent-k-sample-tests.html#kruskal-walis-test"><i class="fa fa-check"></i><b>4.3</b> Kruskal-Walis Test</a></li>
+<li class="chapter" data-level="4.4" data-path="independent-k-sample-tests.html"><a href="independent-k-sample-tests.html#jonkheere-terpstra-test"><i class="fa fa-check"></i><b>4.4</b> Jonkheere-Terpstra Test</a></li>
+<li class="chapter" data-level="4.5" data-path="independent-k-sample-tests.html"><a href="independent-k-sample-tests.html#multiple-comparisons-and-multiple-testing"><i class="fa fa-check"></i><b>4.5</b> Multiple Comparisons and Multiple Testing</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="independent-k-sample-tests.html"><a href="independent-k-sample-tests.html#multiple-comparisons"><i class="fa fa-check"></i><b>4.5.1</b> Multiple Comparisons</a></li>
+<li class="chapter" data-level="4.5.2" data-path="independent-k-sample-tests.html"><a href="independent-k-sample-tests.html#multiple-testing"><i class="fa fa-check"></i><b>4.5.2</b> Multiple Testing</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="in-class-review-questions.html"><a href="in-class-review-questions.html"><i class="fa fa-check"></i><b>5</b> In-Class Review Questions</a><ul>
+<li class="chapter" data-level="5.1" data-path="in-class-review-questions.html"><a href="in-class-review-questions.html#estimator"><i class="fa fa-check"></i><b>5.1</b> Estimator</a></li>
+<li class="chapter" data-level="5.2" data-path="in-class-review-questions.html"><a href="in-class-review-questions.html#one-proportion-z-test"><i class="fa fa-check"></i><b>5.2</b> One-Proportion <span class="math inline">\(z\)</span>-Test</a></li>
+<li class="chapter" data-level="5.3" data-path="in-class-review-questions.html"><a href="in-class-review-questions.html#paired-two-sample-tests-1"><i class="fa fa-check"></i><b>5.3</b> Paired Two-Sample Tests</a></li>
+<li class="chapter" data-level="5.4" data-path="in-class-review-questions.html"><a href="in-class-review-questions.html#paired-permutation-test"><i class="fa fa-check"></i><b>5.4</b> Paired Permutation Test</a></li>
+<li class="chapter" data-level="5.5" data-path="in-class-review-questions.html"><a href="in-class-review-questions.html#anova-and-classic-f-test"><i class="fa fa-check"></i><b>5.5</b> ANOVA and Classic <span class="math inline">\(F\)</span>-Test</a></li>
+<li class="chapter" data-level="5.6" data-path="in-class-review-questions.html"><a href="in-class-review-questions.html#kruskal-wallis-test"><i class="fa fa-check"></i><b>5.6</b> Kruskal-Wallis Test</a></li>
+<li class="chapter" data-level="5.7" data-path="in-class-review-questions.html"><a href="in-class-review-questions.html#sse-from-anova"><i class="fa fa-check"></i><b>5.7</b> SSE (from ANOVA)</a></li>
+<li class="chapter" data-level="5.8" data-path="in-class-review-questions.html"><a href="in-class-review-questions.html#sstr-from-anova"><i class="fa fa-check"></i><b>5.8</b> 8: SSTr (from ANOVA)</a></li>
+<li class="chapter" data-level="5.9" data-path="in-class-review-questions.html"><a href="in-class-review-questions.html#permutation-f-test-1"><i class="fa fa-check"></i><b>5.9</b> Permutation <span class="math inline">\(F\)</span>-test</a></li>
+<li class="chapter" data-level="5.10" data-path="in-class-review-questions.html"><a href="in-class-review-questions.html#multiple-comparison-pairwise-t-tests"><i class="fa fa-check"></i><b>5.10</b> Multiple Comparison (Pairwise <span class="math inline">\(t\)</span>-Tests)</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">STAT 423 Review Guide</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="independent-two-sample-tests" class="section level1">
+<h1><span class="header-section-number">3</span> Independent Two-Sample Tests</h1>
+<p>Data for independent two-sample tests have the following properties:</p>
+<ul>
+<li>two independent samples <span class="math inline">\(X_1, \dots, X_m\)</span> and <span class="math inline">\(Y_1, \dots, Y_n\)</span></li>
+<li><span class="math inline">\(X_1, \dots, X_m\)</span> are mutually independent</li>
+<li><span class="math inline">\(Y_1, \dots, Y_n\)</span> are mutually independent</li>
+</ul>
+<p>We are interested in the mean differences between the two samples.</p>
+<p>For this example, we will use the dataset <code>chickwts</code>.
+The column <code>feed</code> indicates the feed chicks were fed,
+and the column <code>weight</code> indicates the weight of the chick.
+We will only consider the <code>weight</code>s of the <code>feed</code>s
+<code>horsebean</code> and <code>linseed</code>.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="kw">data</span>(<span class="st">&quot;chickwts&quot;</span>)</a>
+<a class="sourceLine" id="cb26-2" title="2"></a>
+<a class="sourceLine" id="cb26-3" title="3"><span class="co"># subset only horsebean and linseed</span></a>
+<a class="sourceLine" id="cb26-4" title="4">chickwts &lt;-<span class="st"> </span><span class="kw">subset</span>(chickwts, feed <span class="op">==</span><span class="st"> &quot;horsebean&quot;</span> <span class="op">|</span><span class="st"> </span>feed <span class="op">==</span><span class="st"> &quot;linseed&quot;</span>)</a>
+<a class="sourceLine" id="cb26-5" title="5"></a>
+<a class="sourceLine" id="cb26-6" title="6"><span class="co"># X: weights of chicks with horsebean feed</span></a>
+<a class="sourceLine" id="cb26-7" title="7">x &lt;-<span class="st"> </span>chickwts<span class="op">$</span>weight[chickwts<span class="op">$</span>feed <span class="op">==</span><span class="st"> &quot;horsebean&quot;</span>]</a>
+<a class="sourceLine" id="cb26-8" title="8"></a>
+<a class="sourceLine" id="cb26-9" title="9"><span class="co"># Y: weights of chicks with linseed feed</span></a>
+<a class="sourceLine" id="cb26-10" title="10">y &lt;-<span class="st"> </span>chickwts<span class="op">$</span>weight[chickwts<span class="op">$</span>feed <span class="op">==</span><span class="st"> &quot;linseed&quot;</span>]</a></code></pre></div>
+<p>For each test, we will be testing <span class="math inline">\(H_a\)</span>: <span class="math inline">\(\Delta \neq \Delta_0\)</span>,
+where <span class="math inline">\(\Delta\)</span> is the difference in center (mean or median)
+between the two groups.</p>
+<div id="two-sample-t-test" class="section level2">
+<h2><span class="header-section-number">3.1</span> Two-Sample <span class="math inline">\(t\)</span>-Test</h2>
+<ul>
+<li>Parametric test</li>
+<li>Assumptions: <span class="math inline">\(X_i \overset{\mathrm{iid}} \sim N(\mu_X, \sigma^2)\)</span>,
+<span class="math inline">\(Y_i \overset{\mathrm{iid}} \sim N(\mu_Y, \sigma^2)\)</span></li>
+<li>Parameter of interest: <span class="math inline">\(\mu = \mu_X - \mu_Y\)</span>
+Hypotheses: <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\mu = \mu_0\)</span> vs <span class="math inline">\(H_a\)</span>: <span class="math inline">\(\mu \neq \mu_0\)</span> (or <span class="math inline">\(&lt;\)</span>, <span class="math inline">\(&gt;\)</span>)</li>
+<li>Test statistic:
+<span class="math display">\[T_{\mathrm{obs}} = \frac{\bar{X} - \bar{Y} - \mu_0}{s_p \sqrt{\frac{1}{m} + \frac{1}{n}}},
+\quad \text{where} \quad s_p = \frac{(m-1)s_X^2 + (n-1)s_Y^2}{m + n - 2}\]</span></li>
+<li>Null distribution: Under <span class="math inline">\(H_0\)</span>, <span class="math inline">\(T_{\mathrm{obs}} \sim t_{m + n - 2}\)</span></li>
+</ul>
+<p>There are two ways to conduct this test using <code>t.test</code>.
+For both ways, we use the argument <code>var.equal = TRUE</code>
+and we let the argument <code>mu</code> be equal to <span class="math inline">\(\mu_0\)</span>.</p>
+<p>If your two samples are in separate vectors <code>x</code> and <code>y</code>,
+you perform the test the way you’re probably used to.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1"><span class="kw">t.test</span>(x, y, <span class="dt">mu =</span> <span class="dv">0</span>, <span class="dt">var.equal =</span> <span class="ot">TRUE</span>, <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>)</a></code></pre></div>
+<pre><code>## 
+##  Two Sample t-test
+## 
+## data:  x and y
+## t = -2.934, df = 20, p-value = 0.008205
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -100.17618  -16.92382
+## sample estimates:
+## mean of x mean of y 
+##    160.20    218.75</code></pre>
+<p>If your response variable is in one column of a dataset and the
+groups are indicated in a different column,
+we can use <code>~</code> and the argument <code>data</code> like we did for the paired <span class="math inline">\(t\)</span>-test.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1"><span class="kw">t.test</span>(weight <span class="op">~</span><span class="st"> </span>feed, <span class="dt">data =</span> chickwts,</a>
+<a class="sourceLine" id="cb29-2" title="2">       <span class="dt">mu =</span> <span class="dv">0</span>, <span class="dt">var.equal =</span> <span class="ot">TRUE</span>, <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>)</a></code></pre></div>
+<pre><code>## 
+##  Two Sample t-test
+## 
+## data:  weight by feed
+## t = -2.934, df = 20, p-value = 0.008205
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -100.17618  -16.92382
+## sample estimates:
+## mean in group horsebean   mean in group linseed 
+##                  160.20                  218.75</code></pre>
+<p>Using both methods, we get <span class="math inline">\(p\text{-value} = 0.008205\)</span>.</p>
+</div>
+<div id="permutation-test-1" class="section level2">
+<h2><span class="header-section-number">3.2</span> Permutation Test</h2>
+<ul>
+<li>Nonparametric tests</li>
+<li>Assumptions
+<ul>
+<li><span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent</li>
+<li><span class="math inline">\(X_1, \dots, X_m\)</span> are iid</li>
+<li><span class="math inline">\(Y_1, \dots, Y_n\)</span> are iid</li>
+</ul></li>
+<li>Parameters of interest
+<ul>
+<li><span class="math inline">\(\Delta_1 = E(X_i) - E(Y_i)\)</span></li>
+<li><span class="math inline">\(\Delta_2 = \mathrm{median}(X_i) - \mathrm{median}(Y_i)\)</span></li>
+</ul></li>
+<li>Hypotheses: <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\Delta = \Delta_0\)</span> vs <span class="math inline">\(H_a\)</span>: <span class="math inline">\(\Delta \neq \Delta_0\)</span> (or <span class="math inline">\(&lt;\)</span>, <span class="math inline">\(&gt;\)</span>)</li>
+<li>Test statistic:
+<ul>
+<li><span class="math inline">\(\hat{\Delta}_1 = \bar{X} - \bar{Y}\)</span></li>
+<li><span class="math inline">\(\hat{\Delta}_2 = \mathrm{median}(X) - \mathrm{median}(Y)\)</span></li>
+</ul></li>
+</ul>
+<p>For the remainder of this section, we will use
+<span class="math inline">\(\Delta\)</span> to represent the parameter of interest
+(difference in population means or medians)
+and <span class="math inline">\(\hat{\Delta}\)</span> to represent the corresponding test statistic,
+since the permutation test works the same way regardless of the choice of test statistic.</p>
+<ul>
+<li>The total number of permutation outcomes is <span class="math inline">\(R = {{m + n} \choose {n}}\)</span>.</li>
+<li>For each possible outcome <span class="math inline">\(\ell \in \{1, \dots, R\}\)</span>,
+we calculate the sample test statistic (mean or median) <span class="math inline">\(\delta_\ell\)</span>.</li>
+</ul>
+<p>The <span class="math inline">\(p\)</span>-value depends on the direction of <span class="math inline">\(H_a\)</span>.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left"><span class="math inline">\(H_a\)</span></th>
+<th align="left"><span class="math inline">\(p\)</span>-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\Delta &gt; 0\)</span></td>
+<td align="left"><span class="math inline">\(I\{\delta_\ell \geq \hat{\Delta}\} / R\)</span></td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\Delta &lt; 0\)</span></td>
+<td align="left"><span class="math inline">\(I\{\delta_\ell \leq \hat{\Delta}\} / R\)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\Delta \neq 0\)</span></td>
+<td align="left"><span class="math inline">\(I\{|\delta_\ell| \geq |\hat{\Delta}|\} / R\)</span></td>
+</tr>
+</tbody>
+</table>
+<div id="exact-permutation-test-1" class="section level3">
+<h3><span class="header-section-number">3.2.1</span> Exact permutation test</h3>
+<p>The exact permutation test for <span class="math inline">\(H_a\)</span>: <span class="math inline">\(\Delta \neq 0\)</span>, where <span class="math inline">\(\Delta\)</span> is the
+difference in population means,
+is carried out as follows.
+(You can also do this for medians by replacing <code>mean</code> with <code>median</code> in the code.)</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1"><span class="co"># append x and y</span></a>
+<a class="sourceLine" id="cb31-2" title="2">xy &lt;-<span class="st"> </span><span class="kw">c</span>(x, y)</a>
+<a class="sourceLine" id="cb31-3" title="3"></a>
+<a class="sourceLine" id="cb31-4" title="4">m &lt;-<span class="st"> </span><span class="kw">length</span>(x) <span class="co"># sample size of x</span></a>
+<a class="sourceLine" id="cb31-5" title="5">n &lt;-<span class="st"> </span><span class="kw">length</span>(y) <span class="co"># sample size of y</span></a>
+<a class="sourceLine" id="cb31-6" title="6"></a>
+<a class="sourceLine" id="cb31-7" title="7"><span class="co"># construct permutation matrix</span></a>
+<a class="sourceLine" id="cb31-8" title="8">permut &lt;-<span class="st"> </span><span class="kw">combn</span>(m <span class="op">+</span><span class="st"> </span>n, n)</a>
+<a class="sourceLine" id="cb31-9" title="9"></a>
+<a class="sourceLine" id="cb31-10" title="10"><span class="co"># observed difference in sample means</span></a>
+<a class="sourceLine" id="cb31-11" title="11">Delta &lt;-<span class="st"> </span><span class="kw">mean</span>(x) <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(y)</a>
+<a class="sourceLine" id="cb31-12" title="12"></a>
+<a class="sourceLine" id="cb31-13" title="13"><span class="co"># sample mean for each permutation outcome</span></a>
+<a class="sourceLine" id="cb31-14" title="14">delta &lt;-<span class="st"> </span><span class="kw">apply</span>(permut, <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb31-15" title="15">               <span class="cf">function</span>(u) <span class="kw">mean</span>(xy[<span class="op">-</span>u]) <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(xy[u]))</a>
+<a class="sourceLine" id="cb31-16" title="16"></a>
+<a class="sourceLine" id="cb31-17" title="17"><span class="co"># p-value</span></a>
+<a class="sourceLine" id="cb31-18" title="18"><span class="kw">mean</span>(<span class="kw">abs</span>(delta) <span class="op">&gt;=</span><span class="st"> </span><span class="kw">abs</span>(Delta))</a></code></pre></div>
+<pre><code>## [1] 0.009229161</code></pre>
+<p>This code takes a while to run because there are so many permutation outcomes.
+Because of that, we can perform a large-sample approximation using fewer permutation outcomes.</p>
+</div>
+<div id="large-sample-approximation-for-permutation-test-1" class="section level3">
+<h3><span class="header-section-number">3.2.2</span> Large-sample approximation for permutation test</h3>
+<p>Instead of using all <span class="math inline">\(R = {{m + n} \choose {n}}\)</span> possible permutation outcomes,
+we can randomly select <span class="math inline">\(R\)</span> permutation outcomes and calculate the approximate
+<span class="math inline">\(p\)</span>-value.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1">R &lt;-<span class="st"> </span><span class="dv">1000</span></a>
+<a class="sourceLine" id="cb33-2" title="2">xy &lt;-<span class="st"> </span><span class="kw">c</span>(x, y)</a>
+<a class="sourceLine" id="cb33-3" title="3">m &lt;-<span class="st"> </span><span class="kw">length</span>(x) <span class="co"># sample size of x</span></a>
+<a class="sourceLine" id="cb33-4" title="4">n &lt;-<span class="st"> </span><span class="kw">length</span>(y) <span class="co"># sample size of y</span></a>
+<a class="sourceLine" id="cb33-5" title="5"></a>
+<a class="sourceLine" id="cb33-6" title="6"><span class="co"># construct permutation matrix</span></a>
+<a class="sourceLine" id="cb33-7" title="7">permut &lt;-<span class="st"> </span><span class="kw">replicate</span>(R, <span class="kw">sample</span>(m <span class="op">+</span><span class="st"> </span>n, n))</a>
+<a class="sourceLine" id="cb33-8" title="8"></a>
+<a class="sourceLine" id="cb33-9" title="9"><span class="co"># observed difference in sample means</span></a>
+<a class="sourceLine" id="cb33-10" title="10">Delta &lt;-<span class="st"> </span><span class="kw">mean</span>(x) <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(y)</a>
+<a class="sourceLine" id="cb33-11" title="11"></a>
+<a class="sourceLine" id="cb33-12" title="12"><span class="co"># sample mean for each permutation outcome</span></a>
+<a class="sourceLine" id="cb33-13" title="13">delta &lt;-<span class="st"> </span><span class="kw">apply</span>(permut, <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb33-14" title="14">               <span class="cf">function</span>(u) <span class="kw">mean</span>(xy[<span class="op">-</span>u]) <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(xy[u]))</a>
+<a class="sourceLine" id="cb33-15" title="15"></a>
+<a class="sourceLine" id="cb33-16" title="16"><span class="co"># p-value</span></a>
+<a class="sourceLine" id="cb33-17" title="17"><span class="kw">mean</span>(<span class="kw">abs</span>(delta) <span class="op">&gt;=</span><span class="st"> </span><span class="kw">abs</span>(Delta))</a></code></pre></div>
+<pre><code>## [1] 0.008</code></pre>
+</div>
+</div>
+<div id="mann-whitney-test" class="section level2">
+<h2><span class="header-section-number">3.3</span> Mann-Whitney Test</h2>
+<ul>
+<li>Equivalent to Wilcoxon rank-sum test</li>
+<li>Nonparametric test</li>
+<li>Assumptions
+<ul>
+<li><span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent</li>
+<li><span class="math inline">\(X_1, \dots, X_m\)</span> are iid</li>
+<li><span class="math inline">\(Y_1, \dots, Y_n\)</span> are iid</li>
+</ul></li>
+<li>Parameter of interest:
+<span class="math inline">\(\Delta = \mathrm{median}(X_i) - \mathrm{median}(Y_i)\)</span></li>
+<li>Hypotheses: <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\Delta = 0\)</span> vs <span class="math inline">\(H_a\)</span>: <span class="math inline">\(\Delta \neq 0\)</span> (or <span class="math inline">\(&lt;\)</span>, <span class="math inline">\(&gt;\)</span>)</li>
+<li>Test statistic: For <span class="math inline">\(i \in \{1, \dots, m\}\)</span> and <span class="math inline">\(j = 1, \dots, n\)</span>,
+<span class="math display">\[U = I\{X_i &gt; X_j\}\]</span></li>
+</ul>
+<p>Because the Mann-Whitney test and the
+Wilcoxon rank-sum test are equivalent,
+we can use <code>wilcox.test</code> the same as with paired samples.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1"><span class="kw">wilcox.test</span>(x, y, <span class="dt">paired =</span> <span class="ot">FALSE</span>, <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>)</a></code></pre></div>
+<pre><code>## 
+##  Wilcoxon rank sum exact test
+## 
+## data:  x and y
+## W = 20, p-value = 0.007145
+## alternative hypothesis: true location shift is not equal to 0</code></pre>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" title="1"><span class="kw">wilcox.test</span>(weight <span class="op">~</span><span class="st"> </span>feed, <span class="dt">data =</span> chickwts,</a>
+<a class="sourceLine" id="cb37-2" title="2">            <span class="dt">paired =</span> <span class="ot">FALSE</span>, <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>)</a></code></pre></div>
+<pre><code>## 
+##  Wilcoxon rank sum exact test
+## 
+## data:  weight by feed
+## W = 20, p-value = 0.007145
+## alternative hypothesis: true location shift is not equal to 0</code></pre>
+</div>
+<div id="kolmogorov-smirnov-test" class="section level2">
+<h2><span class="header-section-number">3.4</span> Kolmogorov-Smirnov Test</h2>
+<ul>
+<li>Designed to detect the differences of two distributions
+in either location, variability, or shape.</li>
+<li>Hypotheses:
+For two continuous CDFs <span class="math inline">\(F(u)\)</span> and <span class="math inline">\(G(u)\)</span>,
+<span class="math inline">\(H_0\)</span>: <span class="math inline">\(F(u) = G(u)\)</span> vs <span class="math inline">\(H_a\)</span>: <span class="math inline">\(F(u) \neq G(u)\)</span></li>
+<li>Test statistic:
+<span class="math display">\[\mathrm{KS} = \max \left| \hat{F}(u) - \hat{G}(u) \right|\]</span>
+where <span class="math inline">\(\hat{F}(u)\)</span> and <span class="math inline">\(\hat{G}(u)\)</span> are the
+empirical CDFs of two samples</li>
+</ul>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" title="1"><span class="kw">ks.test</span>(x, y)</a></code></pre></div>
+<pre><code>## 
+##  Two-sample Kolmogorov-Smirnov test
+## 
+## data:  x and y
+## D = 0.55, p-value = 0.04889
+## alternative hypothesis: two-sided</code></pre>
+</div>
+<div id="tests-on-deviances" class="section level2 tabset tabset-pills">
+<h2><span class="header-section-number">3.5</span> Tests on Deviances</h2>
+<p>Suppose we have two groups of data:
+- <span class="math inline">\(X_i = \mu_X + \sigma_X \epsilon_i\)</span>, where <span class="math inline">\(i \in \{1, \dots, m\}\)</span>
+- <span class="math inline">\(Y_i = \mu_Y + \sigma_Y \epsilon_{i+m}\)</span>, where <span class="math inline">\(i \in \{1, \dots, n\}\)</span></p>
+<p>We will test <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\sigma_X = \sigma_Y\)</span>
+for the <code>chickwts</code> data from the previous section.</p>
+<div id="f-test" class="section level3">
+<h3><span class="header-section-number">3.5.1</span> <span class="math inline">\(F\)</span>-Test</h3>
+<ul>
+<li>Assumption: <span class="math inline">\(\epsilon_i \overset{\mathrm{iid}} \sim N(0,1)\)</span></li>
+<li>Test statistic:
+<span class="math display">\[F_{\mathrm{obs}} = \frac{s_X^2}{s_Y^2}\]</span></li>
+<li>Null distribution:
+Under <span class="math inline">\(H_0\)</span>, <span class="math inline">\(F_{\mathrm{obs}} \sim F_{m-1, n-1}\)</span></li>
+</ul>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" title="1">R &lt;-<span class="st"> </span><span class="dv">1000</span></a>
+<a class="sourceLine" id="cb41-2" title="2">xy &lt;-<span class="st"> </span><span class="kw">c</span>(x, y)</a>
+<a class="sourceLine" id="cb41-3" title="3">m &lt;-<span class="st"> </span><span class="kw">length</span>(x) <span class="co"># sample size of x</span></a>
+<a class="sourceLine" id="cb41-4" title="4">n &lt;-<span class="st"> </span><span class="kw">length</span>(y) <span class="co"># sample size of y</span></a>
+<a class="sourceLine" id="cb41-5" title="5"></a>
+<a class="sourceLine" id="cb41-6" title="6"><span class="co"># construct permutation matrix</span></a>
+<a class="sourceLine" id="cb41-7" title="7">permut &lt;-<span class="st"> </span><span class="kw">replicate</span>(R, <span class="kw">sample</span>(m <span class="op">+</span><span class="st"> </span>n, n))</a>
+<a class="sourceLine" id="cb41-8" title="8"></a>
+<a class="sourceLine" id="cb41-9" title="9"><span class="co"># sample variances</span></a>
+<a class="sourceLine" id="cb41-10" title="10">varx &lt;-<span class="st"> </span><span class="kw">var</span>(x)</a>
+<a class="sourceLine" id="cb41-11" title="11">vary &lt;-<span class="st"> </span><span class="kw">var</span>(y)</a>
+<a class="sourceLine" id="cb41-12" title="12"></a>
+<a class="sourceLine" id="cb41-13" title="13"><span class="co"># test statistic</span></a>
+<a class="sourceLine" id="cb41-14" title="14">Fobs &lt;-<span class="st"> </span>varx <span class="op">/</span><span class="st"> </span>vary</a>
+<a class="sourceLine" id="cb41-15" title="15"></a>
+<a class="sourceLine" id="cb41-16" title="16"><span class="co"># p-value</span></a>
+<a class="sourceLine" id="cb41-17" title="17"><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">min</span>(<span class="kw">pf</span>(Fobs, m <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, n <span class="op">-</span><span class="st"> </span><span class="dv">1</span>), <span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">pf</span>(Fobs, m <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, n <span class="op">-</span><span class="st"> </span><span class="dv">1</span>))</a></code></pre></div>
+<pre><code>## [1] 0.3738707</code></pre>
+</div>
+<div id="nonparametric-test" class="section level3">
+<h3><span class="header-section-number">3.5.2</span> Nonparametric Test</h3>
+<ul>
+<li>Calculate the deviances:
+<ul>
+<li><span class="math inline">\(\mathrm{dev}_{iX} = X_i - \bar{X}\)</span></li>
+<li><span class="math inline">\(\mathrm{dev}_{iY} = Y_i - \bar{Y}\)</span></li>
+</ul></li>
+<li>Calculate the absolute mean deviances:
+<ul>
+<li><span class="math inline">\(\mathrm{dev}_X = \frac{1}{m} \sum_{i=1}^n |\mathrm{dev}_{iX}|\)</span></li>
+<li><span class="math inline">\(\mathrm{dev}_Y = \frac{1}{n} \sum_{i=1}^n |\mathrm{dev}_{iY}|\)</span></li>
+</ul></li>
+<li>Test statistic for <span class="math inline">\(H_a\)</span>: <span class="math inline">\(\sigma_X &gt; \sigma_Y\)</span>
+and <span class="math inline">\(H_a\)</span>: <span class="math inline">\(\sigma_X &lt; \sigma_Y\)</span>
+<span class="math display">\[r_{\mathrm{obs}} = \frac{\mathrm{dev}_X}{\mathrm{dev}_Y}\]</span></li>
+<li>Test statistic for <span class="math inline">\(H_a\)</span>: <span class="math inline">\(\sigma_X \neq \sigma_Y\)</span>
+<span class="math display">\[r_{\mathrm{obs}} = \frac{\min \{\mathrm{dev}_X, \mathrm{dev}_Y\}}
+           {\max \{\mathrm{dev}_X, \mathrm{dev}_Y\}}\]</span></li>
+</ul>
+<p>Let <span class="math inline">\(R\)</span> be the number of permutation outcomes.
+For all <span class="math inline">\(\ell \in \{1, \dots, R\}\)</span>,
+<span class="math inline">\(r_\ell\)</span> is the test statistic for the permutation outcome <span class="math inline">\(\ell\)</span>.
+The <span class="math inline">\(p\)</span>-value depends on the direction of <span class="math inline">\(H_a\)</span>.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left"><span class="math inline">\(H_a\)</span></th>
+<th align="left"><span class="math inline">\(p\)</span>-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\sigma_X &gt; \sigma_Y\)</span></td>
+<td align="left"><span class="math inline">\(I\{r_\ell \geq r\} / R\)</span></td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\sigma_X &lt; \sigma_Y\)</span></td>
+<td align="left"><span class="math inline">\(I\{r_\ell \leq r\} / R\)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\sigma_X \neq \sigma_Y\)</span></td>
+<td align="left"><span class="math inline">\(I\{r_\ell \geq r\} / R\)</span></td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" title="1">R &lt;-<span class="st"> </span><span class="dv">1000</span></a>
+<a class="sourceLine" id="cb43-2" title="2">xy &lt;-<span class="st"> </span><span class="kw">c</span>(x, y)</a>
+<a class="sourceLine" id="cb43-3" title="3"></a>
+<a class="sourceLine" id="cb43-4" title="4"><span class="co"># construct permutation matrix</span></a>
+<a class="sourceLine" id="cb43-5" title="5">permut &lt;-<span class="st"> </span><span class="kw">replicate</span>(R, <span class="kw">sample</span>(m <span class="op">+</span><span class="st"> </span>n, n))</a>
+<a class="sourceLine" id="cb43-6" title="6"></a>
+<a class="sourceLine" id="cb43-7" title="7"><span class="co"># absolute mean deviances</span></a>
+<a class="sourceLine" id="cb43-8" title="8">devx &lt;-<span class="st"> </span><span class="kw">mean</span>(<span class="kw">abs</span>(x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x)))</a>
+<a class="sourceLine" id="cb43-9" title="9">devy &lt;-<span class="st"> </span><span class="kw">mean</span>(<span class="kw">abs</span>(y <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(y)))</a>
+<a class="sourceLine" id="cb43-10" title="10"></a>
+<a class="sourceLine" id="cb43-11" title="11"><span class="co"># test statistic</span></a>
+<a class="sourceLine" id="cb43-12" title="12">robs &lt;-<span class="st"> </span><span class="kw">max</span>(devx, devy) <span class="op">/</span><span class="st"> </span><span class="kw">min</span>(devx, devy)</a>
+<a class="sourceLine" id="cb43-13" title="13"></a>
+<a class="sourceLine" id="cb43-14" title="14"><span class="co"># test statistics for permutation outcomes</span></a>
+<a class="sourceLine" id="cb43-15" title="15">devxl &lt;-<span class="st"> </span><span class="kw">apply</span>(permut, <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb43-16" title="16">               <span class="cf">function</span>(u) <span class="kw">mean</span>(<span class="kw">abs</span>(xy[u] <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(xy[u]))))</a>
+<a class="sourceLine" id="cb43-17" title="17">devyl &lt;-<span class="st"> </span><span class="kw">apply</span>(permut, <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb43-18" title="18">               <span class="cf">function</span>(u) <span class="kw">mean</span>(<span class="kw">abs</span>(xy[<span class="op">-</span>u] <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(xy[<span class="op">-</span>u]))))</a>
+<a class="sourceLine" id="cb43-19" title="19">r &lt;-<span class="st"> </span><span class="kw">apply</span>(<span class="kw">cbind</span>(devxl, devyl), <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb43-20" title="20">            <span class="cf">function</span>(u) {<span class="kw">max</span>(u) <span class="op">/</span><span class="st"> </span><span class="kw">min</span>(u)})</a>
+<a class="sourceLine" id="cb43-21" title="21"></a>
+<a class="sourceLine" id="cb43-22" title="22"><span class="co"># p-value</span></a>
+<a class="sourceLine" id="cb43-23" title="23"><span class="kw">mean</span>(r <span class="op">&gt;=</span><span class="st"> </span>robs)</a></code></pre></div>
+<pre><code>## [1] 0.22</code></pre>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="paired-two-sample-tests.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="independent-k-sample-tests.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/shaandro/stat-423/edit/main/two-sample.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

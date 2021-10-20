@@ -1,0 +1,203 @@
+# In-Class Review Questions
+
+## Estimator
+
+Amazon recommends customers products according to their purchasing history.
+Among 10,000 independent recommendations, 118 were accepted.
+The estimator of acceptance rate is $\hat{p} = 118/10000$.
+
+## One-Proportion $z$-Test
+
+Let $p$ be the true acceptance rate.
+Test the hypotheses
+$H_0$: $p = 0.02$ vs $H_a$: $p < 0.02.$
+
+To find the $p$-value for this test,
+we will use the one-proportion $z$-test
+statistic^[We can use the $z$-test because $np_0 = 10000(0.02) = 200 > 10$
+and $n(1 - p_0) = 10000(0.98) = 9800 > 10$. 
+Dr. Su refers to this as a large-sample approximation because, with a large enough sample,
+we can assume that the data is distributed normally.]
+$$Z = \frac{n\hat{p} - np_0}{\sqrt{np_0(1 - p_0)}}.$$
+
+```{r}
+S <- 118 # number of successes
+n <- 10000 # sample size
+p0 <- 0.02 # expected probability
+ES <- n*p0 # expected number of successes
+VarS <- n*p0*(1 - p0) # variance
+Z <- (S - ES) / sqrt(VarS) # test statistic
+pnorm(Z) # p-value
+```
+
+Under large-sample approximation, the $p$-value of this test is
+$2.35449 \times 10^{-9}$.
+
+
+## Paired Two-Sample Tests
+
+Load the R dataset 
+`sleep`^[The `sleep` data shows the effect of two drugs on 10 patients.
+The dataset has three columns:
+`extra` (increase in hours of sleep),
+`group` (drug given), and
+`ID` (patient ID).
+The data is paired, since each patient was given both drug 1 and drug 2.].
+
+```{r}
+data("sleep")
+head(sleep)
+```
+
+Test $H_0$: $\mu_1 = \mu_2$ vs $H_a$: $\mu_1 < \mu_2$,
+where $\mu_1$ and $\mu_2$ are the centers of the two groups.
+Which method gives the smaller $p$-value:
+$t$-test or Wilcoxon signed-rank test?
+
+
+```{r}
+# paired t-test p-value
+t.test(extra ~ group, paired = TRUE, data = sleep, alternative = "less")$p.value
+
+# paired Wilcoxon test p-value
+wilcox.test(extra ~ group, paired = TRUE, data = sleep, alternative = "less")$p.value
+```
+
+Since $0.0014 < 0.0045$, the $t$-test has a smaller $p$-value than the Wilcoxon test.
+
+We now consider the permutation test.
+The expression that generates the appropriate permutation outcome is
+
+```{r}
+z <- abs(sleep$extra[1:10] - sleep$extra[11:20])
+sample(c(-1,1), 10, replace = TRUE) * z
+```
+
+## Paired Permutation Test
+
+Load the R dataset `sleep`.
+Test $H_0$: $\mu_1 = \mu_2$ vs $H_a$: $\mu_1 \neq \mu_2$,
+where $\mu_1$ and $\mu_2$ are the centers of the two groups.
+
+Consider the permutation test. What is the total number of permutation outcomes?
+
+The `sleep` dataset has 10 paired observations.
+If $n$ is the sample size, then the number of permutation outcomes is $2^n$.
+For the `sleep` dataset,
+the number of permutation outcomes is thus $2^{10} = 1024$.
+
+## ANOVA and Classic $F$-Test
+
+Load the R dataset `iris`.
+
+```{r}
+data("iris")
+head(iris)
+```
+
+
+For the first column, consider the hypothesis
+$H_0$: $\mu_1 = \mu_2 = \mu_3$ vs $H_a$: $H_0$ is not true,
+where $\mu_1$, $\mu_2$, and $\mu_3$
+are the centers for the sepal lengths of
+*Iris setosa*, *versicolor*, and *virginica*, respectively.
+
+We will find the $p$-value of the $F$-test for these hypotheses
+by generating an `anova` table from the `lm` model.
+
+```{r}
+anova(lm(Sepal.Length ~ Species, data = iris))
+```
+
+From the ANOVA table, we have $p\text{-value} < 2.2 \times 10^{-16}$.
+
+## Kruskal-Wallis Test
+
+Load the R dataset `iris`.
+For the first column, consider the hypothesis
+$H_0$: $\mu_1 = \mu_2 = \mu_3$ vs $H_a$: $H_0$ is not true,
+where $\mu_1$, $\mu_2$, and $\mu_3$
+are the centers for the sepal lengths of
+*Iris setosa*, *versicolor*, and *virginica*, respectively.
+
+We will find the $p$-value of the Kruskal-Wallis test
+using `kruskal.test`.
+
+```{r}
+kruskal.test(iris$Sepal.Length, iris$Species)
+```
+
+Thus $p\text{-value} < 2.2 \times 10^{-16}$.
+
+## SSE (from ANOVA)
+
+Load the R dataset `iris`.
+Consider the first numerical column and find the SSE.
+
+The SSE can be found on the ANOVA table,
+which we already generated in 5.
+The SSE is the value in the row `Residuals` and the column `Sum Sq`,
+i.e. $\mathrm{SSE} = 38.956$.
+
+## 8: SSTr (from ANOVA)
+
+Load the R dataset `iris`.
+Consider the first numerical column and find the SSTr.
+
+The SSTr can also be found on the ANOVA table.
+The SSTr is the value in the row `Species` and the column `Sum Sq`,
+i.e. $\mathrm{SSTr} = 63.212$.
+
+## Permutation $F$-test
+
+Load the R dataset `iris`.
+For the first column, compute the $p$-value using the permutation $F$-test for
+$H_0$: $\mu_1 = \mu_2 = \mu_3$ vs $H_a$: $H_0$ is not true.
+
+We will perform the permutation test using $R = 5000$ permutation samples.
+We use the simplified calculation of the $F$-statistic^[`k-sample.pdf`, slide 9]
+
+$$F \propto \sum_{i=1}^K n_i \bar{X}_i ^2,$$
+where $K$ is the number of groups,
+$n_i$ is the number of observations in group $i$,
+and $\bar{X}_i$ is the mean of group $i$.
+
+```{r}
+# number of samples in each group
+n <- tapply(iris$Sepal.Length, iris$Species, length)
+# total number of observations
+N <- sum(n)
+# sepal length of each observation
+y <- iris$Sepal.Length
+# species of each observation
+t <- iris$Species
+
+# F-statistic
+Fobs <- sum(n * tapply(y, t, mean)^2)
+
+# number of permutation samples
+R <- 5000 
+# empty vector for the F-statistic of each permutation sample
+F <- c()
+# calculate permutation sample F-statistics
+for (i in 1:R) {
+  F <- c(F, sum(n * tapply(y, sample(t), mean)^2))
+}
+
+# p-value = proportion of permutation F-statistics greater than Fobs
+mean(Fobs <= F)
+```
+
+Thus the $p$-value for the permutation $F$-test is 0.
+
+## Multiple Comparison (Pairwise $t$-Tests)
+
+Load the R dataset `iris`.
+For the first column, compute the $p$-values from the multiple comparison based on
+pairwise $t$-tests.
+
+```{r}
+pairwise.t.test(y, t)
+```
+
+The pair with the smallest $p$-value is *I. setosa* vs. *I. virginica*.

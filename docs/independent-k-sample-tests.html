@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>4 Independent \(K\)-Sample Tests | STAT 423 Review Guide</title>
+  <meta name="description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="4 Independent \(K\)-Sample Tests | STAT 423 Review Guide" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="github-repo" content="shaandro/stat-423" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="4 Independent \(K\)-Sample Tests | STAT 423 Review Guide" />
+  
+  <meta name="twitter:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  
+
+<meta name="author" content="Shaandro Sarkar" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="independent-two-sample-tests.html"/>
+<link rel="next" href="in-class-review-questions.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">STAT 423 Review Guide</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About</a></li>
+<li class="chapter" data-level="2" data-path="paired-two-sample-tests.html"><a href="paired-two-sample-tests.html"><i class="fa fa-check"></i><b>2</b> Paired Two-Sample Tests</a><ul>
+<li class="chapter" data-level="2.1" data-path="paired-two-sample-tests.html"><a href="paired-two-sample-tests.html#paired-t-test"><i class="fa fa-check"></i><b>2.1</b> Paired <span class="math inline">\(t\)</span>-test</a></li>
+<li class="chapter" data-level="2.2" data-path="paired-two-sample-tests.html"><a href="paired-two-sample-tests.html#sign-test"><i class="fa fa-check"></i><b>2.2</b> Sign test</a></li>
+<li class="chapter" data-level="2.3" data-path="paired-two-sample-tests.html"><a href="paired-two-sample-tests.html#wilcoxon-signed-rank-test"><i class="fa fa-check"></i><b>2.3</b> Wilcoxon Signed-Rank Test</a></li>
+<li class="chapter" data-level="2.4" data-path="paired-two-sample-tests.html"><a href="paired-two-sample-tests.html#permutation-test"><i class="fa fa-check"></i><b>2.4</b> Permutation Test</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="paired-two-sample-tests.html"><a href="paired-two-sample-tests.html#exact-permutation-test"><i class="fa fa-check"></i><b>2.4.1</b> Exact permutation test</a></li>
+<li class="chapter" data-level="2.4.2" data-path="paired-two-sample-tests.html"><a href="paired-two-sample-tests.html#large-sample-approximation-for-permutation-test"><i class="fa fa-check"></i><b>2.4.2</b> Large-sample approximation for permutation test</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="independent-two-sample-tests.html"><a href="independent-two-sample-tests.html"><i class="fa fa-check"></i><b>3</b> Independent Two-Sample Tests</a><ul>
+<li class="chapter" data-level="3.1" data-path="independent-two-sample-tests.html"><a href="independent-two-sample-tests.html#two-sample-t-test"><i class="fa fa-check"></i><b>3.1</b> Two-Sample <span class="math inline">\(t\)</span>-Test</a></li>
+<li class="chapter" data-level="3.2" data-path="independent-two-sample-tests.html"><a href="independent-two-sample-tests.html#permutation-test-1"><i class="fa fa-check"></i><b>3.2</b> Permutation Test</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="independent-two-sample-tests.html"><a href="independent-two-sample-tests.html#exact-permutation-test-1"><i class="fa fa-check"></i><b>3.2.1</b> Exact permutation test</a></li>
+<li class="chapter" data-level="3.2.2" data-path="independent-two-sample-tests.html"><a href="independent-two-sample-tests.html#large-sample-approximation-for-permutation-test-1"><i class="fa fa-check"></i><b>3.2.2</b> Large-sample approximation for permutation test</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="independent-two-sample-tests.html"><a href="independent-two-sample-tests.html#mann-whitney-test"><i class="fa fa-check"></i><b>3.3</b> Mann-Whitney Test</a></li>
+<li class="chapter" data-level="3.4" data-path="independent-two-sample-tests.html"><a href="independent-two-sample-tests.html#kolmogorov-smirnov-test"><i class="fa fa-check"></i><b>3.4</b> Kolmogorov-Smirnov Test</a></li>
+<li class="chapter" data-level="3.5" data-path="independent-two-sample-tests.html"><a href="independent-two-sample-tests.html#tests-on-deviances"><i class="fa fa-check"></i><b>3.5</b> Tests on Deviances</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="independent-two-sample-tests.html"><a href="independent-two-sample-tests.html#f-test"><i class="fa fa-check"></i><b>3.5.1</b> <span class="math inline">\(F\)</span>-Test</a></li>
+<li class="chapter" data-level="3.5.2" data-path="independent-two-sample-tests.html"><a href="independent-two-sample-tests.html#nonparametric-test"><i class="fa fa-check"></i><b>3.5.2</b> Nonparametric Test</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="independent-k-sample-tests.html"><a href="independent-k-sample-tests.html"><i class="fa fa-check"></i><b>4</b> Independent <span class="math inline">\(K\)</span>-Sample Tests</a><ul>
+<li class="chapter" data-level="4.1" data-path="independent-k-sample-tests.html"><a href="independent-k-sample-tests.html#classic-f-test"><i class="fa fa-check"></i><b>4.1</b> Classic <span class="math inline">\(F\)</span>-Test</a></li>
+<li class="chapter" data-level="4.2" data-path="independent-k-sample-tests.html"><a href="independent-k-sample-tests.html#permutation-f-test"><i class="fa fa-check"></i><b>4.2</b> Permutation <span class="math inline">\(F\)</span>-Test</a></li>
+<li class="chapter" data-level="4.3" data-path="independent-k-sample-tests.html"><a href="independent-k-sample-tests.html#kruskal-walis-test"><i class="fa fa-check"></i><b>4.3</b> Kruskal-Walis Test</a></li>
+<li class="chapter" data-level="4.4" data-path="independent-k-sample-tests.html"><a href="independent-k-sample-tests.html#jonkheere-terpstra-test"><i class="fa fa-check"></i><b>4.4</b> Jonkheere-Terpstra Test</a></li>
+<li class="chapter" data-level="4.5" data-path="independent-k-sample-tests.html"><a href="independent-k-sample-tests.html#multiple-comparisons-and-multiple-testing"><i class="fa fa-check"></i><b>4.5</b> Multiple Comparisons and Multiple Testing</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="independent-k-sample-tests.html"><a href="independent-k-sample-tests.html#multiple-comparisons"><i class="fa fa-check"></i><b>4.5.1</b> Multiple Comparisons</a></li>
+<li class="chapter" data-level="4.5.2" data-path="independent-k-sample-tests.html"><a href="independent-k-sample-tests.html#multiple-testing"><i class="fa fa-check"></i><b>4.5.2</b> Multiple Testing</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="in-class-review-questions.html"><a href="in-class-review-questions.html"><i class="fa fa-check"></i><b>5</b> In-Class Review Questions</a><ul>
+<li class="chapter" data-level="5.1" data-path="in-class-review-questions.html"><a href="in-class-review-questions.html#estimator"><i class="fa fa-check"></i><b>5.1</b> Estimator</a></li>
+<li class="chapter" data-level="5.2" data-path="in-class-review-questions.html"><a href="in-class-review-questions.html#one-proportion-z-test"><i class="fa fa-check"></i><b>5.2</b> One-Proportion <span class="math inline">\(z\)</span>-Test</a></li>
+<li class="chapter" data-level="5.3" data-path="in-class-review-questions.html"><a href="in-class-review-questions.html#paired-two-sample-tests-1"><i class="fa fa-check"></i><b>5.3</b> Paired Two-Sample Tests</a></li>
+<li class="chapter" data-level="5.4" data-path="in-class-review-questions.html"><a href="in-class-review-questions.html#paired-permutation-test"><i class="fa fa-check"></i><b>5.4</b> Paired Permutation Test</a></li>
+<li class="chapter" data-level="5.5" data-path="in-class-review-questions.html"><a href="in-class-review-questions.html#anova-and-classic-f-test"><i class="fa fa-check"></i><b>5.5</b> ANOVA and Classic <span class="math inline">\(F\)</span>-Test</a></li>
+<li class="chapter" data-level="5.6" data-path="in-class-review-questions.html"><a href="in-class-review-questions.html#kruskal-wallis-test"><i class="fa fa-check"></i><b>5.6</b> Kruskal-Wallis Test</a></li>
+<li class="chapter" data-level="5.7" data-path="in-class-review-questions.html"><a href="in-class-review-questions.html#sse-from-anova"><i class="fa fa-check"></i><b>5.7</b> SSE (from ANOVA)</a></li>
+<li class="chapter" data-level="5.8" data-path="in-class-review-questions.html"><a href="in-class-review-questions.html#sstr-from-anova"><i class="fa fa-check"></i><b>5.8</b> 8: SSTr (from ANOVA)</a></li>
+<li class="chapter" data-level="5.9" data-path="in-class-review-questions.html"><a href="in-class-review-questions.html#permutation-f-test-1"><i class="fa fa-check"></i><b>5.9</b> Permutation <span class="math inline">\(F\)</span>-test</a></li>
+<li class="chapter" data-level="5.10" data-path="in-class-review-questions.html"><a href="in-class-review-questions.html#multiple-comparison-pairwise-t-tests"><i class="fa fa-check"></i><b>5.10</b> Multiple Comparison (Pairwise <span class="math inline">\(t\)</span>-Tests)</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">STAT 423 Review Guide</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="independent-k-sample-tests" class="section level1">
+<h1><span class="header-section-number">4</span> Independent <span class="math inline">\(K\)</span>-Sample Tests</h1>
+<ul>
+<li><span class="math inline">\(K\)</span> independent samples</li>
+<li><span class="math inline">\(n_i\)</span>: number of observations in group <span class="math inline">\(i\)</span></li>
+<li><span class="math inline">\(X_{ij}\)</span>: <span class="math inline">\(j\)</span>th observation from <span class="math inline">\(i\)</span>th sample
+<ul>
+<li><span class="math inline">\(i \in \{1, \dots, K\}\)</span></li>
+<li><span class="math inline">\(j \in \{1, \dots, n_i\}\)</span></li>
+</ul></li>
+<li><span class="math inline">\(\mu_i\)</span>: mean of group <span class="math inline">\(i\)</span></li>
+<li>One-way ANOVA model: <span class="math inline">\(X_{ij} = \mu_i + e_{ij}\)</span></li>
+<li>Hypotheses: <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\mu_1 = \mu_2 = \dots = \mu_K\)</span> vs
+<span class="math inline">\(H_a\)</span>: <span class="math inline">\(H_0\)</span> is not true</li>
+</ul>
+<p>For this section, we will use the dataset <code>iris</code>.
+The column <code>Sepal.Length</code> indicates the length of the flower’s sepal,
+and the column <code>Species</code> indicates its species.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" title="1"><span class="kw">data</span>(<span class="st">&quot;iris&quot;</span>)</a></code></pre></div>
+<div id="classic-f-test" class="section level2">
+<h2><span class="header-section-number">4.1</span> Classic <span class="math inline">\(F\)</span>-Test</h2>
+<ul>
+<li>Assumption: <span class="math inline">\(e_{ij} \overset{\mathrm{iid}} \sim N(0, \sigma^2)\)</span></li>
+<li>Mean of group <span class="math inline">\(i\)</span>: <span class="math inline">\(\bar{X}_i = \frac{1}{n} \sum_{j = 1}^{n_i} X_{ij}\)</span></li>
+<li>Grand mean: <span class="math inline">\(\bar{X} = \frac{1}{N} \sum_{i=1}^K \sum_{j=1}^{n_i} X_{ij}\)</span></li>
+<li>Treatment sum of squares:
+<span class="math display">\[\mathrm{SSTR} = \sum_{i=1}^K n_i (\bar{X}_i - \bar{X})^2\]</span></li>
+<li>Error sum of squres:
+<span class="math display">\[\mathrm{SSE} = \sum_{i=1}^K \sum_{j=1}^{n_i} (X_{ij} - \bar{X}_i)^2\]</span></li>
+<li>Test statistic:
+<span class="math display">\[F_{\mathrm{obs}} = \frac{\mathrm{SSTr}/(K-1)}{\mathrm{SSE}/(N-K)}\]</span></li>
+<li>Null distribution: Under <span class="math inline">\(H_0\)</span>, <span class="math inline">\(F_{\mathrm{obs}} \sim F_{K-1, N-K}\)</span></li>
+</ul>
+<p>We can conduct the classic <span class="math inline">\(F\)</span>-test using <code>anova</code> and <code>lm</code>.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" title="1"><span class="kw">anova</span>(<span class="kw">lm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Species, <span class="dt">data =</span> iris))</a></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: Sepal.Length
+##            Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+## Species     2 63.212  31.606  119.26 &lt; 2.2e-16 ***
+## Residuals 147 38.956   0.265                      
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>The SSTr is the value in the first row of column <code>Sum Sq</code>.
+The SSE is the value in the row <code>Residuals</code> of column <code>Sum Sq</code>.
+The <span class="math inline">\(p\)</span>-value is <code>Pr(&gt;F)</code>.</p>
+</div>
+<div id="permutation-f-test" class="section level2">
+<h2><span class="header-section-number">4.2</span> Permutation <span class="math inline">\(F\)</span>-Test</h2>
+<ul>
+<li>Total number of permutation outcomes: <span class="math inline">\(R = N!/(n_1! n_2! \cdots n_K!)\)</span></li>
+<li>Calculate <span class="math inline">\(F_{\mathrm{obs}}\)</span></li>
+<li>For <span class="math inline">\(\ell \in \{1, \dots, R\}\)</span>,
+<span class="math inline">\(F_\ell\)</span> is the <span class="math inline">\(F\)</span>-statistic for the <span class="math inline">\(\ell\)</span>th permutation outcome</li>
+<li>We can use the simplified calculation
+<span class="math display">\[F \propto \sum_{i=1}^K n_i \bar{X}_i^2\]</span></li>
+<li><span class="math inline">\(p\text{-value} = I\{F_\ell \geq F_{\mathrm{obs}}\} / R\)</span></li>
+</ul>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" title="1"><span class="co"># number of permutation samples</span></a>
+<a class="sourceLine" id="cb48-2" title="2">R &lt;-<span class="st"> </span><span class="dv">1000</span> </a>
+<a class="sourceLine" id="cb48-3" title="3"><span class="co"># number of samples in each group</span></a>
+<a class="sourceLine" id="cb48-4" title="4">n &lt;-<span class="st"> </span><span class="kw">tapply</span>(iris<span class="op">$</span>Sepal.Length, iris<span class="op">$</span>Species, length)</a>
+<a class="sourceLine" id="cb48-5" title="5"><span class="co"># total number of observations</span></a>
+<a class="sourceLine" id="cb48-6" title="6">N &lt;-<span class="st"> </span><span class="kw">sum</span>(n)</a>
+<a class="sourceLine" id="cb48-7" title="7"><span class="co"># sepal length of each observation</span></a>
+<a class="sourceLine" id="cb48-8" title="8">x &lt;-<span class="st"> </span>iris<span class="op">$</span>Sepal.Length</a>
+<a class="sourceLine" id="cb48-9" title="9"><span class="co"># species of each observation</span></a>
+<a class="sourceLine" id="cb48-10" title="10">t &lt;-<span class="st"> </span>iris<span class="op">$</span>Species</a>
+<a class="sourceLine" id="cb48-11" title="11"></a>
+<a class="sourceLine" id="cb48-12" title="12"><span class="co"># F-statistic</span></a>
+<a class="sourceLine" id="cb48-13" title="13">Fobs &lt;-<span class="st"> </span><span class="kw">sum</span>(n <span class="op">*</span><span class="st"> </span><span class="kw">tapply</span>(x, t, mean)<span class="op">^</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb48-14" title="14"></a>
+<a class="sourceLine" id="cb48-15" title="15"><span class="co"># permutation sample F-statistics</span></a>
+<a class="sourceLine" id="cb48-16" title="16">F &lt;-<span class="st"> </span><span class="kw">c</span>()</a>
+<a class="sourceLine" id="cb48-17" title="17"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>R) {</a>
+<a class="sourceLine" id="cb48-18" title="18">  F &lt;-<span class="st"> </span><span class="kw">c</span>(F, <span class="kw">sum</span>(n <span class="op">*</span><span class="st"> </span><span class="kw">tapply</span>(x, <span class="kw">sample</span>(t), mean)<span class="op">^</span><span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb48-19" title="19">}</a>
+<a class="sourceLine" id="cb48-20" title="20"></a>
+<a class="sourceLine" id="cb48-21" title="21"><span class="co"># p-value</span></a>
+<a class="sourceLine" id="cb48-22" title="22"><span class="kw">mean</span>(Fobs <span class="op">&lt;=</span><span class="st"> </span>F)</a></code></pre></div>
+<pre><code>## [1] 0</code></pre>
+</div>
+<div id="kruskal-walis-test" class="section level2">
+<h2><span class="header-section-number">4.3</span> Kruskal-Walis Test</h2>
+<ul>
+<li>Assumption: the data are iid in each group</li>
+<li>Replace data with ranks</li>
+<li>Test statistic:
+<span class="math display">\[\mathrm{KW} = \frac{12}{N(N+1)} \mathrm{SST}^*,\]</span>
+where <span class="math inline">\(\mathrm{SST}^*\)</span> is the SST calculated with ranks</li>
+<li>Null distribution:
+Under <span class="math inline">\(H_0\)</span>, <span class="math inline">\(\mathrm{KW} \sim \chi^2_{K-1}\)</span> approximately</li>
+</ul>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" title="1"><span class="kw">kruskal.test</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Species, <span class="dt">data =</span> iris)</a></code></pre></div>
+<pre><code>## 
+##  Kruskal-Wallis rank sum test
+## 
+## data:  Sepal.Length by Species
+## Kruskal-Wallis chi-squared = 96.937, df = 2, p-value &lt; 2.2e-16</code></pre>
+</div>
+<div id="jonkheere-terpstra-test" class="section level2">
+<h2><span class="header-section-number">4.4</span> Jonkheere-Terpstra Test</h2>
+<ul>
+<li>Assumption: the data are iid in each group</li>
+<li>Hypotheses: <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\mu_1 = \mu_2 = \dots = \mu_K\)</span> vs
+<span class="math inline">\(H_a\)</span>: <span class="math inline">\(\mu_1 \leq \mu_2 \leq \dots \leq \mu_K\)</span></li>
+<li>Test-Statistic:
+<span class="math display">\[\mathrm{JT} = \sum_{i &lt; j} U_{ij},\]</span>
+where <span class="math inline">\(U_{ij}\)</span> is the Mann-Whitney test statistic
+for <span class="math inline">\(H_a\)</span>: <span class="math inline">\(\mu_i &lt; \mu_j\)</span></li>
+<li>Approximate null distribution: Under <span class="math inline">\(H_0\)</span>,
+<span class="math display">\[\frac{\mathrm{JT} - E(\mathrm{JT})}{\sqrt{\mathrm{Var}(\mathrm{JT})}}
+\sim N(0,1)\]</span>
+<span class="math display">\[E(\mathrm{JT}) = \frac{N^2 - \sum_{i=1}^K n_i^2}{4}\]</span>
+<span class="math display">\[\mathrm{Var}(\mathrm{JT}) 
+= \frac{N^2(2N+3) - \sum_{i=1}^K n_i^2 (2n_i + 3)}{72}\]</span></li>
+</ul>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" title="1"><span class="co"># assign numbers to each group</span></a>
+<a class="sourceLine" id="cb52-2" title="2">species &lt;-<span class="st"> </span><span class="kw">factor</span>(iris<span class="op">$</span>Species, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&quot;setosa&quot;</span>,<span class="st">&quot;versicolor&quot;</span>,<span class="st">&quot;virginica&quot;</span>))</a>
+<a class="sourceLine" id="cb52-3" title="3">groups &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(species)</a>
+<a class="sourceLine" id="cb52-4" title="4"></a>
+<a class="sourceLine" id="cb52-5" title="5">sepal &lt;-<span class="st"> </span>iris<span class="op">$</span>Sepal.Length</a>
+<a class="sourceLine" id="cb52-6" title="6"></a>
+<a class="sourceLine" id="cb52-7" title="7"><span class="co"># number of groups</span></a>
+<a class="sourceLine" id="cb52-8" title="8">K &lt;-<span class="st"> </span><span class="kw">max</span>(groups)</a>
+<a class="sourceLine" id="cb52-9" title="9"></a>
+<a class="sourceLine" id="cb52-10" title="10"><span class="co"># number of observations</span></a>
+<a class="sourceLine" id="cb52-11" title="11">N &lt;-<span class="kw">length</span>(sepal)  <span class="co"># total</span></a>
+<a class="sourceLine" id="cb52-12" title="12">n &lt;-<span class="st"> </span><span class="kw">table</span>(groups) <span class="co"># per group</span></a>
+<a class="sourceLine" id="cb52-13" title="13"></a>
+<a class="sourceLine" id="cb52-14" title="14"><span class="co"># compute Uij</span></a>
+<a class="sourceLine" id="cb52-15" title="15">JT &lt;-<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb52-16" title="16"><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>(K<span class="dv">-1</span>)) {</a>
+<a class="sourceLine" id="cb52-17" title="17">  <span class="cf">for</span>(j <span class="cf">in</span> (i<span class="op">+</span><span class="dv">1</span>)<span class="op">:</span>K) {</a>
+<a class="sourceLine" id="cb52-18" title="18">     JT &lt;-<span class="st"> </span>JT <span class="op">+</span><span class="st"> </span><span class="kw">sum</span>(<span class="kw">outer</span>(sepal[groups <span class="op">==</span><span class="st"> </span>i], sepal[groups <span class="op">==</span><span class="st"> </span>j],<span class="st">&quot;&lt;&quot;</span>))</a>
+<a class="sourceLine" id="cb52-19" title="19">  }</a>
+<a class="sourceLine" id="cb52-20" title="20">}</a>
+<a class="sourceLine" id="cb52-21" title="21">JT</a></code></pre></div>
+<pre><code>## [1] 6686</code></pre>
+</div>
+<div id="multiple-comparisons-and-multiple-testing" class="section level2 tabset tabset-pills">
+<h2><span class="header-section-number">4.5</span> Multiple Comparisons and Multiple Testing</h2>
+<p>We have three methods of deciding the significance levels of multiple comparisons:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Adjustment</th>
+<th align="left">Description</th>
+<th><code>p.adjust.method</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>none</td>
+<td align="left">compare <span class="math inline">\(p_i\)</span> with <span class="math inline">\(\alpha\)</span></td>
+<td>none</td>
+</tr>
+<tr class="even">
+<td>Bonferroni</td>
+<td align="left">compare <span class="math inline">\(p_i\)</span> with <span class="math inline">\(\alpha / h\)</span></td>
+<td><code>"bonferroni"</code></td>
+</tr>
+<tr class="odd">
+<td>Benjamini-Hochberg</td>
+<td align="left">compare BH-adjusted <span class="math inline">\(p_i\)</span> with <span class="math inline">\(\alpha\)</span></td>
+<td><code>"BH"</code></td>
+</tr>
+</tbody>
+</table>
+<p>The Benjamini-Hochberg procedure leads to improved Type I error rate and power.</p>
+<div id="multiple-comparisons" class="section level3">
+<h3><span class="header-section-number">4.5.1</span> Multiple Comparisons</h3>
+<ul>
+<li>If we reject <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\mu_1 = \mu_2 = \dots = \mu_K\)</span> for a <span class="math inline">\(K\)</span>-sample test,
+we can conduct pairwise two-sample tests to determine which pairs of means
+are not equal.</li>
+<li>Total number of pairwise tests for <span class="math inline">\(K\)</span> samples: <span class="math inline">\(h = K(K-1)/2\)</span></li>
+<li><span class="math inline">\(P(\text{at least one Type I error}) = 1 - (1 - \alpha)^h\)</span></li>
+</ul>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" title="1"><span class="kw">pairwise.t.test</span>(iris<span class="op">$</span>Sepal.Length, iris<span class="op">$</span>Species)</a></code></pre></div>
+<pre><code>## 
+##  Pairwise comparisons using t tests with pooled SD 
+## 
+## data:  iris$Sepal.Length and iris$Species 
+## 
+##            setosa  versicolor
+## versicolor 1.8e-15 -         
+## virginica  &lt; 2e-16 2.8e-09   
+## 
+## P value adjustment method: holm</code></pre>
+<div id="bonferroni-adjustment" class="section level4">
+<h4><span class="header-section-number">4.5.1.1</span> Bonferroni Adjustment</h4>
+<ul>
+<li>compare <span class="math inline">\(p\)</span>-value for each pairwise comparison <span class="math inline">\(i\)</span> with significance level
+<span class="math inline">\(\alpha_i = \alpha / h\)</span>
+<ul>
+<li>works because <span class="math inline">\(1 - (1 - \alpha_i)^h \approx h \alpha_i\)</span></li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" title="1"><span class="kw">pairwise.t.test</span>(iris<span class="op">$</span>Sepal.Length, iris<span class="op">$</span>Species, <span class="dt">p.adjust.method =</span> <span class="st">&quot;bonferroni&quot;</span>)</a></code></pre></div>
+<pre><code>## 
+##  Pairwise comparisons using t tests with pooled SD 
+## 
+## data:  iris$Sepal.Length and iris$Species 
+## 
+##            setosa  versicolor
+## versicolor 2.6e-15 -         
+## virginica  &lt; 2e-16 8.3e-09   
+## 
+## P value adjustment method: bonferroni</code></pre>
+</div>
+</div>
+<div id="multiple-testing" class="section level3">
+<h3><span class="header-section-number">4.5.2</span> Multiple Testing</h3>
+<ul>
+<li><p>Consider <span class="math inline">\(m\)</span> hypothesis tests together</p></li>
+<li><p>The <span class="math inline">\(p\)</span>-values are <span class="math inline">\(p_1, \dots, p_h\)</span></p></li>
+<li><p>Instead of controlling the Type I error rate <span class="math inline">\(\alpha\)</span>,
+we control the False Discovery Rate
+<span class="math display">\[\mathrm{FDR} 
+= E \left( \frac{\text{number of false discoveries}}{\text{number of discoveries}} \right)
+\leq \alpha\]</span></p>
+<ul>
+<li>discovery means rejection of <span class="math inline">\(H_0\)</span></li>
+</ul></li>
+<li><p>Threshold: Reject <span class="math inline">\(H_0\)</span> if <span class="math inline">\(p\text{-value} \leq t\)</span></p></li>
+<li><p>False Discovery Proportion for <span class="math inline">\(i \in \{1, \dots, m\}\)</span></p>
+<p><span class="math display">\[\mathrm{FDP}(t) = \frac{\sum_{i = 1}^m I\{p_i \leq t\} H_i}{\sum_{i = 1}^m I\{p_i \leq t\}}\]</span></p>
+<ul>
+<li><span class="math inline">\(p_i\)</span> is the <span class="math inline">\(p\)</span>-value for test <span class="math inline">\(i\)</span></li>
+<li><span class="math inline">\(H_i = 1\)</span> if <span class="math inline">\(H_0\)</span> is true and <span class="math inline">\(H_i = 0\)</span> otherwise</li>
+</ul></li>
+</ul>
+<div id="benjamini-hochberg-procedure" class="section level4">
+<h4><span class="header-section-number">4.5.2.1</span> Benjamini-Hochberg Procedure</h4>
+<ul>
+<li><p>Choose the threshold for rejection to be</p>
+<p><span class="math display">\[t_{\mathrm{BH}} = \max \{P_{(i)} \mid P_{(i)} \leq \frac{\alpha i}{m}, 0 \leq i \leq m\}\]</span></p>
+<ul>
+<li><span class="math inline">\(P_{(1)} \leq P_{(2)} \leq \dots \leq P_{(m)}\)</span></li>
+</ul></li>
+<li><p>It can be proved that</p>
+<p><span class="math display">\[\mathrm{FDR} = E[\mathrm{FDP}(t_{\mathrm{BH}})] 
+\leq \frac{\alpha \sum_{i=1}^m H_i}{m}\]</span></p></li>
+</ul>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" title="1"><span class="kw">pairwise.t.test</span>(iris<span class="op">$</span>Sepal.Length, iris<span class="op">$</span>Species, <span class="dt">p.adjust.method =</span> <span class="st">&quot;BH&quot;</span>)</a></code></pre></div>
+<pre><code>## 
+##  Pairwise comparisons using t tests with pooled SD 
+## 
+## data:  iris$Sepal.Length and iris$Species 
+## 
+##            setosa  versicolor
+## versicolor 1.3e-15 -         
+## virginica  &lt; 2e-16 2.8e-09   
+## 
+## P value adjustment method: BH</code></pre>
+
+</div>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="independent-two-sample-tests.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="in-class-review-questions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/shaandro/stat-423/edit/main/k-sample.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
