@@ -1,0 +1,188 @@
+# Paired Two-Sample Tests
+
+Data for paired two-sample tests have the following properties:
+
+- each subject $i$ has two observations $X_i$ and $Y_i$ to give a paired observation $(X_i, Y_i)$
+- $(X_1, Y_1), \dots, (X_n, Y_n)$ are independent
+
+Our general strategy is to perform one-sample tests on the paired difference $Z_i = Y_i - X_i$
+
+For this section, we will use the R dataset `sleep`.
+In this data, each subject was given both drug 1 and drug 2,
+and the change in their sleep was measured.
+The column `group` indicates which drug the subject took,
+and the column `extra` indicates the change in sleep.
+
+```{r}
+data("sleep")
+
+# X: effect on sleep from drug 1
+x <- sleep$extra[sleep$group == 1]
+
+# Y: effect on sleep from drug 2
+y <- sleep$extra[sleep$group == 2]
+
+# Z: paired difference between X and Y
+z <- y - x
+```
+
+For each of these tests, we will be testing the hypotheses
+$H_0$: $\mu = 0$ vs $H_a$: $\mu \neq 0$,
+where $\mu$ is the mean of $Z$.
+
+## Paired $t$-test
+
+- Parametric test
+- One-sample $t$-test on the mean $\mu$ of $Z$
+- Assumption: $Z_i \overset{\mathrm{iid}} \sim N(\mu, \sigma^2)$
+- Hypotheses: $H_0$: $\mu = \mu_0$ vs $H_a$: $\mu \neq \mu_0$ (or $<$, $>$)
+- Test statistic: $$T_{\mathrm{obs}} = \frac{\bar{Z} - \mu_0}{s_Z / \sqrt{n}},$$
+  where $\bar{Z}$ and $s_Z$ are the sample mean and sample standard deviation
+  of $Z$
+- Null distribution: Under $H_0$, $T_{\mathrm{obs}} \sim t_{n-1}$
+
+There are three ways to do this test in R using the function `t.test`.
+
+If the observations for group $X$ and group $Y$ are stored in separate vectors `x` and `y`,
+then we use `t.test` with the argument `paired = TRUE`.
+
+```{r}
+t.test(x, y, paired = TRUE, alternative = "two.sided")
+```
+
+If the paired differences $Z = Y - X$ are stored in one vector
+`z`, then we use a one-sample `t.test`.
+
+```{r}
+t.test(z, alternative = "two.sided")
+```
+
+
+If the data is stored in one matrix or dataframe
+where one column contains the observations and another column contains the groups,
+we can use the following syntax.
+For this data, `extra` contains the observations, and `group` indicates
+which group each observation comes from.
+
+```{r}
+t.test(extra ~ group, paired = TRUE, data = sleep, alternative = "two.sided")
+```
+
+The result for all three values is the same:
+$p\text{-value} = 0.002833$.
+
+## Sign test
+
+- Also called binomial test
+- Nonparametric test on the median $\theta$ of $Z$
+- Assumption: $Z_i$ are iid
+- Hypotheses: $H_0$: $\theta = \theta_0$ vs $H_a$: $\theta \neq \theta_0$ (or $<$, $>$)
+- Test statistic: $$X = I\{Z_i > \theta_0\},$$
+  where $I\{Z_i > \theta_0\}$ is the number of observations $Z_i$ that are greater than $\theta_0$.
+- Null distribution: Under $H_0$, $X \sim \mathrm{Binom}(n, p = 0.5)$
+
+The alternative hypothesis $H_a$: $\theta < 0$
+is equivalent to $H_a$: $p < 0.5$, where $p = P(Z_i > 0)$.
+This is because, under $H_0$: $\theta = 0$, the probability of $Z_i$ being less than the
+median $\theta$ is 0.5.
+
+The test is conducted as follows.
+```{r}
+# calculate paired differences
+z <- y - x
+
+# calculate the number of observations greater than 0
+X <- sum(z > 0)
+
+# calculate p-value
+2 * min(pbinom(X, size = length(z), prob = 0.5),
+        1 - pbinom(X, size = length(z), prob = 0.5))
+```
+
+## Wilcoxon Signed-Rank Test
+
+- Nonparametric test on the median $\theta$ of $Z$
+- Assumptions: $Z_i$ are iid and symmetric
+- Hypotheses: $H_0$: $\theta = \theta_0$ vs $H_a$: $\theta \neq \theta_0$ (or $<$, $>$)
+- Test statistic: $$V = \sum_{i = 1}^n I\{Z_i > \theta_0\} \mathrm{rank}(|Z_i - \theta_0|)$$
+
+Like with the paired $t$-test, there are three ways to conduct the Wilcoxon test
+using `wilcox.test`.
+
+```{r}
+wilcox.test(x, y, paired = TRUE, alternative = "two.sided")
+
+wilcox.test(z, alternative = "two.sided")
+
+wilcox.test(extra ~ group, paired = TRUE, data = sleep, alternative = "two.sided")
+```
+
+Using all three methods, $p\text{-value} = 0.009091$.
+
+## Permutation Test
+
+- Paired data $(X_i, Y_i)$, where $X_i$ and $Y_i$ are correlated
+- Assumption: $(X_1, Y_1), \dots, (X_n, Y_n)$ are iid
+- For $n$ subjects, there are $R = 2^n$ equally likely permutation outcomes
+- For each possible outcome $\ell \in \{1, \dots, R\}$, we calculate the sample mean of differences
+  $$z_\ell = \frac{1}{n} \sum_{i=1}^n (Y_{\ell i} - X_{\ell i}),$$
+  where $(X_{\ell i}, Y_{\ell i})$ is the $i$th observation of the $\ell$th permutation outcome.
+
+The $p$-value depends on the direction of $H_a$.
+
+$H_a$        $p$-value
+------------ ----------------------------------
+$\mu > 0$    $I\{z_\ell \geq \bar{Z}\} / R$
+$\mu < 0$    $I\{z_\ell \leq \bar{Z}\} / R$
+$\mu \neq 0$ $I\{|z_\ell| \geq |\bar{Z}|\} / R$
+------------ ----------------------------------
+
+### Exact permutation test
+
+The exact permutation test for $H_a$: $\mu \neq 0$ is performed as follows.
+
+```{r}
+# paired differences
+z <- y - x
+# sample size
+n <- length(z)
+
+# create permutation matrix
+lists <- split(matrix(c(-1, 1), n, 2, byrow=TRUE), 1:n)
+all.outcomes <- as.matrix(expand.grid(lists))
+
+# observed test statistic
+zbar <- mean(z)
+
+# test statistic for permutation samples
+zl <- apply(all.outcomes, 1, function(u) mean(u*abs(z)))
+
+# p-value
+mean(abs(zl) >= abs(zbar))
+```
+
+In this example, we used the sample mean as our test statistic,
+but the choice of test statistic for the permutation test is flexible.
+
+### Large-sample approximation for permutation test
+
+Instead of using all $R = 2^n$ possible permutation outcomes,
+we can randomly select $R$ permutation outcomes and calculate the approximate $p$-value.
+
+```{r}
+R <- 1000
+z <- y - x
+n <- length(z)
+
+# generate permutation matrix
+outcomes <- replicate(R, sample(c(-1, 1), n, replace = TRUE))
+
+# observed test statistic
+zbar <- mean(z)
+
+# test statistic for permutation samples
+zl <- apply(outcomes, 2, function(u) mean(u*abs(z)))
+
+# p-value
+mean(abs(zl) >= abs(zbar))
+```
