@@ -1,0 +1,499 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{book}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={STAT 423 Review Guide},
+  pdfauthor={Shaandro Sarkar},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs}
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\usepackage{booktabs}
+\usepackage[]{natbib}
+\bibliographystyle{plainnat}
+
+\title{STAT 423 Review Guide}
+\author{Shaandro Sarkar}
+\date{2021-10-20}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{1}
+\tableofcontents
+}
+\hypertarget{paired-two-sample-tests}{%
+\chapter{Paired Two-Sample Tests}\label{paired-two-sample-tests}}
+
+Data for paired two-sample tests have the following properties:
+
+\begin{itemize}
+\tightlist
+\item
+  each subject \(i\) has two observations \(X_i\) and \(Y_i\) to give a paired observation \((X_i, Y_i)\)
+\item
+  \((X_1, Y_1), \dots, (X_n, Y_n)\) are independent
+\end{itemize}
+
+Our general strategy is to perform one-sample tests on the paired difference \(Z_i = Y_i - X_i\)
+
+For this section, we will use the R dataset \texttt{sleep}.
+In this data, each subject was given both drug 1 and drug 2,
+and the change in their sleep was measured.
+The column \texttt{group} indicates which drug the subject took,
+and the column \texttt{extra} indicates the change in sleep.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{data}\NormalTok{(}\StringTok{"sleep"}\NormalTok{)}
+
+\CommentTok{# X: effect on sleep from drug 1}
+\NormalTok{x <-}\StringTok{ }\NormalTok{sleep}\OperatorTok{$}\NormalTok{extra[sleep}\OperatorTok{$}\NormalTok{group }\OperatorTok{==}\StringTok{ }\DecValTok{1}\NormalTok{]}
+
+\CommentTok{# Y: effect on sleep from drug 2}
+\NormalTok{y <-}\StringTok{ }\NormalTok{sleep}\OperatorTok{$}\NormalTok{extra[sleep}\OperatorTok{$}\NormalTok{group }\OperatorTok{==}\StringTok{ }\DecValTok{2}\NormalTok{]}
+
+\CommentTok{# Z: paired difference between X and Y}
+\NormalTok{z <-}\StringTok{ }\NormalTok{y }\OperatorTok{-}\StringTok{ }\NormalTok{x}
+\end{Highlighting}
+\end{Shaded}
+
+For each of these tests, we will be testing the hypotheses
+\(H_0\): \(\mu = 0\) vs \(H_a\): \(\mu \neq 0\),
+where \(\mu\) is the mean of \(Z\).
+
+\hypertarget{paired-t-test}{%
+\section{\texorpdfstring{Paired \(t\)-test}{Paired t-test}}\label{paired-t-test}}
+
+\begin{itemize}
+\tightlist
+\item
+  Parametric test
+\item
+  One-sample \(t\)-test on the mean \(\mu\) of \(Z\)
+\item
+  Assumption: \(Z_i \overset{\mathrm{iid}} \sim N(\mu, \sigma^2)\)
+\item
+  Hypotheses: \(H_0\): \(\mu = \mu_0\) vs \(H_a\): \(\mu \neq \mu_0\) (or \(<\), \(>\))
+\item
+  Test statistic: \[T_{\mathrm{obs}} = \frac{\bar{Z} - \mu_0}{s_Z / \sqrt{n}},\]
+  where \(\bar{Z}\) and \(s_Z\) are the sample mean and sample standard deviation
+  of \(Z\)
+\item
+  Null distribution: Under \(H_0\), \(T_{\mathrm{obs}} \sim t_{n-1}\)
+\end{itemize}
+
+There are three ways to do this test in R using the function \texttt{t.test}.
+
+If the observations for group \(X\) and group \(Y\) are stored in separate vectors \texttt{x} and \texttt{y},
+then we use \texttt{t.test} with the argument \texttt{paired\ =\ TRUE}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{t.test}\NormalTok{(x, y, }\DataTypeTok{paired =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{alternative =} \StringTok{"two.sided"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Paired t-test
+## 
+## data:  x and y
+## t = -4.0621, df = 9, p-value = 0.002833
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -2.4598858 -0.7001142
+## sample estimates:
+## mean of the differences 
+##                   -1.58
+\end{verbatim}
+
+If the paired differences \(Z = Y - X\) are stored in one vector
+\texttt{z}, then we use a one-sample \texttt{t.test}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{t.test}\NormalTok{(z, }\DataTypeTok{alternative =} \StringTok{"two.sided"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  One Sample t-test
+## 
+## data:  z
+## t = 4.0621, df = 9, p-value = 0.002833
+## alternative hypothesis: true mean is not equal to 0
+## 95 percent confidence interval:
+##  0.7001142 2.4598858
+## sample estimates:
+## mean of x 
+##      1.58
+\end{verbatim}
+
+If the data is stored in one matrix or dataframe
+where one column contains the observations and another column contains the groups,
+we can use the following syntax.
+For this data, \texttt{extra} contains the observations, and \texttt{group} indicates
+which group each observation comes from.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{t.test}\NormalTok{(extra }\OperatorTok{~}\StringTok{ }\NormalTok{group, }\DataTypeTok{paired =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{data =}\NormalTok{ sleep, }\DataTypeTok{alternative =} \StringTok{"two.sided"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Paired t-test
+## 
+## data:  extra by group
+## t = -4.0621, df = 9, p-value = 0.002833
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -2.4598858 -0.7001142
+## sample estimates:
+## mean of the differences 
+##                   -1.58
+\end{verbatim}
+
+The result for all three values is the same:
+\(p\text{-value} = 0.002833\).
+
+\hypertarget{sign-test}{%
+\section{Sign test}\label{sign-test}}
+
+\begin{itemize}
+\tightlist
+\item
+  Also called binomial test
+\item
+  Nonparametric test on the median \(\theta\) of \(Z\)
+\item
+  Assumption: \(Z_i\) are iid
+\item
+  Hypotheses: \(H_0\): \(\theta = \theta_0\) vs \(H_a\): \(\theta \neq \theta_0\) (or \(<\), \(>\))
+\item
+  Test statistic: \[X = I\{Z_i > \theta_0\},\]
+  where \(I\{Z_i > \theta_0\}\) is the number of observations \(Z_i\) that are greater than \(\theta_0\).
+\item
+  Null distribution: Under \(H_0\), \(X \sim \mathrm{Binom}(n, p = 0.5)\)
+\end{itemize}
+
+The alternative hypothesis \(H_a\): \(\theta < 0\)
+is equivalent to \(H_a\): \(p < 0.5\), where \(p = P(Z_i > 0)\).
+This is because, under \(H_0\): \(\theta = 0\), the probability of \(Z_i\) being less than the
+median \(\theta\) is 0.5.
+
+The test is conducted as follows.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# calculate paired differences}
+\NormalTok{z <-}\StringTok{ }\NormalTok{y }\OperatorTok{-}\StringTok{ }\NormalTok{x}
+
+\CommentTok{# calculate the number of observations greater than 0}
+\NormalTok{X <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(z }\OperatorTok{>}\StringTok{ }\DecValTok{0}\NormalTok{)}
+
+\CommentTok{# calculate p-value}
+\DecValTok{2} \OperatorTok{*}\StringTok{ }\KeywordTok{min}\NormalTok{(}\KeywordTok{pbinom}\NormalTok{(X, }\DataTypeTok{size =} \KeywordTok{length}\NormalTok{(z), }\DataTypeTok{prob =} \FloatTok{0.5}\NormalTok{),}
+        \DecValTok{1} \OperatorTok{-}\StringTok{ }\KeywordTok{pbinom}\NormalTok{(X, }\DataTypeTok{size =} \KeywordTok{length}\NormalTok{(z), }\DataTypeTok{prob =} \FloatTok{0.5}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.001953125
+\end{verbatim}
+
+\hypertarget{wilcoxon-signed-rank-test}{%
+\section{Wilcoxon Signed-Rank Test}\label{wilcoxon-signed-rank-test}}
+
+\begin{itemize}
+\tightlist
+\item
+  Nonparametric test on the median \(\theta\) of \(Z\)
+\item
+  Assumptions: \(Z_i\) are iid and symmetric
+\item
+  Hypotheses: \(H_0\): \(\theta = \theta_0\) vs \(H_a\): \(\theta \neq \theta_0\) (or \(<\), \(>\))
+\item
+  Test statistic: \[V = \sum_{i = 1}^n I\{Z_i > \theta_0\} \mathrm{rank}(|Z_i - \theta_0|)\]
+\end{itemize}
+
+Like with the paired \(t\)-test, there are three ways to conduct the Wilcoxon test
+using \texttt{wilcox.test}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{wilcox.test}\NormalTok{(x, y, }\DataTypeTok{paired =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{alternative =} \StringTok{"two.sided"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in wilcox.test.default(x, y, paired = TRUE, alternative = "two.sided"):
+## cannot compute exact p-value with ties
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in wilcox.test.default(x, y, paired = TRUE, alternative = "two.sided"):
+## cannot compute exact p-value with zeroes
+\end{verbatim}
+
+\begin{verbatim}
+## 
+##  Wilcoxon signed rank test with continuity correction
+## 
+## data:  x and y
+## V = 0, p-value = 0.009091
+## alternative hypothesis: true location shift is not equal to 0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{wilcox.test}\NormalTok{(z, }\DataTypeTok{alternative =} \StringTok{"two.sided"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in wilcox.test.default(z, alternative = "two.sided"): cannot compute
+## exact p-value with ties
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in wilcox.test.default(z, alternative = "two.sided"): cannot compute
+## exact p-value with zeroes
+\end{verbatim}
+
+\begin{verbatim}
+## 
+##  Wilcoxon signed rank test with continuity correction
+## 
+## data:  z
+## V = 45, p-value = 0.009091
+## alternative hypothesis: true location is not equal to 0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{wilcox.test}\NormalTok{(extra }\OperatorTok{~}\StringTok{ }\NormalTok{group, }\DataTypeTok{paired =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{data =}\NormalTok{ sleep, }\DataTypeTok{alternative =} \StringTok{"two.sided"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in wilcox.test.default(x = c(0.7, -1.6, -0.2, -1.2, -0.1, 3.4, 3.7, :
+## cannot compute exact p-value with ties
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in wilcox.test.default(x = c(0.7, -1.6, -0.2, -1.2, -0.1, 3.4, 3.7, :
+## cannot compute exact p-value with zeroes
+\end{verbatim}
+
+\begin{verbatim}
+## 
+##  Wilcoxon signed rank test with continuity correction
+## 
+## data:  extra by group
+## V = 0, p-value = 0.009091
+## alternative hypothesis: true location shift is not equal to 0
+\end{verbatim}
+
+Using all three methods, \(p\text{-value} = 0.009091\).
+
+\hypertarget{permutation-test}{%
+\section{Permutation Test}\label{permutation-test}}
+
+\begin{itemize}
+\tightlist
+\item
+  Paired data \((X_i, Y_i)\), where \(X_i\) and \(Y_i\) are correlated
+\item
+  Assumption: \((X_1, Y_1), \dots, (X_n, Y_n)\) are iid
+\item
+  For \(n\) subjects, there are \(R = 2^n\) equally likely permutation outcomes
+\item
+  For each possible outcome \(\ell \in \{1, \dots, R\}\), we calculate the sample mean of differences
+  \[z_\ell = \frac{1}{n} \sum_{i=1}^n (Y_{\ell i} - X_{\ell i}),\]
+  where \((X_{\ell i}, Y_{\ell i})\) is the \(i\)th observation of the \(\ell\)th permutation outcome.
+\end{itemize}
+
+The \(p\)-value depends on the direction of \(H_a\).
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule
+\(H_a\) & \(p\)-value\tabularnewline
+\midrule
+\endhead
+\(\mu > 0\) & \(I\{z_\ell \geq \bar{Z}\} / R\)\tabularnewline
+\(\mu < 0\) & \(I\{z_\ell \leq \bar{Z}\} / R\)\tabularnewline
+\(\mu \neq 0\) & \(I\{|z_\ell| \geq |\bar{Z}|\} / R\)\tabularnewline
+\bottomrule
+\end{longtable}
+
+\hypertarget{exact-permutation-test}{%
+\subsection{Exact permutation test}\label{exact-permutation-test}}
+
+The exact permutation test for \(H_a\): \(\mu \neq 0\) is performed as follows.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# paired differences}
+\NormalTok{z <-}\StringTok{ }\NormalTok{y }\OperatorTok{-}\StringTok{ }\NormalTok{x}
+\CommentTok{# sample size}
+\NormalTok{n <-}\StringTok{ }\KeywordTok{length}\NormalTok{(z)}
+
+\CommentTok{# create permutation matrix}
+\NormalTok{lists <-}\StringTok{ }\KeywordTok{split}\NormalTok{(}\KeywordTok{matrix}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\OperatorTok{-}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{), n, }\DecValTok{2}\NormalTok{, }\DataTypeTok{byrow=}\OtherTok{TRUE}\NormalTok{), }\DecValTok{1}\OperatorTok{:}\NormalTok{n)}
+\NormalTok{all.outcomes <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(}\KeywordTok{expand.grid}\NormalTok{(lists))}
+
+\CommentTok{# observed test statistic}
+\NormalTok{zbar <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(z)}
+
+\CommentTok{# test statistic for permutation samples}
+\NormalTok{zl <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(all.outcomes, }\DecValTok{1}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(u) }\KeywordTok{mean}\NormalTok{(u}\OperatorTok{*}\KeywordTok{abs}\NormalTok{(z)))}
+
+\CommentTok{# p-value}
+\KeywordTok{mean}\NormalTok{(}\KeywordTok{abs}\NormalTok{(zl) }\OperatorTok{>=}\StringTok{ }\KeywordTok{abs}\NormalTok{(zbar))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.00390625
+\end{verbatim}
+
+In this example, we used the sample mean as our test statistic,
+but the choice of test statistic for the permutation test is flexible.
+
+\hypertarget{large-sample-approximation-for-permutation-test}{%
+\subsection{Large-sample approximation for permutation test}\label{large-sample-approximation-for-permutation-test}}
+
+Instead of using all \(R = 2^n\) possible permutation outcomes,
+we can randomly select \(R\) permutation outcomes and calculate the approximate \(p\)-value.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{R <-}\StringTok{ }\DecValTok{1000}
+\NormalTok{z <-}\StringTok{ }\NormalTok{y }\OperatorTok{-}\StringTok{ }\NormalTok{x}
+\NormalTok{n <-}\StringTok{ }\KeywordTok{length}\NormalTok{(z)}
+
+\CommentTok{# generate permutation matrix}
+\NormalTok{outcomes <-}\StringTok{ }\KeywordTok{replicate}\NormalTok{(R, }\KeywordTok{sample}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\OperatorTok{-}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{), n, }\DataTypeTok{replace =} \OtherTok{TRUE}\NormalTok{))}
+
+\CommentTok{# observed test statistic}
+\NormalTok{zbar <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(z)}
+
+\CommentTok{# test statistic for permutation samples}
+\NormalTok{zl <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(outcomes, }\DecValTok{2}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(u) }\KeywordTok{mean}\NormalTok{(u}\OperatorTok{*}\KeywordTok{abs}\NormalTok{(z)))}
+
+\CommentTok{# p-value}
+\KeywordTok{mean}\NormalTok{(}\KeywordTok{abs}\NormalTok{(zl) }\OperatorTok{>=}\StringTok{ }\KeywordTok{abs}\NormalTok{(zbar))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.004
+\end{verbatim}
+
+  \bibliography{book.bib,packages.bib}
+
+\end{document}
