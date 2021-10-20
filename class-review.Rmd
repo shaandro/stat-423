@@ -139,7 +139,7 @@ which we already generated in 5.
 The SSE is the value in the row `Residuals` and the column `Sum Sq`,
 i.e. $\mathrm{SSE} = 38.956$.
 
-## 8: SSTr (from ANOVA)
+## SSTr (from ANOVA)
 
 Load the R dataset `iris`.
 Consider the first numerical column and find the SSTr.
