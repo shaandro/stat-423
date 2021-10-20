@@ -1,0 +1,44 @@
+# One-Sample Tests
+
+This section focuses on hypothesis testing for data in a single sample.
+
+In this section, we will use the weight loss data from class.
+Suppose 10 employees are randomly selected to participate
+in a weight loss program.
+After four weeks, the weight loss of each candidate is given in
+`x`.
+
+```{r}
+x <- c(-12, 2.1, 0.7, 5, 2.3, 3, 1.9, 1, 1.5, 2.5)
+```
+
+We will test the hypothesis $H_a$: $\mu > 0$,
+i.e. that the program was effective.
+
+## Parametric Methods
+
+### One-Sample $t$-Test
+
+- Assumption: $n \geq 30$
+- Hypotheses: $H_0$: $\mu = \mu_0$ vs $H_a$: $\mu \neq \mu_0$ (or $<$, $>$)
+- Test Statistic:
+  $$T_{\mathrm{obs}} = \frac{\bar{X} - \mu_0}{s / \sqrt{n}},$$
+  - If $\sigma$ is known, ise $\sigma$ instead of $s$
+- Null distribution: Under $H_0$, $T_{\mathrm{obs}} \sim t_{n-1}$
+  - If $\sigma$ is known, $T_{\mathrm{obs}} \sim N(0,1)$
+
+We use `t.test`  to test $H_a$: $\mu > 0$.
+
+```{r}
+t.test(x, alternative = "greater")
+```
+
+### Inferences about the Proportion
+
+
+
+### Inferences about the Median
+
+## Sign Test
+
+## Wilcoxon Signed-Rank-Test

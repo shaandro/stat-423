@@ -7,7 +7,7 @@ bookdown::gitbook:
       before: |
         <li><a href="./">STAT 423 Review Guide</a></li>
       after: |
-        <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+        <li>Shaandro Sarkar</li>
     edit: https://github.com/shaandro/stat-423/edit/main/%s
     download: ["pdf", "epub"]
 bookdown::pdf_book:
