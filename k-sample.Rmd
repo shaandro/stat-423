@@ -133,6 +133,7 @@ for(i in 1:(K-1)) {
 JT
 ```
 
+
 ## Bartlett Test
 
 - Test for equal variances

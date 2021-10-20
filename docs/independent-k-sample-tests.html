@@ -167,9 +167,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2" data-path="independent-k-sample-tests.html"><a href="independent-k-sample-tests.html#permutation-f-test"><i class="fa fa-check"></i><b>3.2</b> Permutation <span class="math inline">\(F\)</span>-Test</a></li>
 <li class="chapter" data-level="3.3" data-path="independent-k-sample-tests.html"><a href="independent-k-sample-tests.html#kruskal-walis-test"><i class="fa fa-check"></i><b>3.3</b> Kruskal-Walis Test</a></li>
 <li class="chapter" data-level="3.4" data-path="independent-k-sample-tests.html"><a href="independent-k-sample-tests.html#jonkheere-terpstra-test"><i class="fa fa-check"></i><b>3.4</b> Jonkheere-Terpstra Test</a></li>
-<li class="chapter" data-level="3.5" data-path="independent-k-sample-tests.html"><a href="independent-k-sample-tests.html#multiple-comparisons-and-multiple-testing"><i class="fa fa-check"></i><b>3.5</b> Multiple Comparisons and Multiple Testing</a><ul>
-<li class="chapter" data-level="3.5.1" data-path="independent-k-sample-tests.html"><a href="independent-k-sample-tests.html#multiple-comparisons"><i class="fa fa-check"></i><b>3.5.1</b> Multiple Comparisons</a></li>
-<li class="chapter" data-level="3.5.2" data-path="independent-k-sample-tests.html"><a href="independent-k-sample-tests.html#multiple-testing"><i class="fa fa-check"></i><b>3.5.2</b> Multiple Testing</a></li>
+<li class="chapter" data-level="3.5" data-path="independent-k-sample-tests.html"><a href="independent-k-sample-tests.html#bartlett-test"><i class="fa fa-check"></i><b>3.5</b> Bartlett Test</a></li>
+<li class="chapter" data-level="3.6" data-path="independent-k-sample-tests.html"><a href="independent-k-sample-tests.html#multiple-comparisons-and-multiple-testing"><i class="fa fa-check"></i><b>3.6</b> Multiple Comparisons and Multiple Testing</a><ul>
+<li class="chapter" data-level="3.6.1" data-path="independent-k-sample-tests.html"><a href="independent-k-sample-tests.html#multiple-comparisons"><i class="fa fa-check"></i><b>3.6.1</b> Multiple Comparisons</a></li>
+<li class="chapter" data-level="3.6.2" data-path="independent-k-sample-tests.html"><a href="independent-k-sample-tests.html#multiple-testing"><i class="fa fa-check"></i><b>3.6.2</b> Multiple Testing</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="in-class-review-questions.html"><a href="in-class-review-questions.html"><i class="fa fa-check"></i><b>4</b> In-Class Review Questions</a><ul>
@@ -344,8 +345,21 @@ for <span class="math inline">\(H_a\)</span>: <span class="math inline">\(\mu_i 
 <a class="sourceLine" id="cb52-21" title="21">JT</a></code></pre></div>
 <pre><code>## [1] 6686</code></pre>
 </div>
+<div id="bartlett-test" class="section level2">
+<h2><span class="header-section-number">3.5</span> Bartlett Test</h2>
+<ul>
+<li>Test for equal variances</li>
+<li>Hypotheses: <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\sigma_1 = \sigma_2 = \dots = \sigma_K\)</span></li>
+</ul>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" title="1"><span class="kw">bartlett.test</span>(iris<span class="op">$</span>Sepal.Length <span class="op">~</span><span class="st"> </span>iris<span class="op">$</span>Species)</a></code></pre></div>
+<pre><code>## 
+##  Bartlett test of homogeneity of variances
+## 
+## data:  iris$Sepal.Length by iris$Species
+## Bartlett&#39;s K-squared = 16.006, df = 2, p-value = 0.0003345</code></pre>
+</div>
 <div id="multiple-comparisons-and-multiple-testing" class="section level2 tabset tabset-pills">
-<h2><span class="header-section-number">3.5</span> Multiple Comparisons and Multiple Testing</h2>
+<h2><span class="header-section-number">3.6</span> Multiple Comparisons and Multiple Testing</h2>
 <p>We have three methods of deciding the significance levels of multiple comparisons:</p>
 <table>
 <thead>
@@ -375,7 +389,7 @@ for <span class="math inline">\(H_a\)</span>: <span class="math inline">\(\mu_i 
 </table>
 <p>The Benjamini-Hochberg procedure leads to improved Type I error rate and power.</p>
 <div id="multiple-comparisons" class="section level3">
-<h3><span class="header-section-number">3.5.1</span> Multiple Comparisons</h3>
+<h3><span class="header-section-number">3.6.1</span> Multiple Comparisons</h3>
 <ul>
 <li>If we reject <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\mu_1 = \mu_2 = \dots = \mu_K\)</span> for a <span class="math inline">\(K\)</span>-sample test,
 we can conduct pairwise two-sample tests to determine which pairs of means
@@ -383,7 +397,7 @@ are not equal.</li>
 <li>Total number of pairwise tests for <span class="math inline">\(K\)</span> samples: <span class="math inline">\(h = K(K-1)/2\)</span></li>
 <li><span class="math inline">\(P(\text{at least one Type I error}) = 1 - (1 - \alpha)^h\)</span></li>
 </ul>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" title="1"><span class="kw">pairwise.t.test</span>(iris<span class="op">$</span>Sepal.Length, iris<span class="op">$</span>Species)</a></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" title="1"><span class="kw">pairwise.t.test</span>(iris<span class="op">$</span>Sepal.Length, iris<span class="op">$</span>Species)</a></code></pre></div>
 <pre><code>## 
 ##  Pairwise comparisons using t tests with pooled SD 
 ## 
@@ -395,7 +409,7 @@ are not equal.</li>
 ## 
 ## P value adjustment method: holm</code></pre>
 <div id="bonferroni-adjustment" class="section level4">
-<h4><span class="header-section-number">3.5.1.1</span> Bonferroni Adjustment</h4>
+<h4><span class="header-section-number">3.6.1.1</span> Bonferroni Adjustment</h4>
 <ul>
 <li>compare <span class="math inline">\(p\)</span>-value for each pairwise comparison <span class="math inline">\(i\)</span> with significance level
 <span class="math inline">\(\alpha_i = \alpha / h\)</span>
@@ -403,7 +417,7 @@ are not equal.</li>
 <li>works because <span class="math inline">\(1 - (1 - \alpha_i)^h \approx h \alpha_i\)</span></li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" title="1"><span class="kw">pairwise.t.test</span>(iris<span class="op">$</span>Sepal.Length, iris<span class="op">$</span>Species, <span class="dt">p.adjust.method =</span> <span class="st">&quot;bonferroni&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" title="1"><span class="kw">pairwise.t.test</span>(iris<span class="op">$</span>Sepal.Length, iris<span class="op">$</span>Species, <span class="dt">p.adjust.method =</span> <span class="st">&quot;bonferroni&quot;</span>)</a></code></pre></div>
 <pre><code>## 
 ##  Pairwise comparisons using t tests with pooled SD 
 ## 
@@ -417,7 +431,7 @@ are not equal.</li>
 </div>
 </div>
 <div id="multiple-testing" class="section level3">
-<h3><span class="header-section-number">3.5.2</span> Multiple Testing</h3>
+<h3><span class="header-section-number">3.6.2</span> Multiple Testing</h3>
 <ul>
 <li><p>Consider <span class="math inline">\(m\)</span> hypothesis tests together</p></li>
 <li><p>The <span class="math inline">\(p\)</span>-values are <span class="math inline">\(p_1, \dots, p_h\)</span></p></li>
@@ -438,7 +452,7 @@ we control the False Discovery Rate
 </ul></li>
 </ul>
 <div id="benjamini-hochberg-procedure" class="section level4">
-<h4><span class="header-section-number">3.5.2.1</span> Benjamini-Hochberg Procedure</h4>
+<h4><span class="header-section-number">3.6.2.1</span> Benjamini-Hochberg Procedure</h4>
 <ul>
 <li><p>Choose the threshold for rejection to be</p>
 <p><span class="math display">\[t_{\mathrm{BH}} = \max \{P_{(i)} \mid P_{(i)} \leq \frac{\alpha i}{m}, 0 \leq i \leq m\}\]</span></p>
@@ -449,7 +463,7 @@ we control the False Discovery Rate
 <p><span class="math display">\[\mathrm{FDR} = E[\mathrm{FDP}(t_{\mathrm{BH}})] 
 \leq \frac{\alpha \sum_{i=1}^m H_i}{m}\]</span></p></li>
 </ul>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" title="1"><span class="kw">pairwise.t.test</span>(iris<span class="op">$</span>Sepal.Length, iris<span class="op">$</span>Species, <span class="dt">p.adjust.method =</span> <span class="st">&quot;BH&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" title="1"><span class="kw">pairwise.t.test</span>(iris<span class="op">$</span>Sepal.Length, iris<span class="op">$</span>Species, <span class="dt">p.adjust.method =</span> <span class="st">&quot;BH&quot;</span>)</a></code></pre></div>
 <pre><code>## 
 ##  Pairwise comparisons using t tests with pooled SD 
 ## 

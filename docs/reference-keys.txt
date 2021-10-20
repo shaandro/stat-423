@@ -20,6 +20,7 @@ classic-f-test
 permutation-f-test
 kruskal-walis-test
 jonkheere-terpstra-test
+bartlett-test
 multiple-comparisons-and-multiple-testing
 multiple-comparisons
 bonferroni-adjustment
