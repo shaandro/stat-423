@@ -1,0 +1,11 @@
+about
+usage
+render-book
+preview-book
+paired-two-sample-tests
+paired-t-test
+sign-test
+wilcoxon-signed-rank-test
+permutation-test
+exact-permutation-test
+large-sample-approximation-for-permutation-test
