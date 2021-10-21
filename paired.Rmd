@@ -92,7 +92,7 @@ The test is conducted as follows.
 z <- y - x
 
 # calculate the number of observations greater than 0
-X <- sum(z > 0)
+X <- sum(z != 0)
 
 # calculate p-value
 2 * min(pbinom(X, size = length(z), prob = 0.5),

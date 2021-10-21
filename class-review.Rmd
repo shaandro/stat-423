@@ -185,7 +185,7 @@ for (i in 1:R) {
 }
 
 # p-value = proportion of permutation F-statistics greater than Fobs
-mean(Fobs <= F)
+mean(F >= Fobs)
 ```
 
 Thus the $p$-value for the permutation $F$-test is 0.

@@ -231,7 +231,7 @@ and the column <code>Species</code> indicates its species.</p>
 <li>Mean of group <span class="math inline">\(i\)</span>: <span class="math inline">\(\bar{X}_i = \frac{1}{n} \sum_{j = 1}^{n_i} X_{ij}\)</span></li>
 <li>Grand mean: <span class="math inline">\(\bar{X} = \frac{1}{N} \sum_{i=1}^K \sum_{j=1}^{n_i} X_{ij}\)</span></li>
 <li>Treatment sum of squares:
-<span class="math display">\[\mathrm{SSTR} = \sum_{i=1}^K n_i (\bar{X}_i - \bar{X})^2\]</span></li>
+<span class="math display">\[\mathrm{SSTr} = \sum_{i=1}^K n_i (\bar{X}_i - \bar{X})^2\]</span></li>
 <li>Error sum of squres:
 <span class="math display">\[\mathrm{SSE} = \sum_{i=1}^K \sum_{j=1}^{n_i} (X_{ij} - \bar{X}_i)^2\]</span></li>
 <li>Test statistic:
@@ -255,6 +255,7 @@ The <span class="math inline">\(p\)</span>-value is <code>Pr(&gt;F)</code>.</p>
 <div id="permutation-f-test" class="section level2">
 <h2><span class="header-section-number">3.2</span> Permutation <span class="math inline">\(F\)</span>-Test</h2>
 <ul>
+<li>Nonparametric test</li>
 <li>Total number of permutation outcomes: <span class="math inline">\(R = N!/(n_1! n_2! \cdots n_K!)\)</span></li>
 <li>Calculate <span class="math inline">\(F_{\mathrm{obs}}\)</span></li>
 <li>For <span class="math inline">\(\ell \in \{1, \dots, R\}\)</span>,
@@ -284,12 +285,13 @@ The <span class="math inline">\(p\)</span>-value is <code>Pr(&gt;F)</code>.</p>
 <a class="sourceLine" id="cb48-19" title="19">}</a>
 <a class="sourceLine" id="cb48-20" title="20"></a>
 <a class="sourceLine" id="cb48-21" title="21"><span class="co"># p-value</span></a>
-<a class="sourceLine" id="cb48-22" title="22"><span class="kw">mean</span>(Fobs <span class="op">&lt;=</span><span class="st"> </span>F)</a></code></pre></div>
+<a class="sourceLine" id="cb48-22" title="22"><span class="kw">mean</span>(F <span class="op">&gt;=</span><span class="st"> </span>Fobs)</a></code></pre></div>
 <pre><code>## [1] 0</code></pre>
 </div>
 <div id="kruskal-walis-test" class="section level2">
 <h2><span class="header-section-number">3.3</span> Kruskal-Walis Test</h2>
 <ul>
+<li>Nonparametric test</li>
 <li>Assumption: the data are iid in each group</li>
 <li>Replace data with ranks</li>
 <li>Test statistic:
@@ -308,6 +310,7 @@ Under <span class="math inline">\(H_0\)</span>, <span class="math inline">\(\mat
 <div id="jonkheere-terpstra-test" class="section level2">
 <h2><span class="header-section-number">3.4</span> Jonkheere-Terpstra Test</h2>
 <ul>
+<li>Nonparametric test</li>
 <li>Assumption: the data are iid in each group</li>
 <li>Hypotheses: <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\mu_1 = \mu_2 = \dots = \mu_K\)</span> vs
 <span class="math inline">\(H_a\)</span>: <span class="math inline">\(\mu_1 \leq \mu_2 \leq \dots \leq \mu_K\)</span></li>

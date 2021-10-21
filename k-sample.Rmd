@@ -25,7 +25,7 @@ data("iris")
 - Mean of group $i$: $\bar{X}_i = \frac{1}{n} \sum_{j = 1}^{n_i} X_{ij}$
 - Grand mean: $\bar{X} = \frac{1}{N} \sum_{i=1}^K \sum_{j=1}^{n_i} X_{ij}$
 - Treatment sum of squares:
-  $$\mathrm{SSTR} = \sum_{i=1}^K n_i (\bar{X}_i - \bar{X})^2$$
+  $$\mathrm{SSTr} = \sum_{i=1}^K n_i (\bar{X}_i - \bar{X})^2$$
 - Error sum of squres:
   $$\mathrm{SSE} = \sum_{i=1}^K \sum_{j=1}^{n_i} (X_{ij} - \bar{X}_i)^2$$
 - Test statistic:
@@ -44,6 +44,7 @@ The $p$-value is `Pr(>F)`.
 
 ## Permutation $F$-Test
 
+- Nonparametric test
 - Total number of permutation outcomes: $R = N!/(n_1! n_2! \cdots n_K!)$
 - Calculate $F_{\mathrm{obs}}$
 - For $\ell \in \{1, \dots, R\}$, 
@@ -74,12 +75,13 @@ for (i in 1:R) {
 }
 
 # p-value
-mean(Fobs <= F)
+mean(F >= Fobs)
 ```
 
 
 ## Kruskal-Walis Test
 
+- Nonparametric test
 - Assumption: the data are iid in each group
 - Replace data with ranks
 - Test statistic: 
@@ -95,6 +97,7 @@ kruskal.test(Sepal.Length ~ Species, data = iris)
 
 ## Jonkheere-Terpstra Test
 
+- Nonparametric test
 - Assumption: the data are iid in each group
 - Hypotheses: $H_0$: $\mu_1 = \mu_2 = \dots = \mu_K$ vs 
               $H_a$: $\mu_1 \leq \mu_2 \leq \dots \leq \mu_K$
