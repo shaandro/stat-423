@@ -37,7 +37,7 @@ set in the _output.yml file.</p>" />
   
   
 <link rel="prev" href="independent-k-sample-tests.html"/>
-<link rel="next" href="exam-review.html"/>
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -55,15 +55,14 @@ set in the _output.yml file.</p>" />
 
 
 
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
@@ -72,16 +71,14 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -90,9 +87,9 @@ pre.numberSource code > span > a:first-child::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {   }
+  {  }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+a.sourceLine::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -188,34 +185,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.9" data-path="in-class-review-questions.html"><a href="in-class-review-questions.html#permutation-f-test-1"><i class="fa fa-check"></i><b>4.9</b> Permutation <span class="math inline">\(F\)</span>-test</a></li>
 <li class="chapter" data-level="4.10" data-path="in-class-review-questions.html"><a href="in-class-review-questions.html#multiple-comparison-pairwise-t-tests"><i class="fa fa-check"></i><b>4.10</b> Multiple Comparison (Pairwise <span class="math inline">\(t\)</span>-Tests)</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="exam-review.html"><a href="exam-review.html"><i class="fa fa-check"></i><b>5</b> Exam Review</a><ul>
-<li class="chapter" data-level="5.1" data-path="exam-review.html"><a href="exam-review.html#story-a"><i class="fa fa-check"></i><b>5.1</b> Story A</a><ul>
-<li class="chapter" data-level="5.1.1" data-path="exam-review.html"><a href="exam-review.html#question-1"><i class="fa fa-check"></i><b>5.1.1</b> Question 1</a></li>
-<li class="chapter" data-level="5.1.2" data-path="exam-review.html"><a href="exam-review.html#question-2"><i class="fa fa-check"></i><b>5.1.2</b> Question 2</a></li>
-<li class="chapter" data-level="5.1.3" data-path="exam-review.html"><a href="exam-review.html#question-3"><i class="fa fa-check"></i><b>5.1.3</b> Question 3</a></li>
-<li class="chapter" data-level="5.1.4" data-path="exam-review.html"><a href="exam-review.html#question-4"><i class="fa fa-check"></i><b>5.1.4</b> Question 4</a></li>
-<li class="chapter" data-level="5.1.5" data-path="exam-review.html"><a href="exam-review.html#question-5"><i class="fa fa-check"></i><b>5.1.5</b> Question 5</a></li>
-</ul></li>
-<li class="chapter" data-level="5.2" data-path="exam-review.html"><a href="exam-review.html#story-b"><i class="fa fa-check"></i><b>5.2</b> Story B</a><ul>
-<li class="chapter" data-level="5.2.1" data-path="exam-review.html"><a href="exam-review.html#question-6"><i class="fa fa-check"></i><b>5.2.1</b> Question 6</a></li>
-<li class="chapter" data-level="5.2.2" data-path="exam-review.html"><a href="exam-review.html#question-7"><i class="fa fa-check"></i><b>5.2.2</b> Question 7</a></li>
-<li class="chapter" data-level="5.2.3" data-path="exam-review.html"><a href="exam-review.html#question-8"><i class="fa fa-check"></i><b>5.2.3</b> Question 8</a></li>
-<li class="chapter" data-level="5.2.4" data-path="exam-review.html"><a href="exam-review.html#question-9"><i class="fa fa-check"></i><b>5.2.4</b> Question 9</a></li>
-<li class="chapter" data-level="5.2.5" data-path="exam-review.html"><a href="exam-review.html#question-10"><i class="fa fa-check"></i><b>5.2.5</b> Question 10</a></li>
-<li class="chapter" data-level="5.2.6" data-path="exam-review.html"><a href="exam-review.html#question-11"><i class="fa fa-check"></i><b>5.2.6</b> Question 11</a></li>
-<li class="chapter" data-level="5.2.7" data-path="exam-review.html"><a href="exam-review.html#question-12"><i class="fa fa-check"></i><b>5.2.7</b> Question 12</a></li>
-</ul></li>
-<li class="chapter" data-level="5.3" data-path="exam-review.html"><a href="exam-review.html#story-c"><i class="fa fa-check"></i><b>5.3</b> Story C</a><ul>
-<li class="chapter" data-level="5.3.1" data-path="exam-review.html"><a href="exam-review.html#question-13"><i class="fa fa-check"></i><b>5.3.1</b> Question 13</a></li>
-<li class="chapter" data-level="5.3.2" data-path="exam-review.html"><a href="exam-review.html#question-14"><i class="fa fa-check"></i><b>5.3.2</b> Question 14</a></li>
-<li class="chapter" data-level="5.3.3" data-path="exam-review.html"><a href="exam-review.html#question-15"><i class="fa fa-check"></i><b>5.3.3</b> Question 15</a></li>
-<li class="chapter" data-level="5.3.4" data-path="exam-review.html"><a href="exam-review.html#question-16"><i class="fa fa-check"></i><b>5.3.4</b> Question 16</a></li>
-<li class="chapter" data-level="5.3.5" data-path="exam-review.html"><a href="exam-review.html#question-17"><i class="fa fa-check"></i><b>5.3.5</b> Question 17</a></li>
-<li class="chapter" data-level="5.3.6" data-path="exam-review.html"><a href="exam-review.html#question-18"><i class="fa fa-check"></i><b>5.3.6</b> Question 18</a></li>
-<li class="chapter" data-level="5.3.7" data-path="exam-review.html"><a href="exam-review.html#question-19"><i class="fa fa-check"></i><b>5.3.7</b> Question 19</a></li>
-<li class="chapter" data-level="5.3.8" data-path="exam-review.html"><a href="exam-review.html#question-20"><i class="fa fa-check"></i><b>5.3.8</b> Question 20</a></li>
-</ul></li>
-</ul></li>
 <li class="divider"></li>
 <li><a href="https://shaandro.github.io" target="blank">Shaandro Sarkar</a></li>
 
@@ -253,13 +222,13 @@ Test the hypotheses
 we will use the one-proportion <span class="math inline">\(z\)</span>-test
 statistic<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>
 <span class="math display">\[Z = \frac{n\hat{p} - np_0}{\sqrt{np_0(1 - p_0)}}.\]</span></p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="in-class-review-questions.html#cb62-1"></a>S &lt;-<span class="st"> </span><span class="dv">118</span> <span class="co"># number of successes</span></span>
-<span id="cb62-2"><a href="in-class-review-questions.html#cb62-2"></a>n &lt;-<span class="st"> </span><span class="dv">10000</span> <span class="co"># sample size</span></span>
-<span id="cb62-3"><a href="in-class-review-questions.html#cb62-3"></a>p0 &lt;-<span class="st"> </span><span class="fl">0.02</span> <span class="co"># expected probability</span></span>
-<span id="cb62-4"><a href="in-class-review-questions.html#cb62-4"></a>ES &lt;-<span class="st"> </span>n<span class="op">*</span>p0 <span class="co"># expected number of successes</span></span>
-<span id="cb62-5"><a href="in-class-review-questions.html#cb62-5"></a>VarS &lt;-<span class="st"> </span>n<span class="op">*</span>p0<span class="op">*</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>p0) <span class="co"># variance</span></span>
-<span id="cb62-6"><a href="in-class-review-questions.html#cb62-6"></a>Z &lt;-<span class="st"> </span>(S <span class="op">-</span><span class="st"> </span>ES) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(VarS) <span class="co"># test statistic</span></span>
-<span id="cb62-7"><a href="in-class-review-questions.html#cb62-7"></a><span class="kw">pnorm</span>(Z) <span class="co"># p-value</span></span></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" title="1">S &lt;-<span class="st"> </span><span class="dv">118</span> <span class="co"># number of successes</span></a>
+<a class="sourceLine" id="cb62-2" title="2">n &lt;-<span class="st"> </span><span class="dv">10000</span> <span class="co"># sample size</span></a>
+<a class="sourceLine" id="cb62-3" title="3">p0 &lt;-<span class="st"> </span><span class="fl">0.02</span> <span class="co"># expected probability</span></a>
+<a class="sourceLine" id="cb62-4" title="4">ES &lt;-<span class="st"> </span>n<span class="op">*</span>p0 <span class="co"># expected number of successes</span></a>
+<a class="sourceLine" id="cb62-5" title="5">VarS &lt;-<span class="st"> </span>n<span class="op">*</span>p0<span class="op">*</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>p0) <span class="co"># variance</span></a>
+<a class="sourceLine" id="cb62-6" title="6">Z &lt;-<span class="st"> </span>(S <span class="op">-</span><span class="st"> </span>ES) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(VarS) <span class="co"># test statistic</span></a>
+<a class="sourceLine" id="cb62-7" title="7"><span class="kw">pnorm</span>(Z) <span class="co"># p-value</span></a></code></pre></div>
 <pre><code>## [1] 2.35449e-09</code></pre>
 <p>Under large-sample approximation, the <span class="math inline">\(p\)</span>-value of this test is
 <span class="math inline">\(2.35449 \times 10^{-9}\)</span>.</p>
@@ -268,8 +237,8 @@ statistic<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>
 <h2><span class="header-section-number">4.3</span> Paired Two-Sample Tests</h2>
 <p>Load the R dataset
 <code>sleep</code><a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>.</p>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="in-class-review-questions.html#cb64-1"></a><span class="kw">data</span>(<span class="st">&quot;sleep&quot;</span>)</span>
-<span id="cb64-2"><a href="in-class-review-questions.html#cb64-2"></a><span class="kw">head</span>(sleep)</span></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" title="1"><span class="kw">data</span>(<span class="st">&quot;sleep&quot;</span>)</a>
+<a class="sourceLine" id="cb64-2" title="2"><span class="kw">head</span>(sleep)</a></code></pre></div>
 <pre><code>##   extra group ID
 ## 1   0.7     1  1
 ## 2  -1.6     1  2
@@ -281,11 +250,11 @@ statistic<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>
 where <span class="math inline">\(\mu_1\)</span> and <span class="math inline">\(\mu_2\)</span> are the centers of the two groups.
 Which method gives the smaller <span class="math inline">\(p\)</span>-value:
 <span class="math inline">\(t\)</span>-test or Wilcoxon signed-rank test?</p>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="in-class-review-questions.html#cb66-1"></a><span class="co"># paired t-test p-value</span></span>
-<span id="cb66-2"><a href="in-class-review-questions.html#cb66-2"></a><span class="kw">t.test</span>(extra <span class="op">~</span><span class="st"> </span>group, <span class="dt">paired =</span> <span class="ot">TRUE</span>, <span class="dt">data =</span> sleep, <span class="dt">alternative =</span> <span class="st">&quot;less&quot;</span>)<span class="op">$</span>p.value</span></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" title="1"><span class="co"># paired t-test p-value</span></a>
+<a class="sourceLine" id="cb66-2" title="2"><span class="kw">t.test</span>(extra <span class="op">~</span><span class="st"> </span>group, <span class="dt">paired =</span> <span class="ot">TRUE</span>, <span class="dt">data =</span> sleep, <span class="dt">alternative =</span> <span class="st">&quot;less&quot;</span>)<span class="op">$</span>p.value</a></code></pre></div>
 <pre><code>## [1] 0.001416445</code></pre>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="in-class-review-questions.html#cb68-1"></a><span class="co"># paired Wilcoxon test p-value</span></span>
-<span id="cb68-2"><a href="in-class-review-questions.html#cb68-2"></a><span class="kw">wilcox.test</span>(extra <span class="op">~</span><span class="st"> </span>group, <span class="dt">paired =</span> <span class="ot">TRUE</span>, <span class="dt">data =</span> sleep, <span class="dt">alternative =</span> <span class="st">&quot;less&quot;</span>)<span class="op">$</span>p.value</span></code></pre></div>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" title="1"><span class="co"># paired Wilcoxon test p-value</span></a>
+<a class="sourceLine" id="cb68-2" title="2"><span class="kw">wilcox.test</span>(extra <span class="op">~</span><span class="st"> </span>group, <span class="dt">paired =</span> <span class="ot">TRUE</span>, <span class="dt">data =</span> sleep, <span class="dt">alternative =</span> <span class="st">&quot;less&quot;</span>)<span class="op">$</span>p.value</a></code></pre></div>
 <pre><code>## Warning in wilcox.test.default(x = c(0.7, -1.6, -0.2, -1.2, -0.1, 3.4, 3.7, :
 ## cannot compute exact p-value with ties</code></pre>
 <pre><code>## Warning in wilcox.test.default(x = c(0.7, -1.6, -0.2, -1.2, -0.1, 3.4, 3.7, :
@@ -294,9 +263,9 @@ Which method gives the smaller <span class="math inline">\(p\)</span>-value:
 <p>Since <span class="math inline">\(0.0014 &lt; 0.0045\)</span>, the <span class="math inline">\(t\)</span>-test has a smaller <span class="math inline">\(p\)</span>-value than the Wilcoxon test.</p>
 <p>We now consider the permutation test.
 The expression that generates the appropriate permutation outcome is</p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="in-class-review-questions.html#cb72-1"></a>z &lt;-<span class="st"> </span><span class="kw">abs</span>(sleep<span class="op">$</span>extra[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>] <span class="op">-</span><span class="st"> </span>sleep<span class="op">$</span>extra[<span class="dv">11</span><span class="op">:</span><span class="dv">20</span>])</span>
-<span id="cb72-2"><a href="in-class-review-questions.html#cb72-2"></a><span class="kw">sample</span>(<span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>), <span class="dv">10</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>) <span class="op">*</span><span class="st"> </span>z</span></code></pre></div>
-<pre><code>##  [1] -1.2  2.4 -1.3  1.3  0.0  1.0  1.8 -0.8  4.6  1.4</code></pre>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" title="1">z &lt;-<span class="st"> </span><span class="kw">abs</span>(sleep<span class="op">$</span>extra[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>] <span class="op">-</span><span class="st"> </span>sleep<span class="op">$</span>extra[<span class="dv">11</span><span class="op">:</span><span class="dv">20</span>])</a>
+<a class="sourceLine" id="cb72-2" title="2"><span class="kw">sample</span>(<span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>), <span class="dv">10</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>) <span class="op">*</span><span class="st"> </span>z</a></code></pre></div>
+<pre><code>##  [1]  1.2 -2.4  1.3 -1.3  0.0  1.0  1.8  0.8  4.6 -1.4</code></pre>
 </div>
 <div id="paired-permutation-test" class="section level2">
 <h2><span class="header-section-number">4.4</span> Paired Permutation Test</h2>
@@ -312,8 +281,8 @@ the number of permutation outcomes is thus <span class="math inline">\(2^{10} = 
 <div id="anova-and-classic-f-test" class="section level2">
 <h2><span class="header-section-number">4.5</span> ANOVA and Classic <span class="math inline">\(F\)</span>-Test</h2>
 <p>Load the R dataset <code>iris</code>.</p>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="in-class-review-questions.html#cb74-1"></a><span class="kw">data</span>(<span class="st">&quot;iris&quot;</span>)</span>
-<span id="cb74-2"><a href="in-class-review-questions.html#cb74-2"></a><span class="kw">head</span>(iris)</span></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" title="1"><span class="kw">data</span>(<span class="st">&quot;iris&quot;</span>)</a>
+<a class="sourceLine" id="cb74-2" title="2"><span class="kw">head</span>(iris)</a></code></pre></div>
 <pre><code>##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
 ## 1          5.1         3.5          1.4         0.2  setosa
 ## 2          4.9         3.0          1.4         0.2  setosa
@@ -328,7 +297,7 @@ are the centers for the sepal lengths of
 <em>Iris setosa</em>, <em>versicolor</em>, and <em>virginica</em>, respectively.</p>
 <p>We will find the <span class="math inline">\(p\)</span>-value of the <span class="math inline">\(F\)</span>-test for these hypotheses
 by generating an <code>anova</code> table from the <code>lm</code> model.</p>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="in-class-review-questions.html#cb76-1"></a><span class="kw">anova</span>(<span class="kw">lm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Species, <span class="dt">data =</span> iris))</span></code></pre></div>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" title="1"><span class="kw">anova</span>(<span class="kw">lm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Species, <span class="dt">data =</span> iris))</a></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: Sepal.Length
@@ -349,7 +318,7 @@ are the centers for the sepal lengths of
 <em>Iris setosa</em>, <em>versicolor</em>, and <em>virginica</em>, respectively.</p>
 <p>We will find the <span class="math inline">\(p\)</span>-value of the Kruskal-Wallis test
 using <code>kruskal.test</code>.</p>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="in-class-review-questions.html#cb78-1"></a><span class="kw">kruskal.test</span>(iris<span class="op">$</span>Sepal.Length, iris<span class="op">$</span>Species)</span></code></pre></div>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" title="1"><span class="kw">kruskal.test</span>(iris<span class="op">$</span>Sepal.Length, iris<span class="op">$</span>Species)</a></code></pre></div>
 <pre><code>## 
 ##  Kruskal-Wallis rank sum test
 ## 
@@ -385,29 +354,29 @@ We use the simplified calculation of the <span class="math inline">\(F\)</span>-
 where <span class="math inline">\(K\)</span> is the number of groups,
 <span class="math inline">\(n_i\)</span> is the number of observations in group <span class="math inline">\(i\)</span>,
 and <span class="math inline">\(\bar{X}_i\)</span> is the mean of group <span class="math inline">\(i\)</span>.</p>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="in-class-review-questions.html#cb80-1"></a><span class="co"># number of samples in each group</span></span>
-<span id="cb80-2"><a href="in-class-review-questions.html#cb80-2"></a>n &lt;-<span class="st"> </span><span class="kw">tapply</span>(iris<span class="op">$</span>Sepal.Length, iris<span class="op">$</span>Species, length)</span>
-<span id="cb80-3"><a href="in-class-review-questions.html#cb80-3"></a><span class="co"># total number of observations</span></span>
-<span id="cb80-4"><a href="in-class-review-questions.html#cb80-4"></a>N &lt;-<span class="st"> </span><span class="kw">sum</span>(n)</span>
-<span id="cb80-5"><a href="in-class-review-questions.html#cb80-5"></a><span class="co"># sepal length of each observation</span></span>
-<span id="cb80-6"><a href="in-class-review-questions.html#cb80-6"></a>y &lt;-<span class="st"> </span>iris<span class="op">$</span>Sepal.Length</span>
-<span id="cb80-7"><a href="in-class-review-questions.html#cb80-7"></a><span class="co"># species of each observation</span></span>
-<span id="cb80-8"><a href="in-class-review-questions.html#cb80-8"></a>t &lt;-<span class="st"> </span>iris<span class="op">$</span>Species</span>
-<span id="cb80-9"><a href="in-class-review-questions.html#cb80-9"></a></span>
-<span id="cb80-10"><a href="in-class-review-questions.html#cb80-10"></a><span class="co"># F-statistic</span></span>
-<span id="cb80-11"><a href="in-class-review-questions.html#cb80-11"></a>Fobs &lt;-<span class="st"> </span><span class="kw">sum</span>(n <span class="op">*</span><span class="st"> </span><span class="kw">tapply</span>(y, t, mean)<span class="op">^</span><span class="dv">2</span>)</span>
-<span id="cb80-12"><a href="in-class-review-questions.html#cb80-12"></a></span>
-<span id="cb80-13"><a href="in-class-review-questions.html#cb80-13"></a><span class="co"># number of permutation samples</span></span>
-<span id="cb80-14"><a href="in-class-review-questions.html#cb80-14"></a>R &lt;-<span class="st"> </span><span class="dv">5000</span> </span>
-<span id="cb80-15"><a href="in-class-review-questions.html#cb80-15"></a><span class="co"># empty vector for the F-statistic of each permutation sample</span></span>
-<span id="cb80-16"><a href="in-class-review-questions.html#cb80-16"></a>F &lt;-<span class="st"> </span><span class="kw">c</span>()</span>
-<span id="cb80-17"><a href="in-class-review-questions.html#cb80-17"></a><span class="co"># calculate permutation sample F-statistics</span></span>
-<span id="cb80-18"><a href="in-class-review-questions.html#cb80-18"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>R) {</span>
-<span id="cb80-19"><a href="in-class-review-questions.html#cb80-19"></a>  F &lt;-<span class="st"> </span><span class="kw">c</span>(F, <span class="kw">sum</span>(n <span class="op">*</span><span class="st"> </span><span class="kw">tapply</span>(y, <span class="kw">sample</span>(t), mean)<span class="op">^</span><span class="dv">2</span>))</span>
-<span id="cb80-20"><a href="in-class-review-questions.html#cb80-20"></a>}</span>
-<span id="cb80-21"><a href="in-class-review-questions.html#cb80-21"></a></span>
-<span id="cb80-22"><a href="in-class-review-questions.html#cb80-22"></a><span class="co"># p-value = proportion of permutation F-statistics greater than Fobs</span></span>
-<span id="cb80-23"><a href="in-class-review-questions.html#cb80-23"></a><span class="kw">mean</span>(F <span class="op">&gt;=</span><span class="st"> </span>Fobs)</span></code></pre></div>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb80-1" title="1"><span class="co"># number of samples in each group</span></a>
+<a class="sourceLine" id="cb80-2" title="2">n &lt;-<span class="st"> </span><span class="kw">tapply</span>(iris<span class="op">$</span>Sepal.Length, iris<span class="op">$</span>Species, length)</a>
+<a class="sourceLine" id="cb80-3" title="3"><span class="co"># total number of observations</span></a>
+<a class="sourceLine" id="cb80-4" title="4">N &lt;-<span class="st"> </span><span class="kw">sum</span>(n)</a>
+<a class="sourceLine" id="cb80-5" title="5"><span class="co"># sepal length of each observation</span></a>
+<a class="sourceLine" id="cb80-6" title="6">y &lt;-<span class="st"> </span>iris<span class="op">$</span>Sepal.Length</a>
+<a class="sourceLine" id="cb80-7" title="7"><span class="co"># species of each observation</span></a>
+<a class="sourceLine" id="cb80-8" title="8">t &lt;-<span class="st"> </span>iris<span class="op">$</span>Species</a>
+<a class="sourceLine" id="cb80-9" title="9"></a>
+<a class="sourceLine" id="cb80-10" title="10"><span class="co"># F-statistic</span></a>
+<a class="sourceLine" id="cb80-11" title="11">Fobs &lt;-<span class="st"> </span><span class="kw">sum</span>(n <span class="op">*</span><span class="st"> </span><span class="kw">tapply</span>(y, t, mean)<span class="op">^</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb80-12" title="12"></a>
+<a class="sourceLine" id="cb80-13" title="13"><span class="co"># number of permutation samples</span></a>
+<a class="sourceLine" id="cb80-14" title="14">R &lt;-<span class="st"> </span><span class="dv">5000</span> </a>
+<a class="sourceLine" id="cb80-15" title="15"><span class="co"># empty vector for the F-statistic of each permutation sample</span></a>
+<a class="sourceLine" id="cb80-16" title="16">F &lt;-<span class="st"> </span><span class="kw">c</span>()</a>
+<a class="sourceLine" id="cb80-17" title="17"><span class="co"># calculate permutation sample F-statistics</span></a>
+<a class="sourceLine" id="cb80-18" title="18"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>R) {</a>
+<a class="sourceLine" id="cb80-19" title="19">  F &lt;-<span class="st"> </span><span class="kw">c</span>(F, <span class="kw">sum</span>(n <span class="op">*</span><span class="st"> </span><span class="kw">tapply</span>(y, <span class="kw">sample</span>(t), mean)<span class="op">^</span><span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb80-20" title="20">}</a>
+<a class="sourceLine" id="cb80-21" title="21"></a>
+<a class="sourceLine" id="cb80-22" title="22"><span class="co"># p-value = proportion of permutation F-statistics greater than Fobs</span></a>
+<a class="sourceLine" id="cb80-23" title="23"><span class="kw">mean</span>(F <span class="op">&gt;=</span><span class="st"> </span>Fobs)</a></code></pre></div>
 <pre><code>## [1] 0</code></pre>
 <p>Thus the <span class="math inline">\(p\)</span>-value for the permutation <span class="math inline">\(F\)</span>-test is 0.</p>
 </div>
@@ -416,7 +385,7 @@ and <span class="math inline">\(\bar{X}_i\)</span> is the mean of group <span cl
 <p>Load the R dataset <code>iris</code>.
 For the first column, compute the <span class="math inline">\(p\)</span>-values from the multiple comparison based on
 pairwise <span class="math inline">\(t\)</span>-tests.</p>
-<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="in-class-review-questions.html#cb82-1"></a><span class="kw">pairwise.t.test</span>(y, t)</span></code></pre></div>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb82-1" title="1"><span class="kw">pairwise.t.test</span>(y, t)</a></code></pre></div>
 <pre><code>## 
 ##  Pairwise comparisons using t tests with pooled SD 
 ## 
@@ -431,20 +400,36 @@ pairwise <span class="math inline">\(t\)</span>-tests.</p>
 
 </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="footnotes">
 <hr />
 <ol start="1">
 <li id="fn1"><p>We can use the <span class="math inline">\(z\)</span>-test because <span class="math inline">\(np_0 = 10000(0.02) = 200 &gt; 10\)</span>
 and <span class="math inline">\(n(1 - p_0) = 10000(0.98) = 9800 &gt; 10\)</span>.
 Dr. Su refers to this as a large-sample approximation because, with a large enough sample,
-we can assume that the data is distributed normally.<a href="in-class-review-questions.html#fnref1" class="footnote-back">↩︎</a></p></li>
+we can assume that the data is distributed normally.<a href="in-class-review-questions.html#fnref1" class="footnote-back">↩</a></p></li>
 <li id="fn2"><p>The <code>sleep</code> data shows the effect of two drugs on 10 patients.
 The dataset has three columns:
 <code>extra</code> (increase in hours of sleep),
 <code>group</code> (drug given), and
 <code>ID</code> (patient ID).
-The data is paired, since each patient was given both drug 1 and drug 2.<a href="in-class-review-questions.html#fnref2" class="footnote-back">↩︎</a></p></li>
-<li id="fn3"><p><code>k-sample.pdf</code>, slide 9<a href="in-class-review-questions.html#fnref3" class="footnote-back">↩︎</a></p></li>
+The data is paired, since each patient was given both drug 1 and drug 2.<a href="in-class-review-questions.html#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn3"><p><code>k-sample.pdf</code>, slide 9<a href="in-class-review-questions.html#fnref3" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
             </section>
@@ -452,8 +437,8 @@ The data is paired, since each patient was given both drug 1 and drug 2.<a href=
           </div>
         </div>
       </div>
-<a href="independent-k-sample-tests.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="exam-review.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="independent-k-sample-tests.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
