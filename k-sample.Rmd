@@ -95,7 +95,7 @@ kruskal.test(Sepal.Length ~ Species, data = iris)
 ```
 
 
-## Jonkheere-Terpstra Test
+## Jonckheere-Terpstra Test
 
 - Nonparametric test
 - Assumption: the data are iid in each group
