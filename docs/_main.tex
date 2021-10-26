@@ -113,7 +113,7 @@
 
 \title{STAT 423 Review Guide}
 \author{Shaandro Sarkar}
-\date{2021-10-20}
+\date{}
 
 \begin{document}
 \maketitle
@@ -122,6 +122,16 @@
 \setcounter{tocdepth}{1}
 \tableofcontents
 }
+\hypertarget{about}{%
+\chapter*{About}\label{about}}
+\addcontentsline{toc}{chapter}{About}
+
+This is my review guide for STAT 423 (Nonparametric Statistics).
+The course was taught by Dr.~Ya Su at Virginia Commonwealth University in the fall 2021 semester.
+
+The lecture slides and accompanying R code is available on
+\href{https://drive.google.com/drive/folders/1Wvj3ytoPHZRaQbCHw11FjkdGLqIFLlfo?usp=sharing}{Google Drive}.
+
 \hypertarget{paired-two-sample-tests}{%
 \chapter{Paired Two-Sample Tests}\label{paired-two-sample-tests}}
 
@@ -293,7 +303,7 @@ The test is conducted as follows.
 \NormalTok{z <-}\StringTok{ }\NormalTok{y }\OperatorTok{-}\StringTok{ }\NormalTok{x}
 
 \CommentTok{# calculate the number of observations greater than 0}
-\NormalTok{X <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(z }\OperatorTok{>}\StringTok{ }\DecValTok{0}\NormalTok{)}
+\NormalTok{X <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(z }\OperatorTok{!=}\StringTok{ }\DecValTok{0}\NormalTok{)}
 
 \CommentTok{# calculate p-value}
 \DecValTok{2} \OperatorTok{*}\StringTok{ }\KeywordTok{min}\NormalTok{(}\KeywordTok{pbinom}\NormalTok{(X, }\DataTypeTok{size =} \KeywordTok{length}\NormalTok{(z), }\DataTypeTok{prob =} \FloatTok{0.5}\NormalTok{),}
@@ -491,8 +501,1232 @@ we can randomly select \(R\) permutation outcomes and calculate the approximate 
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.004
+## [1] 0.005
 \end{verbatim}
+
+\hypertarget{independent-two-sample-tests}{%
+\chapter{Independent Two-Sample Tests}\label{independent-two-sample-tests}}
+
+Data for independent two-sample tests have the following properties:
+
+\begin{itemize}
+\tightlist
+\item
+  two independent samples \(X_1, \dots, X_m\) and \(Y_1, \dots, Y_n\)
+\item
+  \(X_1, \dots, X_m\) are mutually independent
+\item
+  \(Y_1, \dots, Y_n\) are mutually independent
+\end{itemize}
+
+We are interested in the mean differences between the two samples.
+
+For this example, we will use the dataset \texttt{chickwts}.
+The column \texttt{feed} indicates the feed chicks were fed,
+and the column \texttt{weight} indicates the weight of the chick.
+We will only consider the \texttt{weight}s of the \texttt{feed}s
+\texttt{horsebean} and \texttt{linseed}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{data}\NormalTok{(}\StringTok{"chickwts"}\NormalTok{)}
+
+\CommentTok{# subset only horsebean and linseed}
+\NormalTok{chickwts <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(chickwts, feed }\OperatorTok{==}\StringTok{ "horsebean"} \OperatorTok{|}\StringTok{ }\NormalTok{feed }\OperatorTok{==}\StringTok{ "linseed"}\NormalTok{)}
+
+\CommentTok{# X: weights of chicks with horsebean feed}
+\NormalTok{x <-}\StringTok{ }\NormalTok{chickwts}\OperatorTok{$}\NormalTok{weight[chickwts}\OperatorTok{$}\NormalTok{feed }\OperatorTok{==}\StringTok{ "horsebean"}\NormalTok{]}
+
+\CommentTok{# Y: weights of chicks with linseed feed}
+\NormalTok{y <-}\StringTok{ }\NormalTok{chickwts}\OperatorTok{$}\NormalTok{weight[chickwts}\OperatorTok{$}\NormalTok{feed }\OperatorTok{==}\StringTok{ "linseed"}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+For each test, we will be testing \(H_a\): \(\Delta \neq \Delta_0\),
+where \(\Delta\) is the difference in center (mean or median)
+between the two groups.
+
+\hypertarget{two-sample-t-test}{%
+\section{\texorpdfstring{Two-Sample \(t\)-Test}{Two-Sample t-Test}}\label{two-sample-t-test}}
+
+\begin{itemize}
+\tightlist
+\item
+  Parametric test
+\item
+  Assumptions: \(X_i \overset{\mathrm{iid}} \sim N(\mu_X, \sigma^2)\),
+  \(Y_i \overset{\mathrm{iid}} \sim N(\mu_Y, \sigma^2)\)
+\item
+  Parameter of interest: \(\mu = \mu_X - \mu_Y\)
+  Hypotheses: \(H_0\): \(\mu = \mu_0\) vs \(H_a\): \(\mu \neq \mu_0\) (or \(<\), \(>\))
+\item
+  Test statistic:
+  \[T_{\mathrm{obs}} = \frac{\bar{X} - \bar{Y} - \mu_0}{s_p \sqrt{\frac{1}{m} + \frac{1}{n}}},
+  \quad \text{where} \quad s_p = \frac{(m-1)s_X^2 + (n-1)s_Y^2}{m + n - 2}\]
+\item
+  Null distribution: Under \(H_0\), \(T_{\mathrm{obs}} \sim t_{m + n - 2}\)
+\end{itemize}
+
+There are two ways to conduct this test using \texttt{t.test}.
+For both ways, we use the argument \texttt{var.equal\ =\ TRUE}
+and we let the argument \texttt{mu} be equal to \(\mu_0\).
+
+If your two samples are in separate vectors \texttt{x} and \texttt{y},
+you perform the test the way you're probably used to.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{t.test}\NormalTok{(x, y, }\DataTypeTok{mu =} \DecValTok{0}\NormalTok{, }\DataTypeTok{var.equal =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{alternative =} \StringTok{"two.sided"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Two Sample t-test
+## 
+## data:  x and y
+## t = -2.934, df = 20, p-value = 0.008205
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -100.17618  -16.92382
+## sample estimates:
+## mean of x mean of y 
+##    160.20    218.75
+\end{verbatim}
+
+If your response variable is in one column of a dataset and the
+groups are indicated in a different column,
+we can use \texttt{\textasciitilde{}} and the argument \texttt{data} like we did for the paired \(t\)-test.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{t.test}\NormalTok{(weight }\OperatorTok{~}\StringTok{ }\NormalTok{feed, }\DataTypeTok{data =}\NormalTok{ chickwts,}
+       \DataTypeTok{mu =} \DecValTok{0}\NormalTok{, }\DataTypeTok{var.equal =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{alternative =} \StringTok{"two.sided"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Two Sample t-test
+## 
+## data:  weight by feed
+## t = -2.934, df = 20, p-value = 0.008205
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -100.17618  -16.92382
+## sample estimates:
+## mean in group horsebean   mean in group linseed 
+##                  160.20                  218.75
+\end{verbatim}
+
+Using both methods, we get \(p\text{-value} = 0.008205\).
+
+\hypertarget{permutation-test-1}{%
+\section{Permutation Test}\label{permutation-test-1}}
+
+\begin{itemize}
+\tightlist
+\item
+  Nonparametric tests
+\item
+  Assumptions
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \(X\) and \(Y\) are independent
+  \item
+    \(X_1, \dots, X_m\) are iid
+  \item
+    \(Y_1, \dots, Y_n\) are iid
+  \end{itemize}
+\item
+  Parameters of interest
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \(\Delta_1 = E(X_i) - E(Y_i)\)
+  \item
+    \(\Delta_2 = \mathrm{median}(X_i) - \mathrm{median}(Y_i)\)
+  \end{itemize}
+\item
+  Hypotheses: \(H_0\): \(\Delta = \Delta_0\) vs \(H_a\): \(\Delta \neq \Delta_0\) (or \(<\), \(>\))
+\item
+  Test statistic:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \(\hat{\Delta}_1 = \bar{X} - \bar{Y}\)
+  \item
+    \(\hat{\Delta}_2 = \mathrm{median}(X) - \mathrm{median}(Y)\)
+  \end{itemize}
+\end{itemize}
+
+For the remainder of this section, we will use
+\(\Delta\) to represent the parameter of interest
+(difference in population means or medians)
+and \(\hat{\Delta}\) to represent the corresponding test statistic,
+since the permutation test works the same way regardless of the choice of test statistic.
+
+\begin{itemize}
+\tightlist
+\item
+  The total number of permutation outcomes is \(R = {{m + n} \choose {n}}\).
+\item
+  For each possible outcome \(\ell \in \{1, \dots, R\}\),
+  we calculate the sample test statistic (mean or median) \(\delta_\ell\).
+\end{itemize}
+
+The \(p\)-value depends on the direction of \(H_a\).
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule
+\(H_a\) & \(p\)-value\tabularnewline
+\midrule
+\endhead
+\(\Delta > 0\) & \(I\{\delta_\ell \geq \hat{\Delta}\} / R\)\tabularnewline
+\(\Delta < 0\) & \(I\{\delta_\ell \leq \hat{\Delta}\} / R\)\tabularnewline
+\(\Delta \neq 0\) & \(I\{|\delta_\ell| \geq |\hat{\Delta}|\} / R\)\tabularnewline
+\bottomrule
+\end{longtable}
+
+\hypertarget{exact-permutation-test-1}{%
+\subsection{Exact permutation test}\label{exact-permutation-test-1}}
+
+The exact permutation test for \(H_a\): \(\Delta \neq 0\), where \(\Delta\) is the
+difference in population means,
+is carried out as follows.
+(You can also do this for medians by replacing \texttt{mean} with \texttt{median} in the code.)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# append x and y}
+\NormalTok{xy <-}\StringTok{ }\KeywordTok{c}\NormalTok{(x, y)}
+
+\NormalTok{m <-}\StringTok{ }\KeywordTok{length}\NormalTok{(x) }\CommentTok{# sample size of x}
+\NormalTok{n <-}\StringTok{ }\KeywordTok{length}\NormalTok{(y) }\CommentTok{# sample size of y}
+
+\CommentTok{# construct permutation matrix}
+\NormalTok{permut <-}\StringTok{ }\KeywordTok{combn}\NormalTok{(m }\OperatorTok{+}\StringTok{ }\NormalTok{n, n)}
+
+\CommentTok{# observed difference in sample means}
+\NormalTok{Delta <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(x) }\OperatorTok{-}\StringTok{ }\KeywordTok{mean}\NormalTok{(y)}
+
+\CommentTok{# sample mean for each permutation outcome}
+\NormalTok{delta <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(permut, }\DecValTok{2}\NormalTok{,}
+               \ControlFlowTok{function}\NormalTok{(u) }\KeywordTok{mean}\NormalTok{(xy[}\OperatorTok{-}\NormalTok{u]) }\OperatorTok{-}\StringTok{ }\KeywordTok{mean}\NormalTok{(xy[u]))}
+
+\CommentTok{# p-value}
+\KeywordTok{mean}\NormalTok{(}\KeywordTok{abs}\NormalTok{(delta) }\OperatorTok{>=}\StringTok{ }\KeywordTok{abs}\NormalTok{(Delta))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.009229161
+\end{verbatim}
+
+This code takes a while to run because there are so many permutation outcomes.
+Because of that, we can perform a large-sample approximation using fewer permutation outcomes.
+
+\hypertarget{large-sample-approximation-for-permutation-test-1}{%
+\subsection{Large-sample approximation for permutation test}\label{large-sample-approximation-for-permutation-test-1}}
+
+Instead of using all \(R = {{m + n} \choose {n}}\) possible permutation outcomes,
+we can randomly select \(R\) permutation outcomes and calculate the approximate
+\(p\)-value.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{R <-}\StringTok{ }\DecValTok{1000}
+\NormalTok{xy <-}\StringTok{ }\KeywordTok{c}\NormalTok{(x, y)}
+\NormalTok{m <-}\StringTok{ }\KeywordTok{length}\NormalTok{(x) }\CommentTok{# sample size of x}
+\NormalTok{n <-}\StringTok{ }\KeywordTok{length}\NormalTok{(y) }\CommentTok{# sample size of y}
+
+\CommentTok{# construct permutation matrix}
+\NormalTok{permut <-}\StringTok{ }\KeywordTok{replicate}\NormalTok{(R, }\KeywordTok{sample}\NormalTok{(m }\OperatorTok{+}\StringTok{ }\NormalTok{n, n))}
+
+\CommentTok{# observed difference in sample means}
+\NormalTok{Delta <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(x) }\OperatorTok{-}\StringTok{ }\KeywordTok{mean}\NormalTok{(y)}
+
+\CommentTok{# sample mean for each permutation outcome}
+\NormalTok{delta <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(permut, }\DecValTok{2}\NormalTok{,}
+               \ControlFlowTok{function}\NormalTok{(u) }\KeywordTok{mean}\NormalTok{(xy[}\OperatorTok{-}\NormalTok{u]) }\OperatorTok{-}\StringTok{ }\KeywordTok{mean}\NormalTok{(xy[u]))}
+
+\CommentTok{# p-value}
+\KeywordTok{mean}\NormalTok{(}\KeywordTok{abs}\NormalTok{(delta) }\OperatorTok{>=}\StringTok{ }\KeywordTok{abs}\NormalTok{(Delta))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.007
+\end{verbatim}
+
+\hypertarget{mann-whitney-test}{%
+\section{Mann-Whitney Test}\label{mann-whitney-test}}
+
+\begin{itemize}
+\tightlist
+\item
+  Equivalent to Wilcoxon rank-sum test
+\item
+  Nonparametric test
+\item
+  Assumptions
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \(X\) and \(Y\) are independent
+  \item
+    \(X_1, \dots, X_m\) are iid
+  \item
+    \(Y_1, \dots, Y_n\) are iid
+  \end{itemize}
+\item
+  Parameter of interest:
+  \(\Delta = \mathrm{median}(X_i) - \mathrm{median}(Y_i)\)
+\item
+  Hypotheses: \(H_0\): \(\Delta = 0\) vs \(H_a\): \(\Delta \neq 0\) (or \(<\), \(>\))
+\item
+  Test statistic: For \(i \in \{1, \dots, m\}\) and \(j = 1, \dots, n\),
+  \[U = I\{X_i > X_j\}\]
+\end{itemize}
+
+Because the Mann-Whitney test and the
+Wilcoxon rank-sum test are equivalent,
+we can use \texttt{wilcox.test} the same as with paired samples.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{wilcox.test}\NormalTok{(x, y, }\DataTypeTok{paired =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{alternative =} \StringTok{"two.sided"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Wilcoxon rank sum exact test
+## 
+## data:  x and y
+## W = 20, p-value = 0.007145
+## alternative hypothesis: true location shift is not equal to 0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{wilcox.test}\NormalTok{(weight }\OperatorTok{~}\StringTok{ }\NormalTok{feed, }\DataTypeTok{data =}\NormalTok{ chickwts,}
+            \DataTypeTok{paired =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{alternative =} \StringTok{"two.sided"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Wilcoxon rank sum exact test
+## 
+## data:  weight by feed
+## W = 20, p-value = 0.007145
+## alternative hypothesis: true location shift is not equal to 0
+\end{verbatim}
+
+\hypertarget{kolmogorov-smirnov-test}{%
+\section{Kolmogorov-Smirnov Test}\label{kolmogorov-smirnov-test}}
+
+\begin{itemize}
+\tightlist
+\item
+  Designed to detect the differences of two distributions
+  in either location, variability, or shape.
+\item
+  Hypotheses:
+  For two continuous CDFs \(F(u)\) and \(G(u)\),
+  \(H_0\): \(F(u) = G(u)\) vs \(H_a\): \(F(u) \neq G(u)\)
+\item
+  Test statistic:
+  \[\mathrm{KS} = \max \left| \hat{F}(u) - \hat{G}(u) \right|\]
+  where \(\hat{F}(u)\) and \(\hat{G}(u)\) are the
+  empirical CDFs of two samples
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ks.test}\NormalTok{(x, y)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Two-sample Kolmogorov-Smirnov test
+## 
+## data:  x and y
+## D = 0.55, p-value = 0.04889
+## alternative hypothesis: two-sided
+\end{verbatim}
+
+\hypertarget{tests-on-deviances}{%
+\section{Tests on Deviances}\label{tests-on-deviances}}
+
+Suppose we have two groups of data:
+- \(X_i = \mu_X + \sigma_X \epsilon_i\), where \(i \in \{1, \dots, m\}\)
+- \(Y_i = \mu_Y + \sigma_Y \epsilon_{i+m}\), where \(i \in \{1, \dots, n\}\)
+
+We will test \(H_0\): \(\sigma_X = \sigma_Y\)
+for the \texttt{chickwts} data from the previous section.
+
+\hypertarget{f-test}{%
+\subsection{\texorpdfstring{\(F\)-Test}{F-Test}}\label{f-test}}
+
+\begin{itemize}
+\tightlist
+\item
+  Assumption: \(\epsilon_i \overset{\mathrm{iid}} \sim N(0,1)\)
+\item
+  Test statistic:
+  \[F_{\mathrm{obs}} = \frac{s_X^2}{s_Y^2}\]
+\item
+  Null distribution:
+  Under \(H_0\), \(F_{\mathrm{obs}} \sim F_{m-1, n-1}\)
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{R <-}\StringTok{ }\DecValTok{1000}
+\NormalTok{xy <-}\StringTok{ }\KeywordTok{c}\NormalTok{(x, y)}
+\NormalTok{m <-}\StringTok{ }\KeywordTok{length}\NormalTok{(x) }\CommentTok{# sample size of x}
+\NormalTok{n <-}\StringTok{ }\KeywordTok{length}\NormalTok{(y) }\CommentTok{# sample size of y}
+
+\CommentTok{# construct permutation matrix}
+\NormalTok{permut <-}\StringTok{ }\KeywordTok{replicate}\NormalTok{(R, }\KeywordTok{sample}\NormalTok{(m }\OperatorTok{+}\StringTok{ }\NormalTok{n, n))}
+
+\CommentTok{# sample variances}
+\NormalTok{varx <-}\StringTok{ }\KeywordTok{var}\NormalTok{(x)}
+\NormalTok{vary <-}\StringTok{ }\KeywordTok{var}\NormalTok{(y)}
+
+\CommentTok{# test statistic}
+\NormalTok{Fobs <-}\StringTok{ }\NormalTok{varx }\OperatorTok{/}\StringTok{ }\NormalTok{vary}
+
+\CommentTok{# p-value}
+\DecValTok{2} \OperatorTok{*}\StringTok{ }\KeywordTok{min}\NormalTok{(}\KeywordTok{pf}\NormalTok{(Fobs, m }\OperatorTok{-}\StringTok{ }\DecValTok{1}\NormalTok{, n }\OperatorTok{-}\StringTok{ }\DecValTok{1}\NormalTok{), }\DecValTok{1} \OperatorTok{-}\StringTok{ }\KeywordTok{pf}\NormalTok{(Fobs, m }\OperatorTok{-}\StringTok{ }\DecValTok{1}\NormalTok{, n }\OperatorTok{-}\StringTok{ }\DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.3738707
+\end{verbatim}
+
+\hypertarget{nonparametric-test}{%
+\subsection{Nonparametric Test}\label{nonparametric-test}}
+
+\begin{itemize}
+\tightlist
+\item
+  Calculate the deviances:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \(\mathrm{dev}_{iX} = X_i - \bar{X}\)
+  \item
+    \(\mathrm{dev}_{iY} = Y_i - \bar{Y}\)
+  \end{itemize}
+\item
+  Calculate the absolute mean deviances:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \(\mathrm{dev}_X = \frac{1}{m} \sum_{i=1}^n |\mathrm{dev}_{iX}|\)
+  \item
+    \(\mathrm{dev}_Y = \frac{1}{n} \sum_{i=1}^n |\mathrm{dev}_{iY}|\)
+  \end{itemize}
+\item
+  Test statistic for \(H_a\): \(\sigma_X > \sigma_Y\)
+  and \(H_a\): \(\sigma_X < \sigma_Y\)
+  \[r_{\mathrm{obs}} = \frac{\mathrm{dev}_X}{\mathrm{dev}_Y}\]
+\item
+  Test statistic for \(H_a\): \(\sigma_X \neq \sigma_Y\)
+  \[r_{\mathrm{obs}} = \frac{\min \{\mathrm{dev}_X, \mathrm{dev}_Y\}}
+             {\max \{\mathrm{dev}_X, \mathrm{dev}_Y\}}\]
+\end{itemize}
+
+Let \(R\) be the number of permutation outcomes.
+For all \(\ell \in \{1, \dots, R\}\),
+\(r_\ell\) is the test statistic for the permutation outcome \(\ell\).
+The \(p\)-value depends on the direction of \(H_a\).
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule
+\(H_a\) & \(p\)-value\tabularnewline
+\midrule
+\endhead
+\(\sigma_X > \sigma_Y\) & \(I\{r_\ell \geq r\} / R\)\tabularnewline
+\(\sigma_X < \sigma_Y\) & \(I\{r_\ell \leq r\} / R\)\tabularnewline
+\(\sigma_X \neq \sigma_Y\) & \(I\{r_\ell \geq r\} / R\)\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{R <-}\StringTok{ }\DecValTok{1000}
+\NormalTok{xy <-}\StringTok{ }\KeywordTok{c}\NormalTok{(x, y)}
+
+\CommentTok{# construct permutation matrix}
+\NormalTok{permut <-}\StringTok{ }\KeywordTok{replicate}\NormalTok{(R, }\KeywordTok{sample}\NormalTok{(m }\OperatorTok{+}\StringTok{ }\NormalTok{n, n))}
+
+\CommentTok{# absolute mean deviances}
+\NormalTok{devx <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(}\KeywordTok{abs}\NormalTok{(x }\OperatorTok{-}\StringTok{ }\KeywordTok{mean}\NormalTok{(x)))}
+\NormalTok{devy <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(}\KeywordTok{abs}\NormalTok{(y }\OperatorTok{-}\StringTok{ }\KeywordTok{mean}\NormalTok{(y)))}
+
+\CommentTok{# test statistic}
+\NormalTok{robs <-}\StringTok{ }\KeywordTok{max}\NormalTok{(devx, devy) }\OperatorTok{/}\StringTok{ }\KeywordTok{min}\NormalTok{(devx, devy)}
+
+\CommentTok{# test statistics for permutation outcomes}
+\NormalTok{devxl <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(permut, }\DecValTok{2}\NormalTok{,}
+               \ControlFlowTok{function}\NormalTok{(u) }\KeywordTok{mean}\NormalTok{(}\KeywordTok{abs}\NormalTok{(xy[u] }\OperatorTok{-}\StringTok{ }\KeywordTok{mean}\NormalTok{(xy[u]))))}
+\NormalTok{devyl <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(permut, }\DecValTok{2}\NormalTok{,}
+               \ControlFlowTok{function}\NormalTok{(u) }\KeywordTok{mean}\NormalTok{(}\KeywordTok{abs}\NormalTok{(xy[}\OperatorTok{-}\NormalTok{u] }\OperatorTok{-}\StringTok{ }\KeywordTok{mean}\NormalTok{(xy[}\OperatorTok{-}\NormalTok{u]))))}
+\NormalTok{r <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(}\KeywordTok{cbind}\NormalTok{(devxl, devyl), }\DecValTok{1}\NormalTok{,}
+            \ControlFlowTok{function}\NormalTok{(u) \{}\KeywordTok{max}\NormalTok{(u) }\OperatorTok{/}\StringTok{ }\KeywordTok{min}\NormalTok{(u)\})}
+
+\CommentTok{# p-value}
+\KeywordTok{mean}\NormalTok{(r }\OperatorTok{>=}\StringTok{ }\NormalTok{robs)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.202
+\end{verbatim}
+
+\hypertarget{independent-k-sample-tests}{%
+\chapter{\texorpdfstring{Independent \(K\)-Sample Tests}{Independent K-Sample Tests}}\label{independent-k-sample-tests}}
+
+\begin{itemize}
+\tightlist
+\item
+  \(K\) independent samples
+\item
+  \(n_i\): number of observations in group \(i\)
+\item
+  \(X_{ij}\): \(j\)th observation from \(i\)th sample
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \(i \in \{1, \dots, K\}\)
+  \item
+    \(j \in \{1, \dots, n_i\}\)
+  \end{itemize}
+\item
+  \(\mu_i\): mean of group \(i\)
+\item
+  One-way ANOVA model: \(X_{ij} = \mu_i + e_{ij}\)
+\item
+  Hypotheses: \(H_0\): \(\mu_1 = \mu_2 = \dots = \mu_K\) vs
+  \(H_a\): \(H_0\) is not true
+\end{itemize}
+
+For this section, we will use the dataset \texttt{iris}.
+The column \texttt{Sepal.Length} indicates the length of the flower's sepal,
+and the column \texttt{Species} indicates its species.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{data}\NormalTok{(}\StringTok{"iris"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{classic-f-test}{%
+\section{\texorpdfstring{Classic \(F\)-Test}{Classic F-Test}}\label{classic-f-test}}
+
+\begin{itemize}
+\tightlist
+\item
+  Assumption: \(e_{ij} \overset{\mathrm{iid}} \sim N(0, \sigma^2)\)
+\item
+  Mean of group \(i\): \(\bar{X}_i = \frac{1}{n} \sum_{j = 1}^{n_i} X_{ij}\)
+\item
+  Grand mean: \(\bar{X} = \frac{1}{N} \sum_{i=1}^K \sum_{j=1}^{n_i} X_{ij}\)
+\item
+  Treatment sum of squares:
+  \[\mathrm{SSTr} = \sum_{i=1}^K n_i (\bar{X}_i - \bar{X})^2\]
+\item
+  Error sum of squres:
+  \[\mathrm{SSE} = \sum_{i=1}^K \sum_{j=1}^{n_i} (X_{ij} - \bar{X}_i)^2\]
+\item
+  Test statistic:
+  \[F_{\mathrm{obs}} = \frac{\mathrm{SSTr}/(K-1)}{\mathrm{SSE}/(N-K)}\]
+\item
+  Null distribution: Under \(H_0\), \(F_{\mathrm{obs}} \sim F_{K-1, N-K}\)
+\end{itemize}
+
+We can conduct the classic \(F\)-test using \texttt{anova} and \texttt{lm}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{anova}\NormalTok{(}\KeywordTok{lm}\NormalTok{(Sepal.Length }\OperatorTok{~}\StringTok{ }\NormalTok{Species, }\DataTypeTok{data =}\NormalTok{ iris))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: Sepal.Length
+##            Df Sum Sq Mean Sq F value    Pr(>F)    
+## Species     2 63.212  31.606  119.26 < 2.2e-16 ***
+## Residuals 147 38.956   0.265                      
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+The SSTr is the value in the first row of column \texttt{Sum\ Sq}.
+The SSE is the value in the row \texttt{Residuals} of column \texttt{Sum\ Sq}.
+The \(p\)-value is \texttt{Pr(\textgreater{}F)}.
+
+\hypertarget{permutation-f-test}{%
+\section{\texorpdfstring{Permutation \(F\)-Test}{Permutation F-Test}}\label{permutation-f-test}}
+
+\begin{itemize}
+\tightlist
+\item
+  Nonparametric test
+\item
+  Total number of permutation outcomes: \(R = N!/(n_1! n_2! \cdots n_K!)\)
+\item
+  Calculate \(F_{\mathrm{obs}}\)
+\item
+  For \(\ell \in \{1, \dots, R\}\),
+  \(F_\ell\) is the \(F\)-statistic for the \(\ell\)th permutation outcome
+\item
+  We can use the simplified calculation
+  \[F \propto \sum_{i=1}^K n_i \bar{X}_i^2\]
+\item
+  \(p\text{-value} = I\{F_\ell \geq F_{\mathrm{obs}}\} / R\)
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# number of permutation samples}
+\NormalTok{R <-}\StringTok{ }\DecValTok{1000} 
+\CommentTok{# number of samples in each group}
+\NormalTok{n <-}\StringTok{ }\KeywordTok{tapply}\NormalTok{(iris}\OperatorTok{$}\NormalTok{Sepal.Length, iris}\OperatorTok{$}\NormalTok{Species, length)}
+\CommentTok{# total number of observations}
+\NormalTok{N <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(n)}
+\CommentTok{# sepal length of each observation}
+\NormalTok{x <-}\StringTok{ }\NormalTok{iris}\OperatorTok{$}\NormalTok{Sepal.Length}
+\CommentTok{# species of each observation}
+\NormalTok{t <-}\StringTok{ }\NormalTok{iris}\OperatorTok{$}\NormalTok{Species}
+
+\CommentTok{# F-statistic}
+\NormalTok{Fobs <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(n }\OperatorTok{*}\StringTok{ }\KeywordTok{tapply}\NormalTok{(x, t, mean)}\OperatorTok{^}\DecValTok{2}\NormalTok{)}
+
+\CommentTok{# permutation sample F-statistics}
+\NormalTok{F <-}\StringTok{ }\KeywordTok{c}\NormalTok{()}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{R) \{}
+\NormalTok{  F <-}\StringTok{ }\KeywordTok{c}\NormalTok{(F, }\KeywordTok{sum}\NormalTok{(n }\OperatorTok{*}\StringTok{ }\KeywordTok{tapply}\NormalTok{(x, }\KeywordTok{sample}\NormalTok{(t), mean)}\OperatorTok{^}\DecValTok{2}\NormalTok{))}
+\NormalTok{\}}
+
+\CommentTok{# p-value}
+\KeywordTok{mean}\NormalTok{(F }\OperatorTok{>=}\StringTok{ }\NormalTok{Fobs)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0
+\end{verbatim}
+
+\hypertarget{kruskal-walis-test}{%
+\section{Kruskal-Walis Test}\label{kruskal-walis-test}}
+
+\begin{itemize}
+\tightlist
+\item
+  Nonparametric test
+\item
+  Assumption: the data are iid in each group
+\item
+  Replace data with ranks
+\item
+  Test statistic:
+  \[\mathrm{KW} = \frac{12}{N(N+1)} \mathrm{SST}^*,\]
+  where \(\mathrm{SST}^*\) is the SST calculated with ranks
+\item
+  Null distribution:
+  Under \(H_0\), \(\mathrm{KW} \sim \chi^2_{K-1}\) approximately
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{kruskal.test}\NormalTok{(Sepal.Length }\OperatorTok{~}\StringTok{ }\NormalTok{Species, }\DataTypeTok{data =}\NormalTok{ iris)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Kruskal-Wallis rank sum test
+## 
+## data:  Sepal.Length by Species
+## Kruskal-Wallis chi-squared = 96.937, df = 2, p-value < 2.2e-16
+\end{verbatim}
+
+\hypertarget{jonkheere-terpstra-test}{%
+\section{Jonkheere-Terpstra Test}\label{jonkheere-terpstra-test}}
+
+\begin{itemize}
+\tightlist
+\item
+  Nonparametric test
+\item
+  Assumption: the data are iid in each group
+\item
+  Hypotheses: \(H_0\): \(\mu_1 = \mu_2 = \dots = \mu_K\) vs
+  \(H_a\): \(\mu_1 \leq \mu_2 \leq \dots \leq \mu_K\)
+\item
+  Test-Statistic:
+  \[\mathrm{JT} = \sum_{i < j} U_{ij},\]
+  where \(U_{ij}\) is the Mann-Whitney test statistic
+  for \(H_a\): \(\mu_i < \mu_j\)
+\item
+  Approximate null distribution: Under \(H_0\),
+  \[\frac{\mathrm{JT} - E(\mathrm{JT})}{\sqrt{\mathrm{Var}(\mathrm{JT})}}
+  \sim N(0,1)\]
+  \[E(\mathrm{JT}) = \frac{N^2 - \sum_{i=1}^K n_i^2}{4}\]
+  \[\mathrm{Var}(\mathrm{JT}) 
+  = \frac{N^2(2N+3) - \sum_{i=1}^K n_i^2 (2n_i + 3)}{72}\]
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# assign numbers to each group}
+\NormalTok{species <-}\StringTok{ }\KeywordTok{factor}\NormalTok{(iris}\OperatorTok{$}\NormalTok{Species, }\DataTypeTok{levels=}\KeywordTok{c}\NormalTok{(}\StringTok{"setosa"}\NormalTok{,}\StringTok{"versicolor"}\NormalTok{,}\StringTok{"virginica"}\NormalTok{))}
+\NormalTok{groups <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(species)}
+
+\NormalTok{sepal <-}\StringTok{ }\NormalTok{iris}\OperatorTok{$}\NormalTok{Sepal.Length}
+
+\CommentTok{# number of groups}
+\NormalTok{K <-}\StringTok{ }\KeywordTok{max}\NormalTok{(groups)}
+
+\CommentTok{# number of observations}
+\NormalTok{N <-}\KeywordTok{length}\NormalTok{(sepal)  }\CommentTok{# total}
+\NormalTok{n <-}\StringTok{ }\KeywordTok{table}\NormalTok{(groups) }\CommentTok{# per group}
+
+\CommentTok{# compute Uij}
+\NormalTok{JT <-}\StringTok{ }\DecValTok{0}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{(K}\DecValTok{-1}\NormalTok{)) \{}
+  \ControlFlowTok{for}\NormalTok{(j }\ControlFlowTok{in}\NormalTok{ (i}\OperatorTok{+}\DecValTok{1}\NormalTok{)}\OperatorTok{:}\NormalTok{K) \{}
+\NormalTok{     JT <-}\StringTok{ }\NormalTok{JT }\OperatorTok{+}\StringTok{ }\KeywordTok{sum}\NormalTok{(}\KeywordTok{outer}\NormalTok{(sepal[groups }\OperatorTok{==}\StringTok{ }\NormalTok{i], sepal[groups }\OperatorTok{==}\StringTok{ }\NormalTok{j],}\StringTok{"<"}\NormalTok{))}
+\NormalTok{  \}}
+\NormalTok{\}}
+\NormalTok{JT}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 6686
+\end{verbatim}
+
+\hypertarget{bartlett-test}{%
+\section{Bartlett Test}\label{bartlett-test}}
+
+\begin{itemize}
+\tightlist
+\item
+  Test for equal variances
+\item
+  Hypotheses: \(H_0\): \(\sigma_1 = \sigma_2 = \dots = \sigma_K\)
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{bartlett.test}\NormalTok{(iris}\OperatorTok{$}\NormalTok{Sepal.Length }\OperatorTok{~}\StringTok{ }\NormalTok{iris}\OperatorTok{$}\NormalTok{Species)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Bartlett test of homogeneity of variances
+## 
+## data:  iris$Sepal.Length by iris$Species
+## Bartlett's K-squared = 16.006, df = 2, p-value = 0.0003345
+\end{verbatim}
+
+\hypertarget{multiple-comparisons-and-multiple-testing}{%
+\section{Multiple Comparisons and Multiple Testing}\label{multiple-comparisons-and-multiple-testing}}
+
+We have three methods of deciding the significance levels of multiple comparisons:
+
+\begin{longtable}[]{@{}lll@{}}
+\toprule
+Adjustment & Description & \texttt{p.adjust.method}\tabularnewline
+\midrule
+\endhead
+none & compare \(p_i\) with \(\alpha\) & none\tabularnewline
+Bonferroni & compare \(p_i\) with \(\alpha / h\) & \texttt{"bonferroni"}\tabularnewline
+Benjamini-Hochberg & compare BH-adjusted \(p_i\) with \(\alpha\) & \texttt{"BH"}\tabularnewline
+\bottomrule
+\end{longtable}
+
+The Benjamini-Hochberg procedure leads to improved Type I error rate and power.
+
+\hypertarget{multiple-comparisons}{%
+\subsection{Multiple Comparisons}\label{multiple-comparisons}}
+
+\begin{itemize}
+\tightlist
+\item
+  If we reject \(H_0\): \(\mu_1 = \mu_2 = \dots = \mu_K\) for a \(K\)-sample test,
+  we can conduct pairwise two-sample tests to determine which pairs of means
+  are not equal.
+\item
+  Total number of pairwise tests for \(K\) samples: \(h = K(K-1)/2\)
+\item
+  \(P(\text{at least one Type I error}) = 1 - (1 - \alpha)^h\)
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{pairwise.t.test}\NormalTok{(iris}\OperatorTok{$}\NormalTok{Sepal.Length, iris}\OperatorTok{$}\NormalTok{Species)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Pairwise comparisons using t tests with pooled SD 
+## 
+## data:  iris$Sepal.Length and iris$Species 
+## 
+##            setosa  versicolor
+## versicolor 1.8e-15 -         
+## virginica  < 2e-16 2.8e-09   
+## 
+## P value adjustment method: holm
+\end{verbatim}
+
+\hypertarget{bonferroni-adjustment}{%
+\subsubsection{Bonferroni Adjustment}\label{bonferroni-adjustment}}
+
+\begin{itemize}
+\tightlist
+\item
+  compare \(p\)-value for each pairwise comparison \(i\) with significance level
+  \(\alpha_i = \alpha / h\)
+
+  \begin{itemize}
+  \tightlist
+  \item
+    works because \(1 - (1 - \alpha_i)^h \approx h \alpha_i\)
+  \end{itemize}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{pairwise.t.test}\NormalTok{(iris}\OperatorTok{$}\NormalTok{Sepal.Length, iris}\OperatorTok{$}\NormalTok{Species, }\DataTypeTok{p.adjust.method =} \StringTok{"bonferroni"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Pairwise comparisons using t tests with pooled SD 
+## 
+## data:  iris$Sepal.Length and iris$Species 
+## 
+##            setosa  versicolor
+## versicolor 2.6e-15 -         
+## virginica  < 2e-16 8.3e-09   
+## 
+## P value adjustment method: bonferroni
+\end{verbatim}
+
+\hypertarget{multiple-testing}{%
+\subsection{Multiple Testing}\label{multiple-testing}}
+
+\begin{itemize}
+\item
+  Consider \(m\) hypothesis tests together
+\item
+  The \(p\)-values are \(p_1, \dots, p_h\)
+\item
+  Instead of controlling the Type I error rate \(\alpha\),
+  we control the False Discovery Rate
+  \[\mathrm{FDR} 
+  = E \left( \frac{\text{number of false discoveries}}{\text{number of discoveries}} \right)
+  \leq \alpha\]
+
+  \begin{itemize}
+  \tightlist
+  \item
+    discovery means rejection of \(H_0\)
+  \end{itemize}
+\item
+  Threshold: Reject \(H_0\) if \(p\text{-value} \leq t\)
+\item
+  False Discovery Proportion for \(i \in \{1, \dots, m\}\)
+
+  \[\mathrm{FDP}(t) = \frac{\sum_{i = 1}^m I\{p_i \leq t\} H_i}{\sum_{i = 1}^m I\{p_i \leq t\}}\]
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \(p_i\) is the \(p\)-value for test \(i\)
+  \item
+    \(H_i = 1\) if \(H_0\) is true and \(H_i = 0\) otherwise
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{benjamini-hochberg-procedure}{%
+\subsubsection{Benjamini-Hochberg Procedure}\label{benjamini-hochberg-procedure}}
+
+\begin{itemize}
+\item
+  Choose the threshold for rejection to be
+
+  \[t_{\mathrm{BH}} = \max \{P_{(i)} \mid P_{(i)} \leq \frac{\alpha i}{m}, 0 \leq i \leq m\}\]
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \(P_{(1)} \leq P_{(2)} \leq \dots \leq P_{(m)}\)
+  \end{itemize}
+\item
+  It can be proved that
+
+  \[\mathrm{FDR} = E[\mathrm{FDP}(t_{\mathrm{BH}})] 
+  \leq \frac{\alpha \sum_{i=1}^m H_i}{m}\]
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{pairwise.t.test}\NormalTok{(iris}\OperatorTok{$}\NormalTok{Sepal.Length, iris}\OperatorTok{$}\NormalTok{Species, }\DataTypeTok{p.adjust.method =} \StringTok{"BH"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Pairwise comparisons using t tests with pooled SD 
+## 
+## data:  iris$Sepal.Length and iris$Species 
+## 
+##            setosa  versicolor
+## versicolor 1.3e-15 -         
+## virginica  < 2e-16 2.8e-09   
+## 
+## P value adjustment method: BH
+\end{verbatim}
+
+\hypertarget{in-class-review-questions}{%
+\chapter{In-Class Review Questions}\label{in-class-review-questions}}
+
+\hypertarget{estimator}{%
+\section{Estimator}\label{estimator}}
+
+Amazon recommends customers products according to their purchasing history.
+Among 10,000 independent recommendations, 118 were accepted.
+The estimator of acceptance rate is \(\hat{p} = 118/10000\).
+
+\hypertarget{one-proportion-z-test}{%
+\section{\texorpdfstring{One-Proportion \(z\)-Test}{One-Proportion z-Test}}\label{one-proportion-z-test}}
+
+Let \(p\) be the true acceptance rate.
+Test the hypotheses
+\(H_0\): \(p = 0.02\) vs \(H_a\): \(p < 0.02.\)
+
+To find the \(p\)-value for this test,
+we will use the one-proportion \(z\)-test
+statistic\footnote{We can use the \(z\)-test because \(np_0 = 10000(0.02) = 200 > 10\)
+  and \(n(1 - p_0) = 10000(0.98) = 9800 > 10\).
+  Dr.~Su refers to this as a large-sample approximation because, with a large enough sample,
+  we can assume that the data is distributed normally.}
+\[Z = \frac{n\hat{p} - np_0}{\sqrt{np_0(1 - p_0)}}.\]
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{S <-}\StringTok{ }\DecValTok{118} \CommentTok{# number of successes}
+\NormalTok{n <-}\StringTok{ }\DecValTok{10000} \CommentTok{# sample size}
+\NormalTok{p0 <-}\StringTok{ }\FloatTok{0.02} \CommentTok{# expected probability}
+\NormalTok{ES <-}\StringTok{ }\NormalTok{n}\OperatorTok{*}\NormalTok{p0 }\CommentTok{# expected number of successes}
+\NormalTok{VarS <-}\StringTok{ }\NormalTok{n}\OperatorTok{*}\NormalTok{p0}\OperatorTok{*}\NormalTok{(}\DecValTok{1} \OperatorTok{-}\StringTok{ }\NormalTok{p0) }\CommentTok{# variance}
+\NormalTok{Z <-}\StringTok{ }\NormalTok{(S }\OperatorTok{-}\StringTok{ }\NormalTok{ES) }\OperatorTok{/}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(VarS) }\CommentTok{# test statistic}
+\KeywordTok{pnorm}\NormalTok{(Z) }\CommentTok{# p-value}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2.35449e-09
+\end{verbatim}
+
+Under large-sample approximation, the \(p\)-value of this test is
+\(2.35449 \times 10^{-9}\).
+
+\hypertarget{paired-two-sample-tests-1}{%
+\section{Paired Two-Sample Tests}\label{paired-two-sample-tests-1}}
+
+Load the R dataset
+\texttt{sleep}\footnote{The \texttt{sleep} data shows the effect of two drugs on 10 patients.
+  The dataset has three columns:
+  \texttt{extra} (increase in hours of sleep),
+  \texttt{group} (drug given), and
+  \texttt{ID} (patient ID).
+  The data is paired, since each patient was given both drug 1 and drug 2.}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{data}\NormalTok{(}\StringTok{"sleep"}\NormalTok{)}
+\KeywordTok{head}\NormalTok{(sleep)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   extra group ID
+## 1   0.7     1  1
+## 2  -1.6     1  2
+## 3  -0.2     1  3
+## 4  -1.2     1  4
+## 5  -0.1     1  5
+## 6   3.4     1  6
+\end{verbatim}
+
+Test \(H_0\): \(\mu_1 = \mu_2\) vs \(H_a\): \(\mu_1 < \mu_2\),
+where \(\mu_1\) and \(\mu_2\) are the centers of the two groups.
+Which method gives the smaller \(p\)-value:
+\(t\)-test or Wilcoxon signed-rank test?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# paired t-test p-value}
+\KeywordTok{t.test}\NormalTok{(extra }\OperatorTok{~}\StringTok{ }\NormalTok{group, }\DataTypeTok{paired =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{data =}\NormalTok{ sleep, }\DataTypeTok{alternative =} \StringTok{"less"}\NormalTok{)}\OperatorTok{$}\NormalTok{p.value}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.001416445
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# paired Wilcoxon test p-value}
+\KeywordTok{wilcox.test}\NormalTok{(extra }\OperatorTok{~}\StringTok{ }\NormalTok{group, }\DataTypeTok{paired =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{data =}\NormalTok{ sleep, }\DataTypeTok{alternative =} \StringTok{"less"}\NormalTok{)}\OperatorTok{$}\NormalTok{p.value}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in wilcox.test.default(x = c(0.7, -1.6, -0.2, -1.2, -0.1, 3.4, 3.7, :
+## cannot compute exact p-value with ties
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in wilcox.test.default(x = c(0.7, -1.6, -0.2, -1.2, -0.1, 3.4, 3.7, :
+## cannot compute exact p-value with zeroes
+\end{verbatim}
+
+\begin{verbatim}
+## [1] 0.004545349
+\end{verbatim}
+
+Since \(0.0014 < 0.0045\), the \(t\)-test has a smaller \(p\)-value than the Wilcoxon test.
+
+We now consider the permutation test.
+The expression that generates the appropriate permutation outcome is
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{z <-}\StringTok{ }\KeywordTok{abs}\NormalTok{(sleep}\OperatorTok{$}\NormalTok{extra[}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{] }\OperatorTok{-}\StringTok{ }\NormalTok{sleep}\OperatorTok{$}\NormalTok{extra[}\DecValTok{11}\OperatorTok{:}\DecValTok{20}\NormalTok{])}
+\KeywordTok{sample}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\OperatorTok{-}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{), }\DecValTok{10}\NormalTok{, }\DataTypeTok{replace =} \OtherTok{TRUE}\NormalTok{) }\OperatorTok{*}\StringTok{ }\NormalTok{z}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] -1.2  2.4  1.3  1.3  0.0  1.0 -1.8  0.8  4.6 -1.4
+\end{verbatim}
+
+\hypertarget{paired-permutation-test}{%
+\section{Paired Permutation Test}\label{paired-permutation-test}}
+
+Load the R dataset \texttt{sleep}.
+Test \(H_0\): \(\mu_1 = \mu_2\) vs \(H_a\): \(\mu_1 \neq \mu_2\),
+where \(\mu_1\) and \(\mu_2\) are the centers of the two groups.
+
+Consider the permutation test. What is the total number of permutation outcomes?
+
+The \texttt{sleep} dataset has 10 paired observations.
+If \(n\) is the sample size, then the number of permutation outcomes is \(2^n\).
+For the \texttt{sleep} dataset,
+the number of permutation outcomes is thus \(2^{10} = 1024\).
+
+\hypertarget{anova-and-classic-f-test}{%
+\section{\texorpdfstring{ANOVA and Classic \(F\)-Test}{ANOVA and Classic F-Test}}\label{anova-and-classic-f-test}}
+
+Load the R dataset \texttt{iris}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{data}\NormalTok{(}\StringTok{"iris"}\NormalTok{)}
+\KeywordTok{head}\NormalTok{(iris)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+## 1          5.1         3.5          1.4         0.2  setosa
+## 2          4.9         3.0          1.4         0.2  setosa
+## 3          4.7         3.2          1.3         0.2  setosa
+## 4          4.6         3.1          1.5         0.2  setosa
+## 5          5.0         3.6          1.4         0.2  setosa
+## 6          5.4         3.9          1.7         0.4  setosa
+\end{verbatim}
+
+For the first column, consider the hypothesis
+\(H_0\): \(\mu_1 = \mu_2 = \mu_3\) vs \(H_a\): \(H_0\) is not true,
+where \(\mu_1\), \(\mu_2\), and \(\mu_3\)
+are the centers for the sepal lengths of
+\emph{Iris setosa}, \emph{versicolor}, and \emph{virginica}, respectively.
+
+We will find the \(p\)-value of the \(F\)-test for these hypotheses
+by generating an \texttt{anova} table from the \texttt{lm} model.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{anova}\NormalTok{(}\KeywordTok{lm}\NormalTok{(Sepal.Length }\OperatorTok{~}\StringTok{ }\NormalTok{Species, }\DataTypeTok{data =}\NormalTok{ iris))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: Sepal.Length
+##            Df Sum Sq Mean Sq F value    Pr(>F)    
+## Species     2 63.212  31.606  119.26 < 2.2e-16 ***
+## Residuals 147 38.956   0.265                      
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+From the ANOVA table, we have \(p\text{-value} < 2.2 \times 10^{-16}\).
+
+\hypertarget{kruskal-wallis-test}{%
+\section{Kruskal-Wallis Test}\label{kruskal-wallis-test}}
+
+Load the R dataset \texttt{iris}.
+For the first column, consider the hypothesis
+\(H_0\): \(\mu_1 = \mu_2 = \mu_3\) vs \(H_a\): \(H_0\) is not true,
+where \(\mu_1\), \(\mu_2\), and \(\mu_3\)
+are the centers for the sepal lengths of
+\emph{Iris setosa}, \emph{versicolor}, and \emph{virginica}, respectively.
+
+We will find the \(p\)-value of the Kruskal-Wallis test
+using \texttt{kruskal.test}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{kruskal.test}\NormalTok{(iris}\OperatorTok{$}\NormalTok{Sepal.Length, iris}\OperatorTok{$}\NormalTok{Species)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Kruskal-Wallis rank sum test
+## 
+## data:  iris$Sepal.Length and iris$Species
+## Kruskal-Wallis chi-squared = 96.937, df = 2, p-value < 2.2e-16
+\end{verbatim}
+
+Thus \(p\text{-value} < 2.2 \times 10^{-16}\).
+
+\hypertarget{sse-from-anova}{%
+\section{SSE (from ANOVA)}\label{sse-from-anova}}
+
+Load the R dataset \texttt{iris}.
+Consider the first numerical column and find the SSE.
+
+The SSE can be found on the ANOVA table,
+which we already generated in 5.
+The SSE is the value in the row \texttt{Residuals} and the column \texttt{Sum\ Sq},
+i.e.~\(\mathrm{SSE} = 38.956\).
+
+\hypertarget{sstr-from-anova}{%
+\section{SSTr (from ANOVA)}\label{sstr-from-anova}}
+
+Load the R dataset \texttt{iris}.
+Consider the first numerical column and find the SSTr.
+
+The SSTr can also be found on the ANOVA table.
+The SSTr is the value in the row \texttt{Species} and the column \texttt{Sum\ Sq},
+i.e.~\(\mathrm{SSTr} = 63.212\).
+
+\hypertarget{permutation-f-test-1}{%
+\section{\texorpdfstring{Permutation \(F\)-test}{Permutation F-test}}\label{permutation-f-test-1}}
+
+Load the R dataset \texttt{iris}.
+For the first column, compute the \(p\)-value using the permutation \(F\)-test for
+\(H_0\): \(\mu_1 = \mu_2 = \mu_3\) vs \(H_a\): \(H_0\) is not true.
+
+We will perform the permutation test using \(R = 5000\) permutation samples.
+We use the simplified calculation of the \(F\)-statistic\footnote{\texttt{k-sample.pdf}, slide 9}
+
+\[F \propto \sum_{i=1}^K n_i \bar{X}_i ^2,\]
+where \(K\) is the number of groups,
+\(n_i\) is the number of observations in group \(i\),
+and \(\bar{X}_i\) is the mean of group \(i\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# number of samples in each group}
+\NormalTok{n <-}\StringTok{ }\KeywordTok{tapply}\NormalTok{(iris}\OperatorTok{$}\NormalTok{Sepal.Length, iris}\OperatorTok{$}\NormalTok{Species, length)}
+\CommentTok{# total number of observations}
+\NormalTok{N <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(n)}
+\CommentTok{# sepal length of each observation}
+\NormalTok{y <-}\StringTok{ }\NormalTok{iris}\OperatorTok{$}\NormalTok{Sepal.Length}
+\CommentTok{# species of each observation}
+\NormalTok{t <-}\StringTok{ }\NormalTok{iris}\OperatorTok{$}\NormalTok{Species}
+
+\CommentTok{# F-statistic}
+\NormalTok{Fobs <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(n }\OperatorTok{*}\StringTok{ }\KeywordTok{tapply}\NormalTok{(y, t, mean)}\OperatorTok{^}\DecValTok{2}\NormalTok{)}
+
+\CommentTok{# number of permutation samples}
+\NormalTok{R <-}\StringTok{ }\DecValTok{5000} 
+\CommentTok{# empty vector for the F-statistic of each permutation sample}
+\NormalTok{F <-}\StringTok{ }\KeywordTok{c}\NormalTok{()}
+\CommentTok{# calculate permutation sample F-statistics}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{R) \{}
+\NormalTok{  F <-}\StringTok{ }\KeywordTok{c}\NormalTok{(F, }\KeywordTok{sum}\NormalTok{(n }\OperatorTok{*}\StringTok{ }\KeywordTok{tapply}\NormalTok{(y, }\KeywordTok{sample}\NormalTok{(t), mean)}\OperatorTok{^}\DecValTok{2}\NormalTok{))}
+\NormalTok{\}}
+
+\CommentTok{# p-value = proportion of permutation F-statistics greater than Fobs}
+\KeywordTok{mean}\NormalTok{(F }\OperatorTok{>=}\StringTok{ }\NormalTok{Fobs)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0
+\end{verbatim}
+
+Thus the \(p\)-value for the permutation \(F\)-test is 0.
+
+\hypertarget{multiple-comparison-pairwise-t-tests}{%
+\section{\texorpdfstring{Multiple Comparison (Pairwise \(t\)-Tests)}{Multiple Comparison (Pairwise t-Tests)}}\label{multiple-comparison-pairwise-t-tests}}
+
+Load the R dataset \texttt{iris}.
+For the first column, compute the \(p\)-values from the multiple comparison based on
+pairwise \(t\)-tests.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{pairwise.t.test}\NormalTok{(y, t)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Pairwise comparisons using t tests with pooled SD 
+## 
+## data:  y and t 
+## 
+##            setosa  versicolor
+## versicolor 1.8e-15 -         
+## virginica  < 2e-16 2.8e-09   
+## 
+## P value adjustment method: holm
+\end{verbatim}
+
+The pair with the smallest \(p\)-value is \emph{I. setosa} vs.~\emph{I. virginica}.
 
   \bibliography{book.bib,packages.bib}
 
